@@ -1,0 +1,156 @@
+using System.Collections;
+using System.Collections.Generic;
+using Unity.VisualScripting;
+using UnityEngine;
+using UnityEngine.InputSystem;
+
+// referenced from: https://www.youtube.com/watch?v=fZvJvZA4nhY&ab_channel=DanPos
+
+[RequireComponent(typeof(Rigidbody))]
+public class Ship : MonoBehaviour
+{
+    [Header("Ship Movement Vars")]
+    //controls how fast you can rotate
+    [SerializeField] float yawTorque = 500f;    // y axis
+    [SerializeField] float pitchTorque = 1000f; // x axis
+    [SerializeField] float rollTorque = 1000f;  // z axis
+    //controls how fast you can actually move
+    [SerializeField] float thrust = 100f;       // forward speed
+    [SerializeField] float upThrust = 50f;      // up/down speed
+    [SerializeField] float strafeThrust = 50f;  // left/right speed
+    //controls accel/deccel (also what makes the ship eventually stop after they release the key
+    [SerializeField, Range(0.001f, 0.999f)] float thrustGlideReduction = 0.999f;
+    [SerializeField, Range(0.001f, 0.999f)] float upDownGlideReduction = .111f;
+    [SerializeField, Range(0.001f, 0.999f)] float leftRightGlideReduction = .111f;
+    float glide, verticalGlide, horizontalGlide = 0f;
+
+    [Header("Boosting Vars")]
+    [SerializeField] float maxBoostAmount = 2f;
+    [SerializeField] float boostLossRate = .25f;
+    [SerializeField] float boostRechargeRate = .5f;
+    [SerializeField] float boostMultiplier = 5f;
+    public bool boosting = false;
+    public float currBoostAmount;
+
+    Rigidbody rb;
+    // input variables
+    float thrust1D;
+    float upDown1D;
+    float strafe1D;
+    float roll1D;
+    Vector2 pitchYaw;
+    void Start()
+    {
+        rb = GetComponent<Rigidbody>();
+        currBoostAmount = maxBoostAmount;
+    }
+
+    
+    void FixedUpdate()
+    {
+        HandleBoost();
+        HandleMovement();
+    }
+    void HandleBoost()
+    {
+        if(boosting && currBoostAmount > 0f)
+        {
+            currBoostAmount -= boostLossRate;
+            if (currBoostAmount <= 0f)
+            {
+                boosting = false;
+            }
+        }
+        else
+        {
+            if(currBoostAmount < maxBoostAmount)
+            {
+                currBoostAmount += boostRechargeRate;
+            }
+        }
+    }
+    void HandleMovement()
+    {
+        // roll
+        rb.AddRelativeTorque(Vector3.back * roll1D * rollTorque * Time.deltaTime);
+        // pitch, if we want to invert to feel realistic, remove the - in front of pitchYaw
+        rb.AddRelativeTorque(Vector3.right * Mathf.Clamp(-pitchYaw.y, -1f, 1f) * pitchTorque * Time.deltaTime);
+        // Yaw
+        rb.AddRelativeTorque(Vector3.up * Mathf.Clamp(pitchYaw.x, -1f, 1f) * yawTorque * Time.deltaTime);
+
+        // Thrust (if statement is to prevent controller drift
+        if(thrust1D > .1f || thrust1D < -.1f)
+        {
+            float currentThrust;
+
+            if (boosting)
+            {
+                currentThrust = thrust * boostMultiplier;
+            }
+            else
+            {
+                currentThrust = thrust;
+            }
+
+            rb.AddRelativeForce(Vector3.forward * thrust1D * currentThrust * Time.deltaTime);
+            glide = thrust;
+        }
+        else
+        {
+            rb.AddRelativeForce(Vector3.forward * glide * Time.deltaTime);
+            glide *= thrustGlideReduction;
+        }
+
+        // Up/Down
+        if (upDown1D > .1f || upDown1D < -.1f)
+        {
+            rb.AddRelativeForce(Vector3.up * upDown1D * upThrust * Time.fixedDeltaTime);
+            verticalGlide = upDown1D * upThrust;
+        }
+        else
+        {
+            rb.AddRelativeForce(Vector3.up * verticalGlide * Time.fixedDeltaTime);
+            verticalGlide *= upDownGlideReduction;
+        }
+
+        // strafing
+        if(strafe1D > .1f || strafe1D < -.1f)
+        {
+            rb.AddRelativeForce(Vector3.right * strafe1D * upThrust * Time.fixedDeltaTime);
+            horizontalGlide = strafe1D * strafeThrust;
+        }
+        else
+        {
+            rb.AddRelativeForce(Vector3.right * horizontalGlide * Time.fixedDeltaTime);
+            horizontalGlide *= leftRightGlideReduction;
+        }
+    }
+
+    #region Input Methods
+    public void OnThrust(InputAction.CallbackContext context)
+    {
+        thrust1D = context.ReadValue<float>();
+    }
+    public void OnStrafe(InputAction.CallbackContext context)
+    {
+        strafe1D = context.ReadValue<float>();
+    }
+    public void OnUpDown(InputAction.CallbackContext context)
+    {
+        upDown1D = context.ReadValue<float>();
+    }
+    public void OnRoll(InputAction.CallbackContext context)
+    {
+        roll1D = context.ReadValue<float>();
+    }
+    public void OnPitchYaw(InputAction.CallbackContext context)
+    {
+        pitchYaw = context.ReadValue<Vector2>();
+    }
+
+    public void OnBoost(InputAction.CallbackContext context)
+    {
+        boosting = context.performed;
+    }
+    #endregion
+}
