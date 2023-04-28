@@ -32,6 +32,10 @@ public class Ship : MonoBehaviour
     public bool boosting = false;
     public float currBoostAmount;
 
+    [Header("Health and Collectable Vars")]
+    public int health = 10;
+    public int collectableCount = 0;
+    
     Rigidbody rb;
     // input variables
     float thrust1D;
