@@ -130,6 +130,20 @@ public class Ship : MonoBehaviour
         }
     }
 
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.CompareTag("DockingStation"))
+        {
+            GameManager.instance.DockingScrap();
+        }
+    }
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.CompareTag("DockingStation")){
+            GameManager.instance.StopDock();
+        }
+    }
+
     #region Input Methods
     public void OnThrust(InputAction.CallbackContext context)
     {
