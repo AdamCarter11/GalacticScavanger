@@ -10,6 +10,7 @@ public class GameManager : MonoBehaviour
     private int collectedScrap;
 
     private bool isDocking = false;
+    bool canDock = true;
 
     private void Start()
     {
@@ -42,6 +43,7 @@ public class GameManager : MonoBehaviour
     {
         if(!isDocking)
         {
+            canDock = true;
             //lerp or change overtime the players scrap
             StartCoroutine(DockScraps());
             isDocking = true;
@@ -50,12 +52,13 @@ public class GameManager : MonoBehaviour
     }
     public void StopDock()
     {
+        canDock = false;
         StopCoroutine(DockScraps());
     }
 
     IEnumerator DockScraps()
     {
-        while(currPlayerScrap > 0)
+        while(currPlayerScrap > 0 && canDock)
         {
             yield return new WaitForSeconds(1f);
             currPlayerScrap--;
