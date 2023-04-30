@@ -281,6 +281,7 @@ GameObject:
   - component: {fileID: 8325805688558623644}
   - component: {fileID: 8325805688558623643}
   - component: {fileID: 8325805688558623640}
+  - component: {fileID: 86786187793678208}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -421,6 +422,36 @@ MonoBehaviour:
   m_RequiresDepthTexture: 0
   m_RequiresColorTexture: 0
   m_Version: 2
+--- !u!114 &86786187793678208
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8325805688558623647}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a18129cee9c59e54a82cfd9ff843b888, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  horizontal:
+    m_Name: 
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: 
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
+  vertical:
+    m_Name: 
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: 
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
 --- !u!1 &8325805688599547621
 GameObject:
   m_ObjectHideFlags: 0
@@ -463,9 +494,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8325805688791109807}
+  - component: {fileID: 6532567687780850053}
+  - component: {fileID: 8325805688791109804}
   - component: {fileID: 8325805688791109802}
   - component: {fileID: 8325805688791109805}
-  - component: {fileID: 8325805688791109804}
   - component: {fileID: 8325805688791109803}
   m_Layer: 0
   m_Name: Ship
@@ -492,7 +524,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8325805688791109802
+--- !u!114 &6532567687780850053
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -501,42 +533,22 @@ MonoBehaviour:
   m_GameObject: {fileID: 8325805688791109806}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a967b7d61df917f4090ef44a088d7737, type: 3}
+  m_Script: {fileID: 11500000, guid: 1d3cbb1a29e518a478d53a8feabb603e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  yawTorque: 100
-  pitchTorque: 100
-  rollTorque: 100
-  thrust: 100
-  upThrust: 50
-  strafeThrust: 50
-  thrustGlideReduction: 0.5
-  upDownGlideReduction: 0.111
-  leftRightGlideReduction: 0.111
-  maxBoostAmount: 20
-  boostLossRate: 0.1
-  boostRechargeRate: 0.15
-  boostMultiplier: 10
-  boosting: 0
-  currBoostAmount: 0
-  health: 10
-  collectableCount: 0
---- !u!54 &8325805688791109805
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8325805688791109806}
-  serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0.5
-  m_AngularDrag: 0.5
-  m_UseGravity: 0
-  m_IsKinematic: 0
-  m_Interpolate: 1
-  m_Constraints: 0
-  m_CollisionDetection: 0
+  players: []
+  startingPoints:
+  - {fileID: 0}
+  - {fileID: 0}
+  playerLayers:
+  - serializedVersion: 2
+    m_Bits: 64
+  - serializedVersion: 2
+    m_Bits: 128
+  - serializedVersion: 2
+    m_Bits: 256
+  - serializedVersion: 2
+    m_Bits: 512
 --- !u!114 &8325805688791109804
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -663,6 +675,51 @@ MonoBehaviour:
   m_DefaultActionMap: ShipControls
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 8325805688558623645}
+--- !u!114 &8325805688791109802
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8325805688791109806}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a967b7d61df917f4090ef44a088d7737, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  yawTorque: 100
+  pitchTorque: 100
+  rollTorque: 100
+  thrust: 100
+  upThrust: 50
+  strafeThrust: 50
+  thrustGlideReduction: 0.5
+  upDownGlideReduction: 0.111
+  leftRightGlideReduction: 0.111
+  maxBoostAmount: 20
+  boostLossRate: 0.1
+  boostRechargeRate: 0.15
+  boostMultiplier: 10
+  boosting: 0
+  currBoostAmount: 0
+  health: 10
+  collectableCount: 0
+--- !u!54 &8325805688791109805
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8325805688791109806}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0.5
+  m_AngularDrag: 0.5
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 1
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!65 &8325805688791109803
 BoxCollider:
   m_ObjectHideFlags: 0
