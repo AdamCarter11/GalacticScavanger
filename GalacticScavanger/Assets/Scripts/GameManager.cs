@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -12,6 +14,12 @@ public class GameManager : MonoBehaviour
     private bool isDocking = false;
     bool canDock = true;
 
+    //Timer variables
+    [SerializeField] TMP_Text timerText;
+    [SerializeField] float StartingTime;
+    float timeLeft;
+    bool timerOn = true;
+
     private void Start()
     {
         if(instance != null && instance != this)
@@ -22,6 +30,7 @@ public class GameManager : MonoBehaviour
         {
             instance = this;
         }
+        timeLeft = StartingTime;
     }
     public void ChangeScrapVal(int scrapChange)
     {
@@ -37,6 +46,35 @@ public class GameManager : MonoBehaviour
     private void Update()
     {
         print(currPlayerScrap);
+        TimerFunc();
+    }
+
+    private void TimerFunc()
+    {
+        if (timerOn)
+        {
+            if(timeLeft > 0)
+            {
+                timeLeft -= Time.deltaTime;
+                UpdateTimer(timeLeft);
+            }
+            else
+            {
+                timerOn = false;
+                // gameover
+                Cursor.visible = true;
+                SceneManager.LoadScene("GameOver");
+            }
+        }
+    }
+    private void UpdateTimer(float currentTime)
+    {
+        currentTime += 1;
+
+        float minutes = Mathf.FloorToInt(currentTime / 60);
+        float seconds = Mathf.FloorToInt(currentTime % 60);
+
+        timerText.text = string.Format("{0:00} : {1:00}", minutes, seconds);
     }
 
     public void DockingScrap()

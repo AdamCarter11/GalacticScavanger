@@ -43,10 +43,16 @@ public class Ship : MonoBehaviour
     float strafe1D;
     float roll1D;
     Vector2 pitchYaw;
+
+    // Pause variables
+    [SerializeField] GameObject pausePanel;
+    bool isPaused = false;
+    bool inputPaused;
     void Start()
     {
         rb = GetComponent<Rigidbody>();
         currBoostAmount = maxBoostAmount;
+        Cursor.visible = false;
     }
 
     
@@ -54,6 +60,7 @@ public class Ship : MonoBehaviour
     {
         HandleBoost();
         HandleMovement();
+        PauseGameFunc();
     }
     void HandleBoost()
     {
@@ -144,6 +151,22 @@ public class Ship : MonoBehaviour
         }
     }
 
+    void PauseGameFunc()
+    {
+        /*
+        if (!isPaused && inputPaused)
+        {
+            isPaused = true;
+            print("Paused");
+        }
+        else if (isPaused && inputPaused)
+        {
+            isPaused = false;
+            print("NOT paused");
+        }
+        */
+    }
+
     #region Input Methods
     public void OnThrust(InputAction.CallbackContext context)
     {
@@ -169,6 +192,26 @@ public class Ship : MonoBehaviour
     public void OnBoost(InputAction.CallbackContext context)
     {
         boosting = context.performed;
+    }
+
+    public void PauseGame(InputAction.CallbackContext context)
+    {
+        isPaused = !isPaused;
+        if (isPaused)
+        {
+            print("Paused");
+            Time.timeScale = 0;
+            pausePanel.SetActive(true);
+            Cursor.visible = true;
+        }
+        else
+        {
+            print("NOT paused");
+            Time.timeScale = 1;
+            pausePanel.SetActive(false);
+            Cursor.visible = false;
+        }
+        //inputPaused = context.performed;
     }
     #endregion
 }
