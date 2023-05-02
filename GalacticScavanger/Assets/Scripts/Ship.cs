@@ -199,14 +199,14 @@ public class Ship : MonoBehaviour
         isPaused = !isPaused;
         if (isPaused)
         {
-            print("Paused");
+            //print("Paused");
             Time.timeScale = 0;
             pausePanel.SetActive(true);
             Cursor.visible = true;
         }
         else
         {
-            print("NOT paused");
+            //print("NOT paused");
             Time.timeScale = 1;
             pausePanel.SetActive(false);
             Cursor.visible = false;
