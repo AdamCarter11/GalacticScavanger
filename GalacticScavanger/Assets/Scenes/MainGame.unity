@@ -707,6 +707,7 @@ GameObject:
   - component: {fileID: 631341918}
   - component: {fileID: 631341922}
   - component: {fileID: 631341923}
+  - component: {fileID: 631341924}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Untagged
@@ -799,7 +800,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 631341917}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 391711198437cab4bac6d7cf196f3e76, type: 3}
   m_Name: 
@@ -826,6 +827,25 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &631341924
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 631341917}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c9133bd9078ef7147a93d10cc0b63dac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxSpeed: 100
+  maxForce: 10
+  mass: 1
+  slowingDistance: 20
+  turnSpeed: 3
+  pathUpdateInterval: 1
+  player: {fileID: 1285020303}
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0

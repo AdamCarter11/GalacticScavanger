@@ -27,6 +27,7 @@ public class EnemyAI2 : MonoBehaviour
         RaycastHit hit;
         if(Physics.SphereCast(transform.position, transform.localScale.y, transform.TransformDirection(Vector3.forward), out hit, 5, whatToAvoid))
         {
+            // SphereCast can shoot out a specific direction (parameter goes after the radius, i.e., third para)
             Vector3 tempDir = new Vector3(transform.rotation.x, transform.rotation.y, transform.rotation.z);
             //dir = (tempDir).normalized;
             //transform.Rotate(transform.rotation.x, transform.rotation.y, transform.rotation.z);
