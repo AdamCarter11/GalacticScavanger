@@ -810,7 +810,7 @@ MonoBehaviour:
   currBoostAmount: 0
   health: 10
   collectableCount: 0
-  turretLocation: {fileID: 0}
+  turretLocation: {fileID: 5874590492130449082}
   pausePanel: {fileID: 0}
 --- !u!54 &8325805688791109805
 Rigidbody:
