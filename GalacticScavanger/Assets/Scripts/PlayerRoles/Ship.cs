@@ -35,6 +35,9 @@ public class Ship : MonoBehaviour
     [Header("Health and Collectable Vars")]
     public int health = 10;
     public int collectableCount = 0;
+
+    [Header("Gunner Vars")] 
+    [SerializeField] private Transform turretLocation;
     
     Rigidbody rb;
     // input variables
@@ -44,6 +47,7 @@ public class Ship : MonoBehaviour
     float roll1D;
     Vector2 pitchYaw;
 
+    [Header("Pause Vars")]
     // Pause variables
     [SerializeField] GameObject pausePanel;
     bool isPaused = false;
