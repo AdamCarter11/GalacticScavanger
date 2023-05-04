@@ -16,6 +16,15 @@ public class EnemyAI3 : MonoBehaviour
     private int currentWaypoint = 0;
     private float lastPathUpdateTime = 0f;
 
+    // these are seperate currently, but they could be one variable if we don't need the extra functionality
+    [SerializeField] float attackRange;
+    [SerializeField] float pathingRange;
+
+    public string targetTag;        // The tag of the objects to search for
+    public float searchRadius = 10f; // The maximum distance to search for objects
+
+    private GameObject nearestObject; // The nearest object found so far
+
     void Start()
     {
         // Set player to be the main camera's transform by default
@@ -30,7 +39,17 @@ public class EnemyAI3 : MonoBehaviour
         // Update path periodically
         if (Time.time - lastPathUpdateTime > pathUpdateInterval)
         {
-            path = GeneratePath(transform.position, player.position);
+            print("Distance: " + Vector3.Distance(player.position, transform.position));
+            if(Vector3.Distance(player.position, transform.position) < attackRange)
+            {
+                path = GeneratePath(transform.position, player.position);
+                
+            }
+            else
+            {
+                FindNearestObject();
+                path = GeneratePath(transform.position, GetNearestObject().transform.position);
+            }
             currentWaypoint = 0;
             lastPathUpdateTime = Time.time;
         }
@@ -98,7 +117,7 @@ public class EnemyAI3 : MonoBehaviour
         while (current != end)
         {
             RaycastHit hit;
-            if (Physics.SphereCast(current, transform.localScale.y, (end - current).normalized, out hit, Mathf.Infinity))
+            if (Physics.SphereCast(current, transform.localScale.y, (end - current).normalized, out hit, pathingRange))
             {
                 if (hit.collider.transform == player)
                 {
@@ -119,4 +138,40 @@ public class EnemyAI3 : MonoBehaviour
 
         return path;
     }
+
+    void FindNearestObject()
+    {
+        
+
+        // Find all objects with the target tag within the search radius
+        Collider[] objectsInRange = Physics.OverlapSphere(transform.position, searchRadius);
+        GameObject nearestObject = null;
+        float nearestDistance = float.MaxValue;
+
+        // Iterate through each object and check if it is closer than the current nearest object
+        foreach (Collider col in objectsInRange)
+        {
+            if (col.gameObject.CompareTag(targetTag))
+            {
+                float distance = Vector3.Distance(transform.position, col.transform.position);
+                if (distance<nearestDistance)
+                {
+                    nearestObject = col.gameObject;
+                    nearestDistance = distance;
+                }
+            }
+        }
+
+        // Store the nearest object found
+        this.nearestObject = nearestObject;
+
+    }
+
+
+    // Get the nearest object found so far
+    public GameObject GetNearestObject()
+    {
+        return nearestObject;
+    }
+
 }
