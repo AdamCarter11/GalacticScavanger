@@ -3,24 +3,22 @@ using System.Collections;
 public class EnemyAI6 : MonoBehaviour
 {
     // Fix a range how early u want your enemy detect the obstacle.
-    private int range;
-    private float speed;
+    [SerializeField] private int range = 160;
+    [SerializeField]  private float speed = 10.0f;
     private bool isThereAnyThing = false;
     // Specify the target for the enemy.
-    public GameObject target;
-    private float rotationSpeed;
+    [SerializeField] private GameObject target;
+    [SerializeField] private float rotationSpeed = 45.0f;
     private RaycastHit hit;
-    // Use this for initialization
+
     void Start()
     {
-        range = 160;
-        speed = 10.0f;
-        rotationSpeed = 45.0f;
+        
     }
     // Update is called once per frame
     void Update()
     {
-        //Look At Somthly Towards the Target if there is nothing in front.
+        //Look At smoothly Towards the Target if there is nothing in front.
         if (!isThereAnyThing)
         {
             Vector3 relativePos = target.transform.position - transform.position;
