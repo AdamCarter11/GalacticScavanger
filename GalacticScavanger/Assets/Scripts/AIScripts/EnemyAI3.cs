@@ -142,28 +142,34 @@ public class EnemyAI3 : MonoBehaviour
     void FindNearestObject()
     {
         
-
         // Find all objects with the target tag within the search radius
         Collider[] objectsInRange = Physics.OverlapSphere(transform.position, searchRadius);
-        GameObject nearestObject = null;
-        float nearestDistance = float.MaxValue;
-
-        // Iterate through each object and check if it is closer than the current nearest object
-        foreach (Collider col in objectsInRange)
+        if(objectsInRange.Length <= 0)
         {
-            if (col.gameObject.CompareTag(targetTag))
+            this.nearestObject = player.gameObject;
+        }
+        else
+        {
+            GameObject nearestObject = null;
+            float nearestDistance = float.MaxValue;
+
+            // Iterate through each object and check if it is closer than the current nearest object
+            foreach (Collider col in objectsInRange)
             {
-                float distance = Vector3.Distance(transform.position, col.transform.position);
-                if (distance<nearestDistance)
+                if (col.gameObject.CompareTag(targetTag))
                 {
-                    nearestObject = col.gameObject;
-                    nearestDistance = distance;
+                    float distance = Vector3.Distance(transform.position, col.transform.position);
+                    if (distance < nearestDistance)
+                    {
+                        nearestObject = col.gameObject;
+                        nearestDistance = distance;
+                    }
                 }
             }
-        }
 
-        // Store the nearest object found
-        this.nearestObject = nearestObject;
+            // Store the nearest object found
+            this.nearestObject = nearestObject;
+        }
 
     }
 
