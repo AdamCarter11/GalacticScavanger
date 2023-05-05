@@ -54,11 +54,16 @@ public class Ship : MonoBehaviour
     [SerializeField] GameObject pausePanel;
     bool isPaused = false;
     bool inputPaused;
+
+    [HideInInspector] public static bool isDead;
+    private Vector3 respawnPos;
+
     void Start()
     {
         rb = GetComponent<Rigidbody>();
         currBoostAmount = maxBoostAmount;
         Cursor.visible = false;
+        respawnPos = transform.position;
     }
 
     private void Awake()
@@ -71,7 +76,15 @@ public class Ship : MonoBehaviour
             Destroy(this.gameObject);
         }
     }
-
+    private void Update()
+    {
+        if (isDead)
+        {
+            isDead = false;
+            transform.position = respawnPos;
+            rb.velocity = Vector3.zero;
+        }
+    }
     void FixedUpdate()
     {
         HandleBoost();
