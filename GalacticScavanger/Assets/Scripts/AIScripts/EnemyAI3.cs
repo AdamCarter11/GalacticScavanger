@@ -144,9 +144,11 @@ public class EnemyAI3 : MonoBehaviour
         
         // Find all objects with the target tag within the search radius
         Collider[] objectsInRange = Physics.OverlapSphere(transform.position, searchRadius);
-        if(objectsInRange.Length <= 0)
+        print(objectsInRange.Length);
+        if(objectsInRange.Length <= 1)
         {
             this.nearestObject = player.gameObject;
+            print("player is nearest");
         }
         else
         {
@@ -177,6 +179,7 @@ public class EnemyAI3 : MonoBehaviour
     // Get the nearest object found so far
     public GameObject GetNearestObject()
     {
+        print(nearestObject.name);
         return nearestObject;
     }
 
