@@ -1,13 +1,20 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
-// code source: https://www.youtube.com/watch?v=bCz7awDbl58
 public class Turret : MonoBehaviour
 {
     [SerializeField] private GameObject camera;
     [SerializeField] private GameObject projectile;
     [SerializeField] public float rotationSpeed = 1f;
+   
+    // input variables
+    //float xRotate1D;
+    //float yRotate1D;
+    Vector2 pitchYaw;
+
 
     // Start is called before the first frame update
     void Start()
@@ -15,32 +22,25 @@ public class Turret : MonoBehaviour
         //Vector3 newRotation = Vector3.RotateTowards();
         //this.gameObject.transform.rotation =
     }
-/*
-    private void Update() 
+
+    private void Update()
     {
-        Aim();
-        //weapon.fire();
+        RotatationUpdate();
     }
 
-    private void Aim()
+    private void RotatationUpdate()
     {
-        // TURN
-        float targetPlaneAngle = vector3AngleOnPlane(target.position, transform.position, -transform.up, transform.forward);
-        Vector3 newRotation = new Vector3(0, targetPlaneAngle, 0);
-        transform.Rotate(newRotation, Space.Self);
-        
-        // UP/DOWN
-        float upAngle = Vector3.Angle(target.position, barrel.transform.up);
-        Vector3 upRotation = new Vector3(-upAngle + 90, 0, 0);
-        barrel.transform.Rotate(upRotation, Space.Self);
+        float x = pitchYaw.x;
+        float y = pitchYaw.y;
+        Vector3 rotate = new Vector3(x * rotationSpeed, y * rotationSpeed);
+        transform.eulerAngles = transform.eulerAngles - rotate;
     }
 
-    float vector3AngleOnPlane(Vector3 from, Vector3 to, Vector3 planeNormal, Vector3 toZeroAngle)
+    #region Input Methods
+    public void OnPitchYaw(InputAction.CallbackContext context)
     {
-        Vector3 projectedVector = Vector3.ProjectOnPlane(from - to, planeNormal);
-        float projectedVectorAngle = Vector3.SignedAngle(projectedVector, toZeroAngle, planeNormal);
+        pitchYaw = context.ReadValue<Vector2>();
+    }
+    #endregion
 
-        return projectedVectorAngle;
-    } 
-    */
 }
