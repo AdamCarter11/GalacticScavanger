@@ -9,7 +9,10 @@ public class Turret : MonoBehaviour
     [SerializeField] private GameObject camera;
     [SerializeField] private GameObject projectile;
     [SerializeField] public float rotationSpeed = 1f;
-   
+
+    private GameObject ship;
+
+    private Transform turretLocation;
     // input variables
     //float xRotate1D;
     //float yRotate1D;
@@ -19,12 +22,13 @@ public class Turret : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //Vector3 newRotation = Vector3.RotateTowards();
-        //this.gameObject.transform.rotation =
+        ship = GameObject.FindWithTag("Ship");
+        turretLocation = ship.GetComponent<Ship>().turretLocation;
     }
 
     private void Update()
     {
+        PositionUpdate();
         RotationUpdate();
     }
 
@@ -34,7 +38,12 @@ public class Turret : MonoBehaviour
         float y = pitchYaw.y;
         Vector3 rotate = new Vector3(x * rotationSpeed, y * rotationSpeed);
         this.gameObject.transform.eulerAngles = transform.eulerAngles - rotate;
-        Debug.Log("in turret rotation update");
+        Debug.Log("in turret rotation update. new vector:" + rotate);
+    }
+
+    private void PositionUpdate()
+    {
+        this.gameObject.transform.position = turretLocation.position;
     }
 
     #region Input Methods

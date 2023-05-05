@@ -37,7 +37,7 @@ public class Ship : MonoBehaviour
     public int collectableCount = 0;
 
     [Header("Gunner Vars")] 
-    [SerializeField] private Transform turretLocation;
+    [SerializeField] public Transform turretLocation;
     
     Rigidbody rb;
     // input variables
