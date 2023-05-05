@@ -39,7 +39,7 @@ public class EnemyAI3 : MonoBehaviour
         // Update path periodically
         if (Time.time - lastPathUpdateTime > pathUpdateInterval)
         {
-            print("Distance: " + Vector3.Distance(player.position, transform.position));
+            //print("Distance: " + Vector3.Distance(player.position, transform.position));
             if(Vector3.Distance(player.position, transform.position) < attackRange)
             {
                 path = GeneratePath(transform.position, player.position);

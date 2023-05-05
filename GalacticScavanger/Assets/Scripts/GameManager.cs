@@ -45,7 +45,7 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
-        print(currPlayerScrap);
+        //print(currPlayerScrap);
         TimerFunc();
     }
 

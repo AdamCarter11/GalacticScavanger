@@ -25,7 +25,7 @@ public class CollectibleSpawner : MonoBehaviour
                 colliders = Physics.OverlapSphere(spawnPosition, 0.5f);
                 totalChecks++;
             }
-            print("Colliders length: " + colliders.Length);
+            //print("Colliders length: " + colliders.Length);
             bool canSpawn = true;
             /*
             foreach (Collider c in colliders)

@@ -25,22 +25,22 @@ public class Turret : MonoBehaviour
 
     private void Update()
     {
-        RotatationUpdate();
+        RotationUpdate();
     }
 
-    private void RotatationUpdate()
+    private void RotationUpdate()
     {
         float x = pitchYaw.x;
         float y = pitchYaw.y;
         Vector3 rotate = new Vector3(x * rotationSpeed, y * rotationSpeed);
-        transform.eulerAngles = transform.eulerAngles - rotate;
+        this.gameObject.transform.eulerAngles = transform.eulerAngles - rotate;
+        Debug.Log("in turret rotation update");
     }
 
     #region Input Methods
-    public void OnPitchYaw(InputAction.CallbackContext context)
+    public void OnXYRotation(InputAction.CallbackContext context)
     {
         pitchYaw = context.ReadValue<Vector2>();
     }
     #endregion
-
 }
