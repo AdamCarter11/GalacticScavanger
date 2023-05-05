@@ -16,14 +16,18 @@ public class MenuScript : MonoBehaviour
     }
     public void NavigatorSelect()
     {
-        PlayerPrefs.SetInt("WhichCharacter", 1);
+        PlayerPrefs.SetInt("Player1Character", 1);
+    }
+    public void PilotSelect()
+    {
+        PlayerPrefs.SetInt("Player1Character", 2);
     }
     public void GunnerSelect()
     {
-        PlayerPrefs.SetInt("WhichCharacter", 2);
+        PlayerPrefs.SetInt("Player2Character", 1);
     }
     public void MechanicSelect()
     {
-        PlayerPrefs.SetInt("WhichCharacter", 3);
+        PlayerPrefs.SetInt("Player2Character", 2);
     }
 }

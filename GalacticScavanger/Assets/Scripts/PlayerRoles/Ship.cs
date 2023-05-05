@@ -57,6 +57,7 @@ public class Ship : MonoBehaviour
 
     [HideInInspector] public static bool isDead;
     private Vector3 respawnPos;
+    int whichClass; // 1 is navigator, 2 is pilot
 
     void Start()
     {
@@ -64,6 +65,7 @@ public class Ship : MonoBehaviour
         currBoostAmount = maxBoostAmount;
         Cursor.visible = false;
         respawnPos = transform.position;
+        whichClass = PlayerPrefs.GetInt("Player1Character");
     }
 
     private void Awake()
@@ -93,19 +95,22 @@ public class Ship : MonoBehaviour
     }
     void HandleBoost()
     {
-        if(boosting && currBoostAmount > 0f)
+        if(whichClass == 2)
         {
-            currBoostAmount -= boostLossRate;
-            if (currBoostAmount <= 0f)
+            if (boosting && currBoostAmount > 0f)
             {
-                boosting = false;
+                currBoostAmount -= boostLossRate;
+                if (currBoostAmount <= 0f)
+                {
+                    boosting = false;
+                }
             }
-        }
-        else
-        {
-            if(currBoostAmount < maxBoostAmount)
+            else
             {
-                currBoostAmount += boostRechargeRate;
+                if (currBoostAmount < maxBoostAmount)
+                {
+                    currBoostAmount += boostRechargeRate;
+                }
             }
         }
     }
