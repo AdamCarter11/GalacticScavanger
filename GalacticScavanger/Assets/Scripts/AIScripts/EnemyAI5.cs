@@ -40,7 +40,8 @@ public class EnemyAI5 : MonoBehaviour
     void FixedUpdate()
     {
         //Find Distance to target
-        var distance = (target.position - myTransform.position).magnitude;
+        //var distance = (target.position - myTransform.position).magnitude;
+        var distance = Vector3.Distance(target.position, myTransform.position);
 
         if (chasing)
         {
@@ -75,11 +76,11 @@ public class EnemyAI5 : MonoBehaviour
             }
         }
 
-        ObstacleAvoidance(transform.forward, 0);
+        ObstacleAvoidance(transform.forward, 0, target);
 
     }
 
-    void ObstacleAvoidance(Vector3 direction, float offsetX)
+    void ObstacleAvoidance(Vector3 direction, float offsetX, Transform currTarget)
     {
         RaycastHit[] hit = Rays(direction, offsetX);
 
@@ -90,7 +91,7 @@ public class EnemyAI5 : MonoBehaviour
             {
                 if (!savePos)
                 {
-                    storeTarget = target.position;
+                    storeTarget = currTarget.position;
                     obstacle = hit[i].transform;
                     savePos = true;
                 }
@@ -107,14 +108,14 @@ public class EnemyAI5 : MonoBehaviour
                 overrideTarget = true;
             }
         }
-        float distance = Vector3.Distance(transform.position, target.position);
+        float distance = Vector3.Distance(transform.position, currTarget.position);
 
         if (distance < 5)
         {
             if (savePos)
             {
                 //if we reach the target
-                target.position = storeTarget;
+                currTarget.position = storeTarget;
                 savePos = false;
             }
             else

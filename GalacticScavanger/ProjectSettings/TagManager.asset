@@ -9,6 +9,7 @@ TagManager:
   - Scrap
   - Turret
   - Enemy
+  - Obstacle
   layers:
   - Default
   - TransparentFX
