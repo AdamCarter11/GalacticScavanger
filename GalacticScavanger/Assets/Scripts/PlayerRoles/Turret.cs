@@ -23,12 +23,22 @@ public class Turret : MonoBehaviour
     void Start()
     {
         ship = GameObject.FindWithTag("Ship");
-        turretLocation = ship.GetComponent<Ship>().turretLocation;
+        if (ship)
+        {
+            turretLocation = ship.GetComponent<Ship>().turretLocation;    
+        }
+        else
+        {
+            Debug.Log("turret did not find ship");
+        }
     }
 
     private void Update()
     {
-        PositionUpdate();
+        if (ship)
+        {
+            PositionUpdate();
+        }
         RotationUpdate();
     }
 

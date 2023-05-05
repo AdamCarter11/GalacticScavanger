@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -38,6 +39,7 @@ public class Ship : MonoBehaviour
 
     [Header("Gunner Vars")] 
     [SerializeField] public Transform turretLocation;
+    [SerializeField] public GameObject turretPrefab;
     
     Rigidbody rb;
     // input variables
@@ -59,7 +61,17 @@ public class Ship : MonoBehaviour
         Cursor.visible = false;
     }
 
-    
+    private void Awake()
+    {
+        GameObject[] ships = GameObject.FindGameObjectsWithTag("Ship");
+        if (ships.Length > 1)
+        {
+            Debug.Log("ship already exists, spawning turret");
+            Instantiate(turretPrefab);
+            Destroy(this.gameObject);
+        }
+    }
+
     void FixedUpdate()
     {
         HandleBoost();
