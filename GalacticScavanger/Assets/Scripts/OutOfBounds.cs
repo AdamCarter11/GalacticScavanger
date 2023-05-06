@@ -46,8 +46,11 @@ public class OutOfBounds : MonoBehaviour
         textPopUp.SetActive(true);
         yield return new WaitForSeconds(5.0f);
         textPopUp.SetActive(false);
-        Ship.isDead = true;
-        print("Player death");
+        if (playerOut)
+        {
+            Ship.isDead = true;
+            print("Player death");
+        }
         //what to do to the player if they have stayed out too long
 
     }
