@@ -13,6 +13,9 @@ public class Turret : MonoBehaviour
     private GameObject ship;
 
     private Transform turretLocation;
+    private Vector3 maxUpVector;
+    private Vector3 maxFlatVector;
+    
     // input variables
     //float xRotate1D;
     //float yRotate1D;
@@ -38,17 +41,47 @@ public class Turret : MonoBehaviour
         if (ship)
         {
             PositionUpdate();
+            UpdateLegalViewingAngle();
+            RotationUpdate();
+            CorrectOutOfRangeViewing();
         }
-        RotationUpdate();
+        else
+        {
+            Debug.Log("no ship detected, not updating turret");
+        }
     }
 
     private void RotationUpdate()
     {
-        float x = pitchYaw.x;
-        float y = pitchYaw.y;
-        Vector3 rotate = new Vector3(x * rotationSpeed, y * rotationSpeed);
+        float x = pitchYaw.y;
+        float y = pitchYaw.x;
+        Vector3 rotate = new Vector3(x * rotationSpeed, -y * rotationSpeed);
         this.gameObject.transform.eulerAngles = transform.eulerAngles - rotate;
+        
+        Debug.DrawRay(this.transform.position, this.transform.up*10, Color.cyan);
+        Debug.DrawRay(this.transform.position, this.transform.forward*10, Color.yellow);
         //Debug.Log("in turret rotation update. new vector:" + rotate);
+    }
+
+    private void UpdateLegalViewingAngle()
+    {
+        maxUpVector = turretLocation.right;
+        maxFlatVector = turretLocation.forward;
+        Debug.DrawRay(turretLocation.position, maxUpVector*10, Color.green);
+        Debug.DrawRay(turretLocation.position, maxFlatVector*10, Color.red);
+    }
+    
+    private void CorrectOutOfRangeViewing()
+    {
+        Transform myT = this.transform;
+        if (myT.right.x > maxUpVector.x - 90)
+        {
+            myT.forward = maxUpVector;
+        }
+        /*if (myT.forward.x < maxFlatVector.x)
+        {
+            myT.forward = maxFlatVector;
+        }*/
     }
 
     private void PositionUpdate()
@@ -60,7 +93,7 @@ public class Turret : MonoBehaviour
     public void OnPitchYaw(InputAction.CallbackContext context)
     {
         pitchYaw = context.ReadValue<Vector2>();
-        Debug.Log("in OnPitchYaw:" + this.gameObject.name);
+        //Debug.Log("in OnPitchYaw:" + this.gameObject.name);
     }
     #endregion
 }
