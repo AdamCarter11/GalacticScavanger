@@ -116,15 +116,43 @@ public class Ship : MonoBehaviour
     }
     void HandleMovement()
     {
-        // roll
-        rb.AddRelativeTorque(Vector3.back * roll1D * rollTorque * Time.deltaTime);
+        
         // pitch, if we want to invert to feel realistic, remove the - in front of pitchYaw
         rb.AddRelativeTorque(Vector3.right * Mathf.Clamp(-pitchYaw.y, -1f, 1f) * pitchTorque * Time.deltaTime);
         // Yaw
         rb.AddRelativeTorque(Vector3.up * Mathf.Clamp(pitchYaw.x, -1f, 1f) * yawTorque * Time.deltaTime);
 
+        //clamp the roll
+        float rollAngle = transform.eulerAngles.z;
+        rollAngle = (rollAngle > 180) ? rollAngle - 360 : rollAngle;
+        rollAngle = Mathf.Clamp(rollAngle, -90, 90);
+        transform.eulerAngles = new Vector3(transform.eulerAngles.x, transform.eulerAngles.y, rollAngle);
+
+        // roll
+        Vector3 rollVal = (Vector3.back * roll1D * rollTorque * Time.deltaTime);
+        //print(rollVal);
+        
+        if (rollAngle <= -85 && rollVal.z < 0)
+        {
+            rb.AddRelativeTorque(new Vector3(0, 0, 4));
+        }
+        else
+        {
+            rb.AddRelativeTorque(rollVal);
+           
+        }
+        if (rollAngle > 85 && rollVal.z > 0)
+        {
+            rb.AddRelativeTorque(new Vector3(0, 0, -4));
+        }
+        else
+        {
+            rb.AddRelativeTorque(rollVal);
+        }
+
+
         // Thrust (if statement is to prevent controller drift
-        if(thrust1D > .1f || thrust1D < -.1f)
+        if (thrust1D > .1f || thrust1D < -.1f)
         {
             float currentThrust;
 
