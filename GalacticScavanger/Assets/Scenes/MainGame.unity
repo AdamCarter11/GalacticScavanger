@@ -123,6 +123,29 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &3162603 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5988257677994111858, guid: 349d0c79336f7f54ab760888312375fd, type: 3}
+  m_PrefabInstance: {fileID: 626314644}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &3162604
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3162603}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  outlineMode: 0
+  outlineColor: {r: 1, g: 0, b: 0, a: 1}
+  outlineWidth: 3.5
+  precomputeOutline: 0
+  bakeKeys: []
+  bakeValues: []
 --- !u!1 &33235682
 GameObject:
   m_ObjectHideFlags: 0
@@ -476,7 +499,7 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 100
+  m_Radius: 1000
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!4 &238038227
 Transform:
@@ -936,6 +959,63 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 585671111}
   m_CullTransparentMesh: 1
+--- !u!1001 &626314644
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 5988257677994111858, guid: 349d0c79336f7f54ab760888312375fd, type: 3}
+      propertyPath: m_Name
+      value: Scrap
+      objectReference: {fileID: 0}
+    - target: {fileID: 5988257677994111865, guid: 349d0c79336f7f54ab760888312375fd, type: 3}
+      propertyPath: m_RootOrder
+      value: 19
+      objectReference: {fileID: 0}
+    - target: {fileID: 5988257677994111865, guid: 349d0c79336f7f54ab760888312375fd, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -34.559845
+      objectReference: {fileID: 0}
+    - target: {fileID: 5988257677994111865, guid: 349d0c79336f7f54ab760888312375fd, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -3.9783635
+      objectReference: {fileID: 0}
+    - target: {fileID: 5988257677994111865, guid: 349d0c79336f7f54ab760888312375fd, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 26.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5988257677994111865, guid: 349d0c79336f7f54ab760888312375fd, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5988257677994111865, guid: 349d0c79336f7f54ab760888312375fd, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5988257677994111865, guid: 349d0c79336f7f54ab760888312375fd, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5988257677994111865, guid: 349d0c79336f7f54ab760888312375fd, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5988257677994111865, guid: 349d0c79336f7f54ab760888312375fd, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5988257677994111865, guid: 349d0c79336f7f54ab760888312375fd, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5988257677994111865, guid: 349d0c79336f7f54ab760888312375fd, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 349d0c79336f7f54ab760888312375fd, type: 3}
 --- !u!1 &631341917
 GameObject:
   m_ObjectHideFlags: 0
@@ -3503,6 +3583,14 @@ PrefabInstance:
     - target: {fileID: 8325805688791109802, guid: 7c9640d0aa3d1284eb7cb1bb48fa6be9, type: 3}
       propertyPath: pitchTorque
       value: 200
+      objectReference: {fileID: 0}
+    - target: {fileID: 8325805688791109802, guid: 7c9640d0aa3d1284eb7cb1bb48fa6be9, type: 3}
+      propertyPath: rollClampVal
+      value: 60
+      objectReference: {fileID: 0}
+    - target: {fileID: 8325805688791109802, guid: 7c9640d0aa3d1284eb7cb1bb48fa6be9, type: 3}
+      propertyPath: teleportCooldown
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 8325805688791109804, guid: 7c9640d0aa3d1284eb7cb1bb48fa6be9, type: 3}
       propertyPath: m_ActionEvents.Array.size

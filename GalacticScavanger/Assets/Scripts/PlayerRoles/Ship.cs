@@ -24,6 +24,7 @@ public class Ship : MonoBehaviour
     [SerializeField, Range(0.001f, 0.999f)] float upDownGlideReduction = .111f;
     [SerializeField, Range(0.001f, 0.999f)] float leftRightGlideReduction = .111f;
     float glide, verticalGlide, horizontalGlide = 0f;
+    [SerializeField] float rollClampVal;
 
     [Header("Boosting Vars")]
     [SerializeField] float maxBoostAmount = 2f;
@@ -58,6 +59,8 @@ public class Ship : MonoBehaviour
     [HideInInspector] public static bool isDead;
     private Vector3 respawnPos;
     int whichClass; // 1 is navigator, 2 is pilot
+    bool canTeleport = true;
+    [SerializeField] float teleportCooldown;
 
     void Start()
     {
@@ -113,6 +116,42 @@ public class Ship : MonoBehaviour
                 }
             }
         }
+        //teleporting ability if we wanted it
+        /*
+        if(whichClass == 1)
+        {
+            if(boosting && canTeleport)
+            {
+                StartCoroutine(TeleportCooldown());
+                teleportLogic();
+            }
+        }
+        */
+    }
+
+    void teleportLogic()
+    {
+        //Vector3 randomPos = new Vector3(0,0,0);
+        Vector3 randomPos = UnityEngine.Random.insideUnitSphere * 100f;
+        Collider[] colliders = Physics.OverlapSphere(randomPos, 0.1f);
+
+        if (colliders.Length > 1)
+        {
+            // The random position is inside a collider, generate a new position
+            teleportLogic();
+        }
+        else
+        {
+            // Teleport the player to the random position
+            transform.position = randomPos;
+        }
+
+    }
+    IEnumerator TeleportCooldown()
+    {
+        canTeleport = false;
+        yield return new WaitForSeconds(teleportCooldown);
+        canTeleport = true;
     }
     void HandleMovement()
     {
@@ -125,31 +164,32 @@ public class Ship : MonoBehaviour
         //clamp the roll
         float rollAngle = transform.eulerAngles.z;
         rollAngle = (rollAngle > 180) ? rollAngle - 360 : rollAngle;
-        rollAngle = Mathf.Clamp(rollAngle, -90, 90);
+        rollAngle = Mathf.Clamp(rollAngle, -rollClampVal, rollClampVal);
         transform.eulerAngles = new Vector3(transform.eulerAngles.x, transform.eulerAngles.y, rollAngle);
 
         // roll
         Vector3 rollVal = (Vector3.back * roll1D * rollTorque * Time.deltaTime);
         //print(rollVal);
         
-        if (rollAngle <= -85 && rollVal.z < 0)
+        if ((rollAngle <= -rollClampVal && rollVal.z < 0) || (rollAngle >= rollClampVal && rollVal.z > 0))
         {
-            rb.AddRelativeTorque(new Vector3(0, 0, 4));
+            rb.angularVelocity = Vector3.zero;
         }
         else
         {
             rb.AddRelativeTorque(rollVal);
            
         }
+        /*
         if (rollAngle > 85 && rollVal.z > 0)
         {
-            rb.AddRelativeTorque(new Vector3(0, 0, -4));
+            rb.angularVelocity = Vector3.zero;
         }
         else
         {
             rb.AddRelativeTorque(rollVal);
         }
-
+        */
 
         // Thrust (if statement is to prevent controller drift
         if (thrust1D > .1f || thrust1D < -.1f)
