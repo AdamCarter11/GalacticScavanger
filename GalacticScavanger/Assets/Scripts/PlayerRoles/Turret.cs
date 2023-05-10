@@ -10,6 +10,10 @@ public class Turret : MonoBehaviour
     [SerializeField] private GameObject projectile;
     [SerializeField] public float rotationSpeed = 1f;
 
+    [Header("Turret Parts")]
+    [SerializeField] private GameObject turretBase;
+    [SerializeField] private GameObject turretBarrelBase;
+
     // ship information
     private GameObject ship;
     private Transform turretLocation;
@@ -28,7 +32,9 @@ public class Turret : MonoBehaviour
         ship = GameObject.FindWithTag("Ship");
         if (ship)
         {
-            turretLocation = ship.GetComponent<Ship>().turretLocation;    
+            turretLocation = ship.GetComponent<Ship>().turretLocation;
+            this.transform.parent = turretLocation;
+            this.transform.position = turretLocation.position;
         }
         else
         {
@@ -40,10 +46,9 @@ public class Turret : MonoBehaviour
     {
         if (ship)
         {
-            PositionUpdate();
             UpdateLegalViewingAngle();
             RotationUpdate();
-            CorrectOutOfRangeViewing();
+            //CorrectOutOfRangeViewing();
         }
         else
         {
@@ -53,25 +58,32 @@ public class Turret : MonoBehaviour
 
     private void RotationUpdate()
     {
-        float tempAngle = ship.transform.rotation.z;
+        //float tempAngle = ship.transform.rotation.z;
         //this.gameObject.transform.Rotate(this.gameObject.transform.forward, tempAngle);
         
-        this.transform.rotation = new Quaternion(this.transform.rotation.x, this.transform.rotation.y, tempAngle, transform.rotation.w);
+        //this.transform.rotation = new Quaternion(this.transform.rotation.x, this.transform.rotation.y, tempAngle, transform.rotation.w);
         
         
-        float x = pitchYaw.y;
-        float y = pitchYaw.x;
-        Vector3 rotate = new Vector3(x * rotationSpeed, -y * rotationSpeed, ship.transform.rotation.z);
-        this.gameObject.transform.eulerAngles = transform.eulerAngles - rotate;
+        float y = pitchYaw.y;
+        float x = pitchYaw.x;
+        //Vector3 rotate = new Vector3(y * rotationSpeed, -x * rotationSpeed, ship.transform.rotation.z);
+        //this.gameObject.transform.eulerAngles = transform.eulerAngles - rotate;
         
+        // rotate base on y axis
+        turretBase.transform.localRotation = Quaternion.Euler(new Vector3(0, y + (turretBase.transform.localRotation.y), 0));
+
+        // rotate barrel on the x axis
+        turretBarrelBase.transform.localRotation = Quaternion.Euler(new Vector3(x + (turretBarrelBase.transform.localRotation.x), 0, 0));
+        
+        // debug stuff
+        Debug.Log("pitchYaw:"+pitchYaw);
         Debug.DrawRay(this.transform.position, this.transform.up*10, Color.yellow);
         Debug.DrawRay(this.transform.position, this.transform.forward*10, Color.magenta);
-        //Debug.Log("in turret rotation update. new vector:" + rotate);
     }
 
     private void UpdateLegalViewingAngle()
     {
-        turretToShip = this.transform.position - turretLocation.position;
+        //turretToShip = this.transform.position - turretLocation.position;
         Debug.DrawRay(turretLocation.position, turretToShip, Color.red);
         
         Debug.DrawRay(ship.transform.position, ship.transform.up*10, Color.green);
@@ -95,15 +107,7 @@ public class Turret : MonoBehaviour
         }
     }
 
-    private void PositionUpdate()
-    {
-        float arbitraryLength = 2f;
-        
-        //this.gameObject.transform.position = new Vector3(turretLocation.position.x, turretLocation.position.y + (turretLocation.up.y * 2), turretLocation.position.z);
-        this.gameObject.transform.position = turretLocation.position + (turretLocation.up*arbitraryLength);
-        //Vector3 projectedVector = Vector3.Project(this.gameObject.transform.position, turretLocation.up);
-        //this.gameObject.transform.position = projectedVector;
-    }
+    
 
     #region Input Methods
     public void OnPitchYaw(InputAction.CallbackContext context)
