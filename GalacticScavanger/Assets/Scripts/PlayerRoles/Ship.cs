@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Rendering;
 
 // referenced from: https://www.youtube.com/watch?v=fZvJvZA4nhY&ab_channel=DanPos
 
@@ -61,6 +62,14 @@ public class Ship : MonoBehaviour
     int whichClass; // 1 is navigator, 2 is pilot
     bool canTeleport = true;
     [SerializeField] float teleportCooldown;
+    //scan vars
+    bool scanOut = false;
+    [SerializeField] SphereCollider scanCol;
+    [SerializeField] float scanSpeed;
+    [SerializeField] int howManyToScan;
+    [SerializeField] LayerMask scanLayers;
+    private int currentObjects;
+
 
     void Start()
     {
@@ -88,6 +97,10 @@ public class Ship : MonoBehaviour
             isDead = false;
             transform.position = respawnPos;
             rb.velocity = Vector3.zero;
+        }
+        if (scanOut)
+        {
+            scanLogic();
         }
     }
     void FixedUpdate()
@@ -127,6 +140,38 @@ public class Ship : MonoBehaviour
             }
         }
         */
+        if(whichClass == 1)
+        {
+            //I'm just using canTeleport so I don't have to make a new ability
+            if(boosting && canTeleport)
+            {
+                StartCoroutine(TeleportCooldown());
+                //scanLogic();
+                scanOut = true;
+            }
+        }
+    }
+
+    void scanLogic()
+    {
+        //print("Start scan");
+        //scanCol.transform.localScale += Vector3.one * scanSpeed * Time.deltaTime;
+        scanCol.radius += 1f * scanSpeed * Time.deltaTime;
+        Collider[] colliders = Physics.OverlapSphere(transform.position, scanCol.radius, scanLayers, QueryTriggerInteraction.Collide);
+        foreach (Collider objectHit in colliders){
+            GameObject tempObj = objectHit.gameObject;
+            tempObj.GetComponent<Outline>().enabled = true;
+            print(tempObj.name);
+        }
+        currentObjects = colliders.Length;
+        //print(currentObjects);
+
+        // Stop growing if we've hit the maximum number of objects
+        if (currentObjects >= howManyToScan)
+        {
+            print("Finished scan");
+            scanOut = false;
+        }
     }
 
     void teleportLogic()
