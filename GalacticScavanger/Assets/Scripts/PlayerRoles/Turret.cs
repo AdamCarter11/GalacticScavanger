@@ -10,17 +10,17 @@ public class Turret : MonoBehaviour
     [SerializeField] private GameObject projectile;
     [SerializeField] public float rotationSpeed = 1f;
 
+    // ship information
     private GameObject ship;
-
     private Transform turretLocation;
-    private Vector3 maxUpVector;
-    private Vector3 maxFlatVector;
+    private Vector3 turretToShip;
     
-    // input variables
-    //float xRotate1D;
-    //float yRotate1D;
+    // input variable
     Vector2 pitchYaw;
 
+    [Header("Limit Rotation Angles")] 
+    [SerializeField] private float minAngle = 90;
+    //[SerializeField] private float maxAngle = 180;
 
     // Start is called before the first frame update
     void Start()
@@ -53,40 +53,56 @@ public class Turret : MonoBehaviour
 
     private void RotationUpdate()
     {
+        float tempAngle = ship.transform.rotation.z;
+        //this.gameObject.transform.Rotate(this.gameObject.transform.forward, tempAngle);
+        
+        this.transform.rotation = new Quaternion(this.transform.rotation.x, this.transform.rotation.y, tempAngle, transform.rotation.w);
+        
+        
         float x = pitchYaw.y;
         float y = pitchYaw.x;
-        Vector3 rotate = new Vector3(x * rotationSpeed, -y * rotationSpeed);
+        Vector3 rotate = new Vector3(x * rotationSpeed, -y * rotationSpeed, ship.transform.rotation.z);
         this.gameObject.transform.eulerAngles = transform.eulerAngles - rotate;
         
-        Debug.DrawRay(this.transform.position, this.transform.up*10, Color.cyan);
-        Debug.DrawRay(this.transform.position, this.transform.forward*10, Color.yellow);
+        Debug.DrawRay(this.transform.position, this.transform.up*10, Color.yellow);
+        Debug.DrawRay(this.transform.position, this.transform.forward*10, Color.magenta);
         //Debug.Log("in turret rotation update. new vector:" + rotate);
     }
 
     private void UpdateLegalViewingAngle()
     {
-        maxUpVector = turretLocation.right;
-        maxFlatVector = turretLocation.forward;
-        Debug.DrawRay(turretLocation.position, maxUpVector*10, Color.green);
-        Debug.DrawRay(turretLocation.position, maxFlatVector*10, Color.red);
+        turretToShip = this.transform.position - turretLocation.position;
+        Debug.DrawRay(turretLocation.position, turretToShip, Color.red);
+        
+        Debug.DrawRay(ship.transform.position, ship.transform.up*10, Color.green);
+        Debug.DrawRay(ship.transform.position, ship.transform.forward*10, Color.blue);
     }
     
     private void CorrectOutOfRangeViewing()
     {
         Transform myT = this.transform;
-        if (myT.right.x > maxUpVector.x - 90)
+        float currentAngle = Vector3.Angle(turretToShip, -myT.forward);
+        float facingForwardDotProduct = Vector3.Dot(turretLocation.forward, myT.forward);
+        Debug.Log("Current Angle:"+currentAngle + " | Current Dot Product:"+facingForwardDotProduct);
+        
+        if (currentAngle < minAngle)
         {
-            myT.forward = maxUpVector;
+            Debug.Log("less than 90 degrees");
         }
-        /*if (myT.forward.x < maxFlatVector.x)
+        if (facingForwardDotProduct < 0)
         {
-            myT.forward = maxFlatVector;
-        }*/
+            Debug.Log("greater than 180 degrees");
+        }
     }
 
     private void PositionUpdate()
     {
-        this.gameObject.transform.position = turretLocation.position;
+        float arbitraryLength = 2f;
+        
+        //this.gameObject.transform.position = new Vector3(turretLocation.position.x, turretLocation.position.y + (turretLocation.up.y * 2), turretLocation.position.z);
+        this.gameObject.transform.position = turretLocation.position + (turretLocation.up*arbitraryLength);
+        //Vector3 projectedVector = Vector3.Project(this.gameObject.transform.position, turretLocation.up);
+        //this.gameObject.transform.position = projectedVector;
     }
 
     #region Input Methods
