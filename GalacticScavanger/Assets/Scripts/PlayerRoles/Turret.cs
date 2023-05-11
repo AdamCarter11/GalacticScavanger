@@ -71,12 +71,23 @@ public class Turret : MonoBehaviour
 
         // rotate base on y axis
         Quaternion localRotation = this.transform.localRotation;
-        this.transform.localRotation = Quaternion.Euler(new Vector3(localRotation.x, (y + localRotation.y), localRotation.z));
-
+        this.transform.RotateAround(this.transform.position, this.transform.up, y);
+        
         // rotate barrel on the x axis
         Quaternion localBarrelRotation = turretBarrelBase.transform.localRotation;
-        turretBarrelBase.transform.localRotation = Quaternion.Euler(new Vector3((x + localBarrelRotation.x), localBarrelRotation.y, localBarrelRotation.z));
+        Vector3 localEuler = turretBarrelBase.transform.localRotation.eulerAngles;
+        /*if (localEuler.x - x - 5 < -89.99 || localEuler.x + x > 0 + 5)
+        {
+            turretBarrelBase.transform.RotateAround(turretBarrelBase.transform.position, this.transform.right, -x);
+
+        }
+        else
+        {
+            turretBarrelBase.transform.RotateAround(turretBarrelBase.transform.position, this.transform.right, x);
+
+        }*/
         
+
         // debug stuff
         Debug.Log("pitchYaw:"+pitchYaw);
         Debug.DrawRay(this.transform.position, this.transform.up*10, Color.yellow);
