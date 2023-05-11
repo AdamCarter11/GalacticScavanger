@@ -64,16 +64,18 @@ public class Turret : MonoBehaviour
         //this.transform.rotation = new Quaternion(this.transform.rotation.x, this.transform.rotation.y, tempAngle, transform.rotation.w);
         
         
-        float y = pitchYaw.y;
-        float x = pitchYaw.x;
+        float x = pitchYaw.y;
+        float y = pitchYaw.x;
         //Vector3 rotate = new Vector3(y * rotationSpeed, -x * rotationSpeed, ship.transform.rotation.z);
         //this.gameObject.transform.eulerAngles = transform.eulerAngles - rotate;
-        
+
         // rotate base on y axis
-        turretBase.transform.localRotation = Quaternion.Euler(new Vector3(0, y + (turretBase.transform.localRotation.y), 0));
+        Quaternion localRotation = this.transform.localRotation;
+        this.transform.localRotation = Quaternion.Euler(new Vector3(localRotation.x, (y + localRotation.y), localRotation.z));
 
         // rotate barrel on the x axis
-        turretBarrelBase.transform.localRotation = Quaternion.Euler(new Vector3(x + (turretBarrelBase.transform.localRotation.x), 0, 0));
+        Quaternion localBarrelRotation = turretBarrelBase.transform.localRotation;
+        turretBarrelBase.transform.localRotation = Quaternion.Euler(new Vector3((x + localBarrelRotation.x), localBarrelRotation.y, localBarrelRotation.z));
         
         // debug stuff
         Debug.Log("pitchYaw:"+pitchYaw);

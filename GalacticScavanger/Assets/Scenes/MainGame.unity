@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.058121786, g: 0.05296403, b: 0.16432121, a: 1}
+  m_IndirectSpecularColor: {r: 0.05825158, g: 0.05308592, b: 0.16449079, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -432,7 +432,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   characters:
   - {fileID: 8325805688791109806, guid: 7c9640d0aa3d1284eb7cb1bb48fa6be9, type: 3}
-  - {fileID: 3036964109284216318, guid: 090e7bb5c4c940e4f92161438c286f58, type: 3}
+  - {fileID: 12152231830840278, guid: 090e7bb5c4c940e4f92161438c286f58, type: 3}
 --- !u!1 &238038224
 GameObject:
   m_ObjectHideFlags: 0
@@ -747,6 +747,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 12152231830840278, guid: 090e7bb5c4c940e4f92161438c286f58, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 240620953303404024, guid: 090e7bb5c4c940e4f92161438c286f58, type: 3}
+      propertyPath: m_RootOrder
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 3036964109284216318, guid: 090e7bb5c4c940e4f92161438c286f58, type: 3}
       propertyPath: m_Name
       value: Turret
@@ -754,6 +762,10 @@ PrefabInstance:
     - target: {fileID: 3036964109284216318, guid: 090e7bb5c4c940e4f92161438c286f58, type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6073350239471359504, guid: 090e7bb5c4c940e4f92161438c286f58, type: 3}
+      propertyPath: m_RootOrder
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 8209820113410002048, guid: 090e7bb5c4c940e4f92161438c286f58, type: 3}
       propertyPath: m_RootOrder
