@@ -46,9 +46,8 @@ public class Turret : MonoBehaviour
     {
         if (ship)
         {
-            UpdateLegalViewingAngle();
             RotationUpdate();
-            //CorrectOutOfRangeViewing();
+            //DebugViewingRays();
         }
         else
         {
@@ -58,70 +57,33 @@ public class Turret : MonoBehaviour
 
     private void RotationUpdate()
     {
-        //float tempAngle = ship.transform.rotation.z;
-        //this.gameObject.transform.Rotate(this.gameObject.transform.forward, tempAngle);
-        
-        //this.transform.rotation = new Quaternion(this.transform.rotation.x, this.transform.rotation.y, tempAngle, transform.rotation.w);
-        
-        
         float x = pitchYaw.y;
         float y = pitchYaw.x;
-        //Vector3 rotate = new Vector3(y * rotationSpeed, -x * rotationSpeed, ship.transform.rotation.z);
-        //this.gameObject.transform.eulerAngles = transform.eulerAngles - rotate;
 
         // rotate base on y axis
         Quaternion localRotation = this.transform.localRotation;
         this.transform.RotateAround(this.transform.position, this.transform.up, y);
         
         // rotate barrel on the x axis
-        Quaternion localBarrelRotation = turretBarrelBase.transform.localRotation;
         Vector3 localEuler = turretBarrelBase.transform.localRotation.eulerAngles;
-        /*if (localEuler.x - x - 5 < -89.99 || localEuler.x + x > 0 + 5)
-        {
-            turretBarrelBase.transform.RotateAround(turretBarrelBase.transform.position, this.transform.right, -x);
 
-        }
-        else
-        {
-            turretBarrelBase.transform.RotateAround(turretBarrelBase.transform.position, this.transform.right, x);
-
-        }*/
-        
-
+        //clamp the roll
+        float rollAngle = turretBarrelBase.transform.eulerAngles.x - x;
+        rollAngle = (rollAngle > 180) ? rollAngle - 360 : rollAngle;
+        rollAngle = Mathf.Clamp(rollAngle, -89.99f, 5);
+        turretBarrelBase.transform.eulerAngles = new Vector3(rollAngle, turretBarrelBase.transform.eulerAngles.y, turretBarrelBase.transform.eulerAngles.z);
+    }
+    
+    private void DebugViewingRays()
+    {
         // debug stuff
-        Debug.Log("pitchYaw:"+pitchYaw);
         Debug.DrawRay(this.transform.position, this.transform.up*10, Color.yellow);
         Debug.DrawRay(this.transform.position, this.transform.forward*10, Color.magenta);
-    }
-
-    private void UpdateLegalViewingAngle()
-    {
-        //turretToShip = this.transform.position - turretLocation.position;
         Debug.DrawRay(turretLocation.position, turretToShip, Color.red);
-        
         Debug.DrawRay(ship.transform.position, ship.transform.up*10, Color.green);
         Debug.DrawRay(ship.transform.position, ship.transform.forward*10, Color.blue);
     }
     
-    private void CorrectOutOfRangeViewing()
-    {
-        Transform myT = this.transform;
-        float currentAngle = Vector3.Angle(turretToShip, -myT.forward);
-        float facingForwardDotProduct = Vector3.Dot(turretLocation.forward, myT.forward);
-        Debug.Log("Current Angle:"+currentAngle + " | Current Dot Product:"+facingForwardDotProduct);
-        
-        if (currentAngle < minAngle)
-        {
-            Debug.Log("less than 90 degrees");
-        }
-        if (facingForwardDotProduct < 0)
-        {
-            Debug.Log("greater than 180 degrees");
-        }
-    }
-
-    
-
     #region Input Methods
     public void OnPitchYaw(InputAction.CallbackContext context)
     {
