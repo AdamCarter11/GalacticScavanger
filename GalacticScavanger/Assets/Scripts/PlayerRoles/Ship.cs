@@ -26,6 +26,7 @@ public class Ship : MonoBehaviour
     [SerializeField, Range(0.001f, 0.999f)] float leftRightGlideReduction = .111f;
     float glide, verticalGlide, horizontalGlide = 0f;
     [SerializeField] float rollClampVal;
+    [SerializeField] float pitchClamp;
 
     [Header("Boosting Vars")]
     [SerializeField] float maxBoostAmount = 2f;
@@ -59,16 +60,24 @@ public class Ship : MonoBehaviour
 
     [HideInInspector] public static bool isDead;
     private Vector3 respawnPos;
+
+    [Header("Class Ability Vars")]
+    [SerializeField] float teleportCooldownOrScanCooldown;
     int whichClass; // 1 is navigator, 2 is pilot
     bool canTeleport = true;
-    [SerializeField] float teleportCooldown;
+    
     //scan vars
     bool scanOut = false;
     [SerializeField] SphereCollider scanCol;
     [SerializeField] float scanSpeed;
     [SerializeField] int howManyToScan;
+    [SerializeField] float maxScanRadius;
     [SerializeField] LayerMask scanLayers;
     private int currentObjects;
+
+    Quaternion startingRotation;
+    float timeCount = 0.0f;
+    bool resetSpeed = false;
 
 
     void Start()
@@ -78,6 +87,7 @@ public class Ship : MonoBehaviour
         Cursor.visible = false;
         respawnPos = transform.position;
         whichClass = PlayerPrefs.GetInt("Player1Character");
+        startingRotation = transform.rotation;
     }
 
     private void Awake()
@@ -140,7 +150,7 @@ public class Ship : MonoBehaviour
             }
         }
         */
-        if(whichClass == 1)
+        //if(whichClass == 1)
         {
             //I'm just using canTeleport so I don't have to make a new ability
             if(boosting && canTeleport)
@@ -156,7 +166,16 @@ public class Ship : MonoBehaviour
     {
         //print("Start scan");
         //scanCol.transform.localScale += Vector3.one * scanSpeed * Time.deltaTime;
-        scanCol.radius += 1f * scanSpeed * Time.deltaTime;
+        if(scanCol.radius <= maxScanRadius)
+        {
+            scanCol.radius += 1f * scanSpeed * Time.deltaTime;
+        }
+        else
+        {
+            print("Finished scan");
+            scanOut = false;
+        }
+        
         Collider[] colliders = Physics.OverlapSphere(transform.position, scanCol.radius, scanLayers, QueryTriggerInteraction.Collide);
         foreach (Collider objectHit in colliders){
             GameObject tempObj = objectHit.gameObject;
@@ -195,7 +214,7 @@ public class Ship : MonoBehaviour
     IEnumerator TeleportCooldown()
     {
         canTeleport = false;
-        yield return new WaitForSeconds(teleportCooldown);
+        yield return new WaitForSeconds(teleportCooldownOrScanCooldown);
         canTeleport = true;
     }
     void HandleMovement()
@@ -203,8 +222,22 @@ public class Ship : MonoBehaviour
         
         // pitch, if we want to invert to feel realistic, remove the - in front of pitchYaw
         rb.AddRelativeTorque(Vector3.right * Mathf.Clamp(-pitchYaw.y, -1f, 1f) * pitchTorque * Time.deltaTime);
+
         // Yaw
-        rb.AddRelativeTorque(Vector3.up * Mathf.Clamp(pitchYaw.x, -1f, 1f) * yawTorque * Time.deltaTime);
+        float pitchAngle = transform.eulerAngles.x;
+        pitchAngle = (pitchAngle > 180) ? pitchAngle - 360 : pitchAngle;
+        pitchAngle = Mathf.Clamp(pitchAngle, -pitchClamp, pitchClamp);
+        transform.eulerAngles = new Vector3(pitchAngle, transform.eulerAngles.y, transform.eulerAngles.z);
+        Vector3 pitchVal = (Vector3.up * Mathf.Clamp(pitchYaw.x, -1f, 1f) * yawTorque * Time.deltaTime);
+        if ((pitchAngle <= -pitchClamp && pitchVal.x < 0) || (pitchAngle >= pitchClamp && pitchVal.x > 0))
+        {
+            rb.angularVelocity = Vector3.zero;
+        }
+        else
+        {
+            rb.AddRelativeTorque(pitchVal);
+        }
+        
 
         //clamp the roll
         float rollAngle = transform.eulerAngles.z;
@@ -225,6 +258,19 @@ public class Ship : MonoBehaviour
             rb.AddRelativeTorque(rollVal);
            
         }
+
+        //  resets players rotation if their speed is less than .1
+        if(rb.angularVelocity.x <= .1f && rb.angularVelocity.y <= .1f && rb.angularVelocity.z <= .1f)
+        {
+            transform.rotation = Quaternion.Lerp(transform.rotation, startingRotation, timeCount * .001f);
+            timeCount += Time.deltaTime;
+            if (resetSpeed)
+            {
+                // need to figure out how to reset the speed properly
+                //rb.angularVelocity = Vector3.zero;
+                resetSpeed = false;
+            }
+        }
         /*
         if (rollAngle > 85 && rollVal.z > 0)
         {
@@ -240,6 +286,7 @@ public class Ship : MonoBehaviour
         if (thrust1D > .1f || thrust1D < -.1f)
         {
             float currentThrust;
+            
 
             if (boosting)
             {
@@ -257,6 +304,7 @@ public class Ship : MonoBehaviour
         {
             rb.AddRelativeForce(Vector3.forward * glide * Time.deltaTime);
             glide *= thrustGlideReduction;
+            resetSpeed = true;
         }
 
         // Up/Down
@@ -281,6 +329,11 @@ public class Ship : MonoBehaviour
         {
             rb.AddRelativeForce(Vector3.right * horizontalGlide * Time.fixedDeltaTime);
             horizontalGlide *= leftRightGlideReduction;
+        }
+
+        if(thrust1D > .1f && strafe1D > .1f && upDown1D > .1f && roll1D > .1f && pitchYaw.x > .1f && pitchYaw.y > .1f)
+        {
+            resetSpeed = false;
         }
     }
 
