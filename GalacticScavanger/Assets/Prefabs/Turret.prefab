@@ -48,12 +48,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ff45d57b3d949348a0cf8f19f5e648e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  camera: {fileID: 0}
-  projectile: {fileID: 0}
-  rotationSpeed: 1
-  turretBase: {fileID: 0}
+  turretCamera: {fileID: 7611724894000309097}
   turretBarrelBase: {fileID: 762249777225659131}
-  minAngle: 90
+  minAngle: -89.999
+  maxAngle: 5
 --- !u!114 &1700090380186389598
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -154,6 +152,22 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: 63755f0e-d7ce-4501-828b-8a50bad26ab3
     m_ActionName: ShipControls/Pause[/Keyboard/escape,/XInputControllerWindows/select,/XInputControllerWindows1/select]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 5580972181921785071}
+        m_TargetAssemblyTypeName: Turret, Assembly-CSharp
+        m_MethodName: OnFire
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 83cea683-0f82-47df-9fbf-2cb0cb8a6bf4
+    m_ActionName: ShipControls/Fire[/XInputControllerWindows/rightTrigger,/XInputControllerWindows1/rightTrigger]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: ShipControls

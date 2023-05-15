@@ -7,7 +7,7 @@
             "actions": [
                 {
                     "name": "Thrust",
-                    "type": "PassThrough",
+                    "type": "Button",
                     "id": "30db35b3-35da-41b9-a5e6-5dec2e1abbe9",
                     "expectedControlType": "Button",
                     "processors": "",
@@ -72,6 +72,15 @@
                     "name": "Pause",
                     "type": "Button",
                     "id": "63755f0e-d7ce-4501-828b-8a50bad26ab3",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Fire",
+                    "type": "Button",
+                    "id": "83cea683-0f82-47df-9fbf-2cb0cb8a6bf4",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -428,6 +437,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "Pause",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "b685b98d-3295-4211-a4ff-8209049bbb58",
+                    "path": "<Gamepad>/rightTrigger",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Fire",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

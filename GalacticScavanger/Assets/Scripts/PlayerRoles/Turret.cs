@@ -6,12 +6,8 @@ using UnityEngine.InputSystem;
 
 public class Turret : MonoBehaviour
 {
-    [SerializeField] private GameObject camera;
-    [SerializeField] private GameObject projectile;
-    [SerializeField] public float rotationSpeed = 1f;
-
     [Header("Turret Parts")]
-    [SerializeField] private GameObject turretBase;
+    [SerializeField] private GameObject turretCamera;
     [SerializeField] private GameObject turretBarrelBase;
 
     // ship information
@@ -20,11 +16,12 @@ public class Turret : MonoBehaviour
     private Vector3 turretToShip;
     
     // input variable
-    Vector2 pitchYaw;
+    private Vector2 pitchYaw;
+    private bool firePressed;
 
     [Header("Limit Rotation Angles")] 
-    [SerializeField] private float minAngle = 90;
-    //[SerializeField] private float maxAngle = 180;
+    [SerializeField] private float minAngle = -89.999f;
+    [SerializeField] private float maxAngle = 5;
 
     // Start is called before the first frame update
     void Start()
@@ -47,6 +44,7 @@ public class Turret : MonoBehaviour
         if (ship)
         {
             RotationUpdate();
+            ShootingUpdate();
             //DebugViewingRays();
         }
         else
@@ -70,7 +68,7 @@ public class Turret : MonoBehaviour
         //clamp the roll
         float rollAngle = turretBarrelBase.transform.eulerAngles.x - x;
         rollAngle = (rollAngle > 180) ? rollAngle - 360 : rollAngle;
-        rollAngle = Mathf.Clamp(rollAngle, -89.99f, 5);
+        rollAngle = Mathf.Clamp(rollAngle, minAngle, maxAngle);
         turretBarrelBase.transform.eulerAngles = new Vector3(rollAngle, turretBarrelBase.transform.eulerAngles.y, turretBarrelBase.transform.eulerAngles.z);
     }
     
@@ -83,12 +81,23 @@ public class Turret : MonoBehaviour
         Debug.DrawRay(ship.transform.position, ship.transform.up*10, Color.green);
         Debug.DrawRay(ship.transform.position, ship.transform.forward*10, Color.blue);
     }
+
+    private void ShootingUpdate()
+    {
+        
+    }
     
     #region Input Methods
     public void OnPitchYaw(InputAction.CallbackContext context)
     {
         pitchYaw = context.ReadValue<Vector2>();
         //Debug.Log("in OnPitchYaw:" + this.gameObject.name);
+    }
+
+    public void OnFire(InputAction.CallbackContext context)
+    {
+        firePressed = context.performed;
+        Debug.Log("in OnFire:" + firePressed);
     }
     #endregion
 }
