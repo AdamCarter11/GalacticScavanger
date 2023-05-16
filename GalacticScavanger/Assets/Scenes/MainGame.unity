@@ -432,7 +432,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   characters:
   - {fileID: 8325805688791109806, guid: 7c9640d0aa3d1284eb7cb1bb48fa6be9, type: 3}
-  - {fileID: 12152231830840278, guid: 090e7bb5c4c940e4f92161438c286f58, type: 3}
+  - {fileID: 3036964109284216318, guid: 090e7bb5c4c940e4f92161438c286f58, type: 3}
 --- !u!1 &226736647
 GameObject:
   m_ObjectHideFlags: 0
@@ -927,10 +927,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 12152231830840278, guid: 090e7bb5c4c940e4f92161438c286f58, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 3036964109284216318, guid: 090e7bb5c4c940e4f92161438c286f58, type: 3}
       propertyPath: m_Name
       value: Turret
@@ -1200,7 +1196,6 @@ GameObject:
   - component: {fileID: 631341927}
   - component: {fileID: 631341928}
   - component: {fileID: 631341929}
-  - component: {fileID: 631341930}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Enemy
@@ -1391,6 +1386,7 @@ MonoBehaviour:
   scrapSearchRadius: 500
   range: 160
   targetTag: Scrap
+<<<<<<< HEAD
   scrapLayer:
     serializedVersion: 2
 <<<<<<< Updated upstream
@@ -1399,11 +1395,12 @@ MonoBehaviour:
     m_Bits: 1024
 >>>>>>> Stashed changes
   scrapDepositThreshold: 30
+=======
+>>>>>>> parent of 75a502c (enemy health decrements when hit by turret spherecast)
   speed: 10
   target: {fileID: 985294242}
   player: {fileID: 985294242}
   rotationSpeed: 45
-  collectedScrap: 0
 --- !u!114 &631341929
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1422,19 +1419,6 @@ MonoBehaviour:
   precomputeOutline: 0
   bakeKeys: []
   bakeValues: []
---- !u!114 &631341930
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 631341917}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8c87379453298c54781db6c5c52a665c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  health: 3
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -4148,7 +4132,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8325805688791109806, guid: 7c9640d0aa3d1284eb7cb1bb48fa6be9, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8325805688791109806, guid: 7c9640d0aa3d1284eb7cb1bb48fa6be9, type: 3}
       propertyPath: m_TagString
