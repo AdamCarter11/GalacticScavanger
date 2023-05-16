@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5874590492130449082}
   - component: {fileID: 1278198166483078449}
   - component: {fileID: 3837667425739703652}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: TurretLocation
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -93,7 +93,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8325805687683780664}
   - component: {fileID: 8325805687683780665}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Trail
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -235,7 +235,7 @@ GameObject:
   - component: {fileID: 8325805688081846849}
   - component: {fileID: 8325805688081846848}
   - component: {fileID: 8325805688081846851}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -330,7 +330,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8325805688414554299}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: ShipLookTarget
   m_TagString: Untagged
   m_Icon: {fileID: 7174288486110832750, guid: 0000000000000000d000000000000000, type: 0}
@@ -366,7 +366,7 @@ GameObject:
   - component: {fileID: 8325805688558623643}
   - component: {fileID: 8325805688558623640}
   - component: {fileID: 86786187793678208}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Main Camera
   m_TagString: MainCamera
   m_Icon: {fileID: 0}
@@ -545,7 +545,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8325805688599547618}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: ShipGraphics
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -584,7 +584,7 @@ GameObject:
   - component: {fileID: 8325805688791109802}
   - component: {fileID: 8325805688791109805}
   - component: {fileID: 8325805688791109803}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Ship
   m_TagString: Ship
   m_Icon: {fileID: 0}
@@ -759,6 +759,10 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: 63755f0e-d7ce-4501-828b-8a50bad26ab3
     m_ActionName: ShipControls/Pause[/Keyboard/escape]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 83cea683-0f82-47df-9fbf-2cb0cb8a6bf4
+    m_ActionName: ShipControls/Fire[/XInputControllerWindows/rightTrigger,/XInputControllerWindows1/rightTrigger]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: ShipControls
@@ -785,6 +789,8 @@ MonoBehaviour:
   thrustGlideReduction: 0.5
   upDownGlideReduction: 0.111
   leftRightGlideReduction: 0.111
+  rollClampVal: 0
+  pitchClamp: 0
   maxBoostAmount: 20
   boostLossRate: 0.1
   boostRechargeRate: 0.15
@@ -796,6 +802,14 @@ MonoBehaviour:
   turretLocation: {fileID: 5874590492130449082}
   turretPrefab: {fileID: 3036964109284216318, guid: 090e7bb5c4c940e4f92161438c286f58, type: 3}
   pausePanel: {fileID: 0}
+  teleportCooldownOrScanCooldown: 0
+  scanCol: {fileID: 0}
+  scanSpeed: 0
+  howManyToScan: 0
+  maxScanRadius: 0
+  scanLayers:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!54 &8325805688791109805
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -832,6 +846,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8325805688081846850}
     m_Modifications:
+    - target: {fileID: -9038585923029775698, guid: a7b70eb6c33a4c346bbdadc2838650a6, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: a7b70eb6c33a4c346bbdadc2838650a6, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -876,9 +894,77 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7609145667655734672, guid: a7b70eb6c33a4c346bbdadc2838650a6, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: -7247213817774130632, guid: a7b70eb6c33a4c346bbdadc2838650a6, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: -7235015103121818086, guid: a7b70eb6c33a4c346bbdadc2838650a6, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: -5731229141766309534, guid: a7b70eb6c33a4c346bbdadc2838650a6, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: -4957452930195757054, guid: a7b70eb6c33a4c346bbdadc2838650a6, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: -3957782524123411102, guid: a7b70eb6c33a4c346bbdadc2838650a6, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: -2793727289926329592, guid: a7b70eb6c33a4c346bbdadc2838650a6, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: -2096956310628527958, guid: a7b70eb6c33a4c346bbdadc2838650a6, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: -344004081357383697, guid: a7b70eb6c33a4c346bbdadc2838650a6, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: -8140499575222096, guid: a7b70eb6c33a4c346bbdadc2838650a6, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: a7b70eb6c33a4c346bbdadc2838650a6, type: 3}
       propertyPath: m_Name
       value: ship_test2
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: a7b70eb6c33a4c346bbdadc2838650a6, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 1507767883509144192, guid: a7b70eb6c33a4c346bbdadc2838650a6, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 2040542448765327740, guid: a7b70eb6c33a4c346bbdadc2838650a6, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 2866621852552652557, guid: a7b70eb6c33a4c346bbdadc2838650a6, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 3779745573541866595, guid: a7b70eb6c33a4c346bbdadc2838650a6, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 6085036178219441596, guid: a7b70eb6c33a4c346bbdadc2838650a6, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 7750397243111347764, guid: a7b70eb6c33a4c346bbdadc2838650a6, type: 3}
+      propertyPath: m_Layer
+      value: 11
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a7b70eb6c33a4c346bbdadc2838650a6, type: 3}

@@ -102,6 +102,7 @@ GameObject:
   - component: {fileID: 7615455725069732510}
   - component: {fileID: 7615455725069732497}
   - component: {fileID: 7615455725069732496}
+  - component: {fileID: 5892575355552034962}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Enemy
@@ -289,10 +290,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca82a417fc3c96149882a359c4bedec0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerAttackRange: 150
+  scrapSearchRadius: 500
   range: 160
+  targetTag: 
+  scrapLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  scrapDepositThreshold: 30
   speed: 10
   target: {fileID: 0}
+  player: {fileID: 0}
   rotationSpeed: 45
+  collectedScrap: 0
 --- !u!114 &7615455725069732496
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -311,6 +321,19 @@ MonoBehaviour:
   precomputeOutline: 0
   bakeKeys: []
   bakeValues: []
+--- !u!114 &5892575355552034962
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7615455725069732516}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8c87379453298c54781db6c5c52a665c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: 3
 --- !u!1 &8654933418619503122
 GameObject:
   m_ObjectHideFlags: 0
@@ -410,3 +433,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   projectile: {fileID: 8744558536229626749, guid: 9b7eb56af315b164089af8969ecbc536, type: 3}
   distanceToFire: 40
+  fireDelaySeconds: 0.5
