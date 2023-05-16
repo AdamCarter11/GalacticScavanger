@@ -103,32 +103,13 @@ public class Turret : MonoBehaviour
 
     private void FiringHelper()
     {
-        //Debug.Log("FireHelper");
-        //myRay = new Ray(turretCamera.transform.position, turretCamera.transform.forward);
-
-        /*Rect viewportRect = turretCamera.GetComponent<Camera>().rect;
-        Vector3 viewportCenter = new Vector3(viewportRect.x + viewportRect.width * 0.5f,
-            viewportRect.y + viewportRect.height * 0.5f, 0f);
-        //Ray ray = turretCamera.GetComponent<Camera>().ViewportPointToRay(viewportCenter);
-        myRay = turretCamera.GetComponent<Camera>().ViewportPointToRay(viewportCenter);
-        
-        RaycastHit hit;
-        //layerMask = LayerMask.GetMask("Default");
-        
-        if (Physics.Raycast(myRay, out hit, Mathf.Infinity, ~layerMaskToIgnore))
-        {
-            Debug.Log("Hit object: " + hit.transform.name);
-            //Instantiate(projectile, myRay.origin, Quaternion.Euler(myRay.direction));
-            // Do something with the hit object here
-        }*/
-        
-        
         RaycastHit[] hits = Physics.SphereCastAll(turretBarrel.transform.position, sphereCastRadius, turretBarrel.transform.forward, sphereCastDistance, ~layerMaskToIgnore);
         foreach (RaycastHit hit in hits)
         {
             if (hit.transform.CompareTag("Enemy"))
             {
                 Debug.Log("Hit an enemy!");
+                hit.transform.gameObject.GetComponent<EnemyHealth>().DecrementHealth();
             }
             else
             {
