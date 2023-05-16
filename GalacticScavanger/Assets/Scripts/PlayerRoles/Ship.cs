@@ -258,6 +258,7 @@ public class Ship : MonoBehaviour
             rb.AddRelativeTorque(rollVal);
            
         }
+        /*
         print("angular velocity: " + rb.angularVelocity);
         //  resets players rotation if their speed is less than .1
         
@@ -272,7 +273,7 @@ public class Ship : MonoBehaviour
                 resetSpeed = false;
             }
         }
-        
+        */
         /*
         if (rollAngle > 85 && rollVal.z > 0)
         {
