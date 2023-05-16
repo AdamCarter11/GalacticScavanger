@@ -1393,7 +1393,7 @@ MonoBehaviour:
   targetTag: Scrap
   scrapLayer:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 1024
   scrapDepositThreshold: 30
   speed: 10
   target: {fileID: 985294242}
@@ -4144,7 +4144,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8325805688791109806, guid: 7c9640d0aa3d1284eb7cb1bb48fa6be9, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8325805688791109806, guid: 7c9640d0aa3d1284eb7cb1bb48fa6be9, type: 3}
       propertyPath: m_TagString

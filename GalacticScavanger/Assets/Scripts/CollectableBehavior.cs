@@ -6,19 +6,28 @@ using UnityEngine;
 public class CollectableBehavior : MonoBehaviour
 {
 
+    [HideInInspector] public int scrapCap = 10;
     private void OnTriggerEnter(Collider other)
     {
         //will have to change this to make the AI actually be able to increas their own scrap instead of the players
+        /*
         if (other.gameObject.CompareTag("Ship"))
         {
             GameManager.instance.ChangeScrapVal(10); //val in paranthesis will be whatever we want to increase scrap by
             Destroy(this.gameObject);
         }
+        */
         if (other.gameObject.CompareTag("Enemy"))
         {
             other.GetComponent<EnemyAI6>().collectedScrap += 10;
             Destroy(this.gameObject);
         }
     }
-
+    private void Update()
+    {
+        if (scrapCap <= 0)
+        {
+            Destroy(this.gameObject);
+        }
+    }
 }

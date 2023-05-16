@@ -36,13 +36,15 @@ public class GameManager : MonoBehaviour
     public void ChangeScrapVal(int scrapChange)
     {
         int tempTarget = scrapChange;
-        if(scrapChange == -1 || scrapChange == 0)
+        if (scrapChange == -1 || scrapChange == 0)
         {
+            collectedScrap += currPlayerScrap;
             tempTarget = 0;
         }
 
         currPlayerScrap = tempTarget;
         scrapText.text = "Scrap: " + currPlayerScrap;
+        depositedText.text = "Deposited: " + collectedScrap;
     }
 
     private void Update()
@@ -79,13 +81,14 @@ public class GameManager : MonoBehaviour
         timerText.text = string.Format("{0:00} : {1:00}", minutes, seconds);
     }
 
-    public void DockingScrap()
+    public void DockingScrap(GameObject scrapObj, int maxScrapCap)
     {
-        if(!isDocking)
+        if (!isDocking)
         {
             canDock = true;
             //lerp or change overtime the players scrap
-            StartCoroutine(DockScraps());
+            //StartCoroutine(DockScraps());
+            StartCoroutine(DockScraps(scrapObj, maxScrapCap));
             isDocking = true;
         }
 
@@ -93,19 +96,32 @@ public class GameManager : MonoBehaviour
     public void StopDock()
     {
         canDock = false;
-        StopCoroutine(DockScraps());
+        //StopCoroutine(DockScraps());
+        StopCoroutine(DockScraps(null, 0));
     }
 
-    IEnumerator DockScraps()
+    IEnumerator DockScraps(GameObject scrapObj, int maxScrapCap)
     {
-        while(currPlayerScrap > 0 && canDock)
+        while (scrapObj != null && scrapObj.GetComponent<CollectableBehavior>().scrapCap > 0 && canDock)
         {
             yield return new WaitForSeconds(1f);
-            currPlayerScrap--;
-            collectedScrap++;
+            //currPlayerScrap--;
+            //collectedScrap++;
+            currPlayerScrap++;
+            scrapObj.GetComponent<CollectableBehavior>().scrapCap--;
+            //collectedScrap++;
             scrapText.text = "Scrap: " + currPlayerScrap;
-            depositedText.text = "Deposited: " + collectedScrap;
-            print(currPlayerScrap);
+            //depositedText.text = "Deposited: " + collectedScrap;
+            //print(currPlayerScrap);
+            //depositedText.text = "Deposited: " + collectedScrap;
+            //print(currPlayerScrap);
+        }
+        if(scrapObj != null)
+        {
+            if (scrapObj.GetComponent<CollectableBehavior>().scrapCap <= 0)
+            {
+                Destroy(scrapObj);
+            }
         }
         isDocking = false;
     }
