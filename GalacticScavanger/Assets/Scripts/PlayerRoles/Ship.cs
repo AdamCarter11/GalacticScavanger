@@ -258,9 +258,10 @@ public class Ship : MonoBehaviour
             rb.AddRelativeTorque(rollVal);
            
         }
-
+        print("angular velocity: " + rb.angularVelocity);
         //  resets players rotation if their speed is less than .1
-        if(rb.angularVelocity.x <= .1f && rb.angularVelocity.y <= .1f && rb.angularVelocity.z <= .1f)
+        
+        if((rb.angularVelocity.x <= .1f && rb.angularVelocity.x >= -.1f) && (rb.angularVelocity.y <= .1f && rb.angularVelocity.y >= -.1f) && (rb.angularVelocity.z <= .1f && rb.angularVelocity.z >= -.1f))
         {
             transform.rotation = Quaternion.Lerp(transform.rotation, startingRotation, timeCount * .001f);
             timeCount += Time.deltaTime;
@@ -271,6 +272,7 @@ public class Ship : MonoBehaviour
                 resetSpeed = false;
             }
         }
+        
         /*
         if (rollAngle > 85 && rollVal.z > 0)
         {
