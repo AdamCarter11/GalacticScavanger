@@ -12,9 +12,9 @@ GameObject:
   - component: {fileID: 5580972181921785071}
   - component: {fileID: 1700090380186389598}
   - component: {fileID: 2338808515414769750}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Turret
-  m_TagString: Untagged
+  m_TagString: Turret
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -50,6 +50,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   turretCamera: {fileID: 7611724894000309097}
   turretBarrelBase: {fileID: 762249777225659131}
+  turretBarrel: {fileID: 8173529516129636655}
+  fireRate: 0.1
+  layerMaskToIgnore:
+    serializedVersion: 2
+    m_Bits: 2048
+  projectile: {fileID: 8744558536229626749, guid: 1f333d17d80c00f4eaec6d6d1d4e2c8b, type: 3}
   minAngle: -89.999
   maxAngle: 5
 --- !u!114 &1700090380186389598
@@ -184,7 +190,7 @@ GameObject:
   - component: {fileID: 2224917879085916519}
   - component: {fileID: 8618484448814761427}
   - component: {fileID: 1499799538640474015}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: BarrelBase
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -269,7 +275,7 @@ GameObject:
   - component: {fileID: 3597152092135563489}
   - component: {fileID: 7827573371217933091}
   - component: {fileID: 2914146690372649278}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Base
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -355,7 +361,7 @@ GameObject:
   - component: {fileID: 4485935918846645352}
   - component: {fileID: 938043904875555156}
   - component: {fileID: 1356425421054025181}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: TurretCamera
   m_TagString: MainCamera
   m_Icon: {fileID: 0}
@@ -536,7 +542,7 @@ GameObject:
   - component: {fileID: 5441845859793155510}
   - component: {fileID: 3685658036934292375}
   - component: {fileID: 7413971781317192290}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Barrel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
