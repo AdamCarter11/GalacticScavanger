@@ -10,7 +10,6 @@ TagManager:
   - Turret
   - Enemy
   - Obstacle
-  - CollectionArea
   layers:
   - Default
   - TransparentFX

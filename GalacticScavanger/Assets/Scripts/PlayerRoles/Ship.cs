@@ -342,19 +342,14 @@ public class Ship : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag("CollectionArea"))
-        {
-            print(other.gameObject.name);
-            GameManager.instance.DockingScrap(other.gameObject.transform.parent.gameObject, 10);
-        }
         if (other.gameObject.CompareTag("DockingStation"))
         {
-            GameManager.instance.ChangeScrapVal(0);
+            GameManager.instance.DockingScrap();
         }
     }
     private void OnTriggerExit(Collider other)
     {
-        if (other.gameObject.CompareTag("CollectionArea")){
+        if (other.gameObject.CompareTag("DockingStation")){
             GameManager.instance.StopDock();
         }
     }
