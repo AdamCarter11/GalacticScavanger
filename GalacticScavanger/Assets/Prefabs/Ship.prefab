@@ -255,6 +255,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3380212480037402897}
+  - {fileID: 3241026088934146172}
   m_Father: {fileID: 8325805688599547618}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -763,6 +764,10 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: 83cea683-0f82-47df-9fbf-2cb0cb8a6bf4
     m_ActionName: ShipControls/Fire[/XInputControllerWindows/rightTrigger,/XInputControllerWindows1/rightTrigger]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: e49102d3-9185-447f-ad20-f862dfcc6920
+    m_ActionName: ShipControls/TurretAbility[/Keyboard/u]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: ShipControls
@@ -791,6 +796,7 @@ MonoBehaviour:
   leftRightGlideReduction: 0.001
   rollClampVal: 60
   pitchClamp: 60
+  canDrift: 0
   maxBoostAmount: 20
   boostLossRate: 0.1
   boostRechargeRate: 0.15
@@ -799,6 +805,7 @@ MonoBehaviour:
   currBoostAmount: 0
   health: 10
   collectableCount: 0
+  healthUIText: {fileID: 0}
   turretLocation: {fileID: 5874590492130449082}
   turretPrefab: {fileID: 3036964109284216318, guid: 090e7bb5c4c940e4f92161438c286f58, type: 3}
   pausePanel: {fileID: 0}
@@ -810,6 +817,8 @@ MonoBehaviour:
   scanLayers:
     serializedVersion: 2
     m_Bits: 1024
+  shieldTime: 5
+  shieldCoolDown: 10
 --- !u!54 &8325805688791109805
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -942,6 +951,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 11
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: a7b70eb6c33a4c346bbdadc2838650a6, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1507767883509144192, guid: a7b70eb6c33a4c346bbdadc2838650a6, type: 3}
       propertyPath: m_Layer
       value: 11
@@ -990,4 +1003,66 @@ BoxCollider:
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: a7b70eb6c33a4c346bbdadc2838650a6, type: 3}
   m_PrefabInstance: {fileID: 2982038443028504314}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &4250625467147813795
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 8325805688081846850}
+    m_Modifications:
+    - target: {fileID: 1587291652263936991, guid: e72b80ed3c59cd84ab494d8e0370852e, type: 3}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1587291652263936991, guid: e72b80ed3c59cd84ab494d8e0370852e, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1587291652263936991, guid: e72b80ed3c59cd84ab494d8e0370852e, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1587291652263936991, guid: e72b80ed3c59cd84ab494d8e0370852e, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1587291652263936991, guid: e72b80ed3c59cd84ab494d8e0370852e, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1587291652263936991, guid: e72b80ed3c59cd84ab494d8e0370852e, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1587291652263936991, guid: e72b80ed3c59cd84ab494d8e0370852e, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1587291652263936991, guid: e72b80ed3c59cd84ab494d8e0370852e, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1587291652263936991, guid: e72b80ed3c59cd84ab494d8e0370852e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1587291652263936991, guid: e72b80ed3c59cd84ab494d8e0370852e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1587291652263936991, guid: e72b80ed3c59cd84ab494d8e0370852e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2111310770038036837, guid: e72b80ed3c59cd84ab494d8e0370852e, type: 3}
+      propertyPath: m_Name
+      value: Ship model
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: e72b80ed3c59cd84ab494d8e0370852e, type: 3}
+--- !u!4 &3241026088934146172 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1587291652263936991, guid: e72b80ed3c59cd84ab494d8e0370852e, type: 3}
+  m_PrefabInstance: {fileID: 4250625467147813795}
   m_PrefabAsset: {fileID: 0}
