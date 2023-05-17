@@ -1127,6 +1127,22 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1064076790235119589, guid: 349d0c79336f7f54ab760888312375fd, type: 3}
+      propertyPath: m_Radius
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2611579061540178799, guid: 349d0c79336f7f54ab760888312375fd, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.07
+      objectReference: {fileID: 0}
+    - target: {fileID: 2611579061540178799, guid: 349d0c79336f7f54ab760888312375fd, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.07
+      objectReference: {fileID: 0}
+    - target: {fileID: 2611579061540178799, guid: 349d0c79336f7f54ab760888312375fd, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.07
+      objectReference: {fileID: 0}
     - target: {fileID: 5988257677994111858, guid: 349d0c79336f7f54ab760888312375fd, type: 3}
       propertyPath: m_Name
       value: Scrap
@@ -1138,6 +1154,18 @@ PrefabInstance:
     - target: {fileID: 5988257677994111865, guid: 349d0c79336f7f54ab760888312375fd, type: 3}
       propertyPath: m_RootOrder
       value: 18
+      objectReference: {fileID: 0}
+    - target: {fileID: 5988257677994111865, guid: 349d0c79336f7f54ab760888312375fd, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 300
+      objectReference: {fileID: 0}
+    - target: {fileID: 5988257677994111865, guid: 349d0c79336f7f54ab760888312375fd, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 300
+      objectReference: {fileID: 0}
+    - target: {fileID: 5988257677994111865, guid: 349d0c79336f7f54ab760888312375fd, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 300
       objectReference: {fileID: 0}
     - target: {fileID: 5988257677994111865, guid: 349d0c79336f7f54ab760888312375fd, type: 3}
       propertyPath: m_LocalPosition.x
