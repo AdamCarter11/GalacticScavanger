@@ -13,6 +13,9 @@ public class Turret : MonoBehaviour
     
     [Header("Shooting Information")]
     [SerializeField] public float fireRate = 0.1f;
+    [SerializeField] private float doubleFireRateTime = 5.0f; //in seconds
+    [SerializeField] private float doubleFireCooldown = 10f;
+    private float startingFireRate;
     [SerializeField] public int projectileDamage = 1;
     [SerializeField] private float sphereCastRadius = 0.5f;
     [SerializeField] private float sphereCastDistance = 100f;
@@ -28,10 +31,16 @@ public class Turret : MonoBehaviour
     // input variable
     private Vector2 pitchYaw;
     private bool firePressed;
+    private bool abilityPressed;
 
     [Header("Limit Rotation Angles")] 
     [SerializeField] private float minAngle = -89.999f;
     [SerializeField] private float maxAngle = 5;
+
+    bool doubleFireRate = false;
+    int whichClass;
+    bool canDouble = true;
+    bool turretAbility = false;
 
     // Start is called before the first frame update
     void Start()
@@ -48,6 +57,7 @@ public class Turret : MonoBehaviour
         {
             Debug.Log("turret did not find ship");
         }
+        startingFireRate = fireRate;
     }
 
     private void Update()
@@ -62,6 +72,27 @@ public class Turret : MonoBehaviour
         {
             Debug.Log("no ship detected, not updating turret");
         }
+
+        // turret ability
+        if (PlayerPrefs.GetInt("Player1Character") == 1 && !doubleFireRate && canDouble && turretAbility)
+        {
+            StartCoroutine(fireRateDouble());
+        }
+    }
+    IEnumerator fireRateDouble()
+    {
+        doubleFireRate = true;
+        fireRate /= 2;
+        yield return new WaitForSeconds(doubleFireRateTime);
+        fireRate = startingFireRate;
+        doubleFireRate = false;
+        StartCoroutine(rateCooldown());
+    }
+    IEnumerator rateCooldown()
+    {
+        canDouble = false;
+        yield return new WaitForSeconds(doubleFireCooldown);
+        canDouble = true;
     }
 
     private void RotationUpdate()
@@ -77,10 +108,10 @@ public class Turret : MonoBehaviour
         Vector3 localEuler = turretBarrelBase.transform.localRotation.eulerAngles;
 
         //clamp the roll
-        float rollAngle = turretBarrelBase.transform.eulerAngles.x - x;
+        float rollAngle = turretBarrelBase.transform.localEulerAngles.x - x;
         rollAngle = (rollAngle > 180) ? rollAngle - 360 : rollAngle;
         rollAngle = Mathf.Clamp(rollAngle, minAngle, maxAngle);
-        turretBarrelBase.transform.eulerAngles = new Vector3(rollAngle, turretBarrelBase.transform.eulerAngles.y, turretBarrelBase.transform.eulerAngles.z);
+        turretBarrelBase.transform.localRotation = Quaternion.Euler(new Vector3(rollAngle, turretBarrelBase.transform.localRotation.y, turretBarrelBase.transform.localRotation.z));
     }
 
     private void FireUpdate()
@@ -144,6 +175,11 @@ public class Turret : MonoBehaviour
     public void OnFire(InputAction.CallbackContext context)
     {
         firePressed = context.performed;
+        //Debug.Log("in OnFire:" + firePressed);
+    }
+    public void OnTurretAbility(InputAction.CallbackContext context)
+    {
+        turretAbility = context.performed;
         //Debug.Log("in OnFire:" + firePressed);
     }
     #endregion

@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -27,6 +28,7 @@ public class Ship : MonoBehaviour
     float glide, verticalGlide, horizontalGlide = 0f;
     [SerializeField] float rollClampVal;
     [SerializeField] float pitchClamp;
+    [SerializeField] bool canDrift = false;
 
     [Header("Boosting Vars")]
     [SerializeField] float maxBoostAmount = 2f;
@@ -39,6 +41,7 @@ public class Ship : MonoBehaviour
     [Header("Health and Collectable Vars")]
     public int health = 10;
     public int collectableCount = 0;
+    [SerializeField] private GameObject healthUIText;
 
     [Header("Gunner Vars")] 
     [SerializeField] public Transform turretLocation;
@@ -78,6 +81,10 @@ public class Ship : MonoBehaviour
     Quaternion startingRotation;
     float timeCount = 0.0f;
     bool resetSpeed = false;
+    bool shielding = false;
+    bool shieldingOnCool = false;
+    [SerializeField] float shieldTime = 5.0f;
+    [SerializeField] float shieldCoolDown = 10.0f;
 
 
     void Start()
@@ -88,6 +95,10 @@ public class Ship : MonoBehaviour
         respawnPos = transform.position;
         whichClass = PlayerPrefs.GetInt("Player1Character");
         startingRotation = transform.rotation;
+        if (!healthUIText)
+        {
+            healthUIText = GameObject.Find("HealthPointsText");
+        }
     }
 
     private void Awake()
@@ -112,6 +123,7 @@ public class Ship : MonoBehaviour
         {
             scanLogic();
         }
+        healthUIText.GetComponent<TextMeshProUGUI>().text = "Health: " + health;
     }
     void FixedUpdate()
     {
@@ -160,6 +172,26 @@ public class Ship : MonoBehaviour
                 scanOut = true;
             }
         }
+        if(whichClass == 2)
+        {
+            if (!shielding && boosting && !shieldingOnCool)
+            {
+                StartCoroutine(shieldLogic());
+            }
+        }
+    }
+    IEnumerator shieldLogic()
+    {
+        shielding = true;
+        yield return new WaitForSeconds(shieldTime);
+        shielding = false;
+        StartCoroutine(shieldCoolDownFunc());
+    }
+    IEnumerator shieldCoolDownFunc()
+    {
+        shieldingOnCool = true;
+        yield return new WaitForSeconds(shieldCoolDown);
+        shieldingOnCool = false;
     }
 
     void scanLogic()
@@ -256,7 +288,7 @@ public class Ship : MonoBehaviour
         else
         {
             rb.AddRelativeTorque(rollVal);
-           
+
         }
         /*
         print("angular velocity: " + rb.angularVelocity);
@@ -289,7 +321,7 @@ public class Ship : MonoBehaviour
         if (thrust1D > .1f || thrust1D < -.1f)
         {
             float currentThrust;
-            
+
 
             if (boosting)
             {
@@ -302,12 +334,19 @@ public class Ship : MonoBehaviour
 
             rb.AddRelativeForce(Vector3.forward * thrust1D * currentThrust * Time.deltaTime);
             glide = thrust;
+
         }
         else
         {
             rb.AddRelativeForce(Vector3.forward * glide * Time.deltaTime);
             glide *= thrustGlideReduction;
+
             resetSpeed = true;
+        }
+        //  THIS IS A BAD FIX TO PREVENT DRIFTING (I'm leaving it in for now)
+        if(canDrift && (thrust1D < 1f || glide < 1f) && (upThrust < 1f || verticalGlide < 1f) && (strafe1D < 1f || horizontalGlide < 1f))
+        {
+            rb.velocity = Vector3.zero;
         }
 
         // Up/Down
@@ -315,11 +354,19 @@ public class Ship : MonoBehaviour
         {
             rb.AddRelativeForce(Vector3.up * upDown1D * upThrust * Time.fixedDeltaTime);
             verticalGlide = upDown1D * upThrust;
+            if(verticalGlide <= .5f)
+            {
+                verticalGlide = 0;
+            }
         }
         else
         {
             rb.AddRelativeForce(Vector3.up * verticalGlide * Time.fixedDeltaTime);
             verticalGlide *= upDownGlideReduction;
+            if (verticalGlide <= .5f)
+            {
+                verticalGlide = 0;
+            }
         }
 
         // strafing
@@ -327,11 +374,19 @@ public class Ship : MonoBehaviour
         {
             rb.AddRelativeForce(Vector3.right * strafe1D * upThrust * Time.fixedDeltaTime);
             horizontalGlide = strafe1D * strafeThrust;
+            if(horizontalGlide <= .5f)
+            {
+                horizontalGlide = 0;
+            }
         }
         else
         {
             rb.AddRelativeForce(Vector3.right * horizontalGlide * Time.fixedDeltaTime);
             horizontalGlide *= leftRightGlideReduction;
+            if (horizontalGlide <= .5f)
+            {
+                horizontalGlide = 0;
+            }
         }
 
         if(thrust1D > .1f && strafe1D > .1f && upDown1D > .1f && roll1D > .1f && pitchYaw.x > .1f && pitchYaw.y > .1f)
@@ -350,6 +405,20 @@ public class Ship : MonoBehaviour
         if (other.gameObject.CompareTag("DockingStation"))
         {
             GameManager.instance.ChangeScrapVal(0);
+        }
+        if (other.gameObject.CompareTag("EnemyProj"))
+        {
+            Destroy(other.gameObject);
+
+            if (!shielding)
+            {
+                health--;
+                if (health <= 0)
+                {
+                    // game over
+                }
+            }
+            
         }
     }
     private void OnTriggerExit(Collider other)

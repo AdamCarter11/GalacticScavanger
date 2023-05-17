@@ -52,6 +52,11 @@ MonoBehaviour:
   turretBarrelBase: {fileID: 762249777225659131}
   turretBarrel: {fileID: 8173529516129636655}
   fireRate: 0.1
+  doubleFireRateTime: 5
+  doubleFireCooldown: 10
+  projectileDamage: 1
+  sphereCastRadius: 0.5
+  sphereCastDistance: 100
   layerMaskToIgnore:
     serializedVersion: 2
     m_Bits: 2048
@@ -174,6 +179,22 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 83cea683-0f82-47df-9fbf-2cb0cb8a6bf4
     m_ActionName: ShipControls/Fire[/XInputControllerWindows/rightTrigger,/XInputControllerWindows1/rightTrigger]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 5580972181921785071}
+        m_TargetAssemblyTypeName: Turret, Assembly-CSharp
+        m_MethodName: OnTurretAbility
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: e49102d3-9185-447f-ad20-f862dfcc6920
+    m_ActionName: ShipControls/TurretAbility[/XInputControllerWindows/leftTrigger,/XInputControllerWindows1/leftTrigger,/Keyboard/u]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: ShipControls

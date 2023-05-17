@@ -781,15 +781,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   yawTorque: 700
-  pitchTorque: 500
-  rollTorque: 100
-  thrust: 1000
-  upThrust: 500
-  strafeThrust: 5000
+  pitchTorque: 400
+  rollTorque: 200
+  thrust: 500
+  upThrust: 350
+  strafeThrust: 350
   thrustGlideReduction: 0.001
   upDownGlideReduction: 0.001
   leftRightGlideReduction: 0.001
-  rollClampVal: 0
+  rollClampVal: 60
   pitchClamp: 60
   maxBoostAmount: 20
   boostLossRate: 0.1
@@ -802,14 +802,14 @@ MonoBehaviour:
   turretLocation: {fileID: 5874590492130449082}
   turretPrefab: {fileID: 3036964109284216318, guid: 090e7bb5c4c940e4f92161438c286f58, type: 3}
   pausePanel: {fileID: 0}
-  teleportCooldownOrScanCooldown: 0
+  teleportCooldownOrScanCooldown: 5
   scanCol: {fileID: 0}
-  scanSpeed: 0
-  howManyToScan: 0
-  maxScanRadius: 0
+  scanSpeed: 5
+  howManyToScan: 2
+  maxScanRadius: 1000
   scanLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 1024
 --- !u!54 &8325805688791109805
 Rigidbody:
   m_ObjectHideFlags: 0
