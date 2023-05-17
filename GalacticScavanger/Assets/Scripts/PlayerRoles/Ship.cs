@@ -27,6 +27,7 @@ public class Ship : MonoBehaviour
     float glide, verticalGlide, horizontalGlide = 0f;
     [SerializeField] float rollClampVal;
     [SerializeField] float pitchClamp;
+    [SerializeField] bool canDrift = false;
 
     [Header("Boosting Vars")]
     [SerializeField] float maxBoostAmount = 2f;
@@ -256,7 +257,7 @@ public class Ship : MonoBehaviour
         else
         {
             rb.AddRelativeTorque(rollVal);
-           
+
         }
         /*
         print("angular velocity: " + rb.angularVelocity);
@@ -289,7 +290,7 @@ public class Ship : MonoBehaviour
         if (thrust1D > .1f || thrust1D < -.1f)
         {
             float currentThrust;
-            
+
 
             if (boosting)
             {
@@ -302,12 +303,19 @@ public class Ship : MonoBehaviour
 
             rb.AddRelativeForce(Vector3.forward * thrust1D * currentThrust * Time.deltaTime);
             glide = thrust;
+
         }
         else
         {
             rb.AddRelativeForce(Vector3.forward * glide * Time.deltaTime);
             glide *= thrustGlideReduction;
+
             resetSpeed = true;
+        }
+        //  THIS IS A BAD FIX TO PREVENT DRIFTING (I'm leaving it in for now)
+        if(canDrift && (thrust1D < 1f || glide < 1f) && (upThrust < 1f || verticalGlide < 1f) && (strafe1D < 1f || horizontalGlide < 1f))
+        {
+            rb.velocity = Vector3.zero;
         }
 
         // Up/Down
@@ -315,11 +323,19 @@ public class Ship : MonoBehaviour
         {
             rb.AddRelativeForce(Vector3.up * upDown1D * upThrust * Time.fixedDeltaTime);
             verticalGlide = upDown1D * upThrust;
+            if(verticalGlide <= .5f)
+            {
+                verticalGlide = 0;
+            }
         }
         else
         {
             rb.AddRelativeForce(Vector3.up * verticalGlide * Time.fixedDeltaTime);
             verticalGlide *= upDownGlideReduction;
+            if (verticalGlide <= .5f)
+            {
+                verticalGlide = 0;
+            }
         }
 
         // strafing
@@ -327,11 +343,19 @@ public class Ship : MonoBehaviour
         {
             rb.AddRelativeForce(Vector3.right * strafe1D * upThrust * Time.fixedDeltaTime);
             horizontalGlide = strafe1D * strafeThrust;
+            if(horizontalGlide <= .5f)
+            {
+                horizontalGlide = 0;
+            }
         }
         else
         {
             rb.AddRelativeForce(Vector3.right * horizontalGlide * Time.fixedDeltaTime);
             horizontalGlide *= leftRightGlideReduction;
+            if (horizontalGlide <= .5f)
+            {
+                horizontalGlide = 0;
+            }
         }
 
         if(thrust1D > .1f && strafe1D > .1f && upDown1D > .1f && roll1D > .1f && pitchYaw.x > .1f && pitchYaw.y > .1f)
