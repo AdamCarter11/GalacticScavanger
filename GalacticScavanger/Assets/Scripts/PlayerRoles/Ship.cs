@@ -79,6 +79,10 @@ public class Ship : MonoBehaviour
     Quaternion startingRotation;
     float timeCount = 0.0f;
     bool resetSpeed = false;
+    bool shielding = false;
+    bool shieldingOnCool = false;
+    [SerializeField] float shieldTime = 5.0f;
+    [SerializeField] float shieldCoolDown = 10.0f;
 
 
     void Start()
@@ -161,6 +165,26 @@ public class Ship : MonoBehaviour
                 scanOut = true;
             }
         }
+        if(whichClass == 2)
+        {
+            if (!shielding && boosting && !shieldingOnCool)
+            {
+                StartCoroutine(shieldLogic());
+            }
+        }
+    }
+    IEnumerator shieldLogic()
+    {
+        shielding = true;
+        yield return new WaitForSeconds(shieldTime);
+        shielding = false;
+        StartCoroutine(shieldCoolDownFunc());
+    }
+    IEnumerator shieldCoolDownFunc()
+    {
+        shieldingOnCool = true;
+        yield return new WaitForSeconds(shieldCoolDown);
+        shieldingOnCool = false;
     }
 
     void scanLogic()
@@ -374,6 +398,20 @@ public class Ship : MonoBehaviour
         if (other.gameObject.CompareTag("DockingStation"))
         {
             GameManager.instance.ChangeScrapVal(0);
+        }
+        if (other.gameObject.CompareTag("EnemyProj"))
+        {
+            Destroy(other.gameObject);
+
+            if (!shielding)
+            {
+                health--;
+                if (health <= 0)
+                {
+                    // game over
+                }
+            }
+            
         }
     }
     private void OnTriggerExit(Collider other)
