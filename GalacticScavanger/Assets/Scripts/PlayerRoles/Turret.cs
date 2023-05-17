@@ -40,6 +40,7 @@ public class Turret : MonoBehaviour
     bool doubleFireRate = false;
     int whichClass;
     bool canDouble = true;
+    bool turretAbility = false;
 
     // Start is called before the first frame update
     void Start()
@@ -73,7 +74,7 @@ public class Turret : MonoBehaviour
         }
 
         // turret ability
-        if (PlayerPrefs.GetInt("Player1Character") == 1 && !doubleFireRate && canDouble)
+        if (PlayerPrefs.GetInt("Player1Character") == 1 && !doubleFireRate && canDouble && turretAbility)
         {
             StartCoroutine(fireRateDouble());
         }
@@ -112,7 +113,7 @@ public class Turret : MonoBehaviour
         rollAngle = Mathf.Clamp(rollAngle, minAngle, maxAngle);
         //Vector3 newRotation = new Vector3(rollAngle, turretBarrelBase.transform.localRotation.y, turretBarrelBase.transform.localRotation.z);
         //Vector3 newRotation = new Vector3(rollAngle, this.transform.localRotation.y, this.transform.localRotation.z);
-        turretBarrelBase.transform.localRotation = new Vector3(rollAngle, turretBarrelBase.transform.localRotation.y, turretBarrelBase.transform.localRotation.z);//Quaternion.Euler(newRotation);
+        turretBarrelBase.transform.localRotation = Quaternion.Euler(new Vector3(rollAngle, turretBarrelBase.transform.localRotation.y, turretBarrelBase.transform.localRotation.z));//Quaternion.Euler(newRotation);
     }
 
     private void FireUpdate()
@@ -180,7 +181,7 @@ public class Turret : MonoBehaviour
     }
     public void OnTurretAbility(InputAction.CallbackContext context)
     {
-        firePressed = context.performed;
+        turretAbility = context.performed;
         //Debug.Log("in OnFire:" + firePressed);
     }
     #endregion
