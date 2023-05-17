@@ -13,6 +13,9 @@ public class Turret : MonoBehaviour
     
     [Header("Shooting Information")]
     [SerializeField] public float fireRate = 0.1f;
+    [SerializeField] private float doubleFireRateTime = 5.0f; //in seconds
+    [SerializeField] private float doubleFireCooldown = 10f;
+    private float startingFireRate;
     [SerializeField] public int projectileDamage = 1;
     [SerializeField] private float sphereCastRadius = 0.5f;
     [SerializeField] private float sphereCastDistance = 100f;
@@ -33,6 +36,10 @@ public class Turret : MonoBehaviour
     [SerializeField] private float minAngle = -89.999f;
     [SerializeField] private float maxAngle = 5;
 
+    bool doubleFireRate = false;
+    int whichClass;
+    bool canDouble = true;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -48,6 +55,7 @@ public class Turret : MonoBehaviour
         {
             Debug.Log("turret did not find ship");
         }
+        startingFireRate = fireRate;
     }
 
     private void Update()
@@ -62,6 +70,27 @@ public class Turret : MonoBehaviour
         {
             Debug.Log("no ship detected, not updating turret");
         }
+
+        // turret ability
+        if (PlayerPrefs.GetInt("Player1Character") == 1 && !doubleFireRate && canDouble)
+        {
+            StartCoroutine(fireRateDouble());
+        }
+    }
+    IEnumerator fireRateDouble()
+    {
+        doubleFireRate = true;
+        fireRate /= 2;
+        yield return new WaitForSeconds(doubleFireRateTime);
+        fireRate = startingFireRate;
+        doubleFireRate = false;
+        StartCoroutine(rateCooldown());
+    }
+    IEnumerator rateCooldown()
+    {
+        canDouble = false;
+        yield return new WaitForSeconds(doubleFireCooldown);
+        canDouble = true;
     }
 
     private void RotationUpdate()
