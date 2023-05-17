@@ -31,6 +31,7 @@ public class Turret : MonoBehaviour
     // input variable
     private Vector2 pitchYaw;
     private bool firePressed;
+    private bool abilityPressed;
 
     [Header("Limit Rotation Angles")] 
     [SerializeField] private float minAngle = -89.999f;
@@ -109,7 +110,9 @@ public class Turret : MonoBehaviour
         float rollAngle = turretBarrelBase.transform.eulerAngles.x - x;
         rollAngle = (rollAngle > 180) ? rollAngle - 360 : rollAngle;
         rollAngle = Mathf.Clamp(rollAngle, minAngle, maxAngle);
-        turretBarrelBase.transform.eulerAngles = new Vector3(rollAngle, turretBarrelBase.transform.eulerAngles.y, turretBarrelBase.transform.eulerAngles.z);
+        //Vector3 newRotation = new Vector3(rollAngle, turretBarrelBase.transform.localRotation.y, turretBarrelBase.transform.localRotation.z);
+        //Vector3 newRotation = new Vector3(rollAngle, this.transform.localRotation.y, this.transform.localRotation.z);
+        turretBarrelBase.transform.localRotation = new Vector3(rollAngle, turretBarrelBase.transform.localRotation.y, turretBarrelBase.transform.localRotation.z);//Quaternion.Euler(newRotation);
     }
 
     private void FireUpdate()
@@ -171,6 +174,11 @@ public class Turret : MonoBehaviour
     }
 
     public void OnFire(InputAction.CallbackContext context)
+    {
+        firePressed = context.performed;
+        //Debug.Log("in OnFire:" + firePressed);
+    }
+    public void OnTurretAbility(InputAction.CallbackContext context)
     {
         firePressed = context.performed;
         //Debug.Log("in OnFire:" + firePressed);

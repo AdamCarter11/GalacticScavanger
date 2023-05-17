@@ -470,6 +470,17 @@
                     "action": "TurretAbility",
                     "isComposite": false,
                     "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "5b4e5f37-f80a-459c-822a-be0c00681ca4",
+                    "path": "<Keyboard>/u",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "TurretAbility",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         }
