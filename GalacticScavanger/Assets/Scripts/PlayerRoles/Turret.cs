@@ -108,12 +108,10 @@ public class Turret : MonoBehaviour
         Vector3 localEuler = turretBarrelBase.transform.localRotation.eulerAngles;
 
         //clamp the roll
-        float rollAngle = turretBarrelBase.transform.eulerAngles.x - x;
+        float rollAngle = turretBarrelBase.transform.localEulerAngles.x - x;
         rollAngle = (rollAngle > 180) ? rollAngle - 360 : rollAngle;
         rollAngle = Mathf.Clamp(rollAngle, minAngle, maxAngle);
-        //Vector3 newRotation = new Vector3(rollAngle, turretBarrelBase.transform.localRotation.y, turretBarrelBase.transform.localRotation.z);
-        //Vector3 newRotation = new Vector3(rollAngle, this.transform.localRotation.y, this.transform.localRotation.z);
-        turretBarrelBase.transform.localRotation = Quaternion.Euler(new Vector3(rollAngle, turretBarrelBase.transform.localRotation.y, turretBarrelBase.transform.localRotation.z));//Quaternion.Euler(newRotation);
+        turretBarrelBase.transform.localRotation = Quaternion.Euler(new Vector3(rollAngle, turretBarrelBase.transform.localRotation.y, turretBarrelBase.transform.localRotation.z));
     }
 
     private void FireUpdate()
