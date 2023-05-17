@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -40,6 +41,7 @@ public class Ship : MonoBehaviour
     [Header("Health and Collectable Vars")]
     public int health = 10;
     public int collectableCount = 0;
+    [SerializeField] private GameObject healthUIText;
 
     [Header("Gunner Vars")] 
     [SerializeField] public Transform turretLocation;
@@ -93,6 +95,10 @@ public class Ship : MonoBehaviour
         respawnPos = transform.position;
         whichClass = PlayerPrefs.GetInt("Player1Character");
         startingRotation = transform.rotation;
+        if (!healthUIText)
+        {
+            healthUIText = GameObject.Find("HealthPointsText");
+        }
     }
 
     private void Awake()
@@ -117,6 +123,7 @@ public class Ship : MonoBehaviour
         {
             scanLogic();
         }
+        healthUIText.GetComponent<TextMeshProUGUI>().text = "Health: " + health;
     }
     void FixedUpdate()
     {
