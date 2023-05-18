@@ -110,7 +110,7 @@ public class GameManager : MonoBehaviour
             currPlayerScrap++;
             scrapObj.GetComponent<CollectableBehavior>().scrapCap--;
             //collectedScrap++;
-            scrapText.text = "Scrap: " + currPlayerScrap;
+            //scrapText.text = "Scrap: " + currPlayerScrap;
             //depositedText.text = "Deposited: " + collectedScrap;
             //print(currPlayerScrap);
             //depositedText.text = "Deposited: " + collectedScrap;
