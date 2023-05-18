@@ -790,9 +790,9 @@ MonoBehaviour:
   yawTorque: 700
   pitchTorque: 400
   rollTorque: 200
-  thrust: 500
-  upThrust: 350
-  strafeThrust: 350
+  thrust: 2000
+  upThrust: 2000
+  strafeThrust: 2500
   thrustGlideReduction: 0.001
   upDownGlideReduction: 0.001
   leftRightGlideReduction: 0.001
