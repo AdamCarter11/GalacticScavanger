@@ -24,10 +24,12 @@ public class EnemyAI6 : MonoBehaviour
     int depositedScrap;
 
     private Vector3 respawnPoint;
-    public int enemyHealth = 10;
+    [SerializeField] int actualEnemyHealth;
+    [HideInInspector] public int enemyHealth;
     private int startingHealth;
     void Start()
     {
+        enemyHealth = actualEnemyHealth;
         startingHealth = enemyHealth;
         respawnPoint = transform.position;
     }
