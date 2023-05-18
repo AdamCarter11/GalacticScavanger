@@ -427,6 +427,28 @@ public class Ship : MonoBehaviour
             GameManager.instance.StopDock();
         }
     }
+    private void OnCollisionEnter(Collision collision)
+    {
+        rb.angularVelocity = Vector3.zero;
+        rb.velocity = Vector3.zero;
+        /*
+        Vector3 averageNormal = Vector3.zero;
+        foreach (ContactPoint contact in collision.contacts)
+        {
+            averageNormal += contact.normal; 
+        }
+        averageNormal /= collision.contacts.Length;
+        //print("Opposing force: " + averageNormal);
+        // Calculate the opposing force vector
+        float magnitude = 1; // Adjust this value as needed
+        Vector3 opposingForce = -averageNormal * magnitude;
+        print("Opposing force: " + opposingForce);
+        print("Player force: " + rb.velocity);
+
+        // Apply the opposing force to the spaceship
+        GetComponent<Rigidbody>().AddForce(opposingForce, ForceMode.Impulse);
+        */
+    }
 
     void PauseGameFunc()
     {

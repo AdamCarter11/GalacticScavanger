@@ -22,9 +22,19 @@ public class EnemyAI6 : MonoBehaviour
 
     [HideInInspector] public int collectedScrap;
     int depositedScrap;
+
+    private Vector3 respawnPoint;
+    public int enemyHealth = 10;
+    private int startingHealth;
     void Start()
     {
-        
+        startingHealth = enemyHealth;
+        respawnPoint = transform.position;
+    }
+    private void OnEnable()
+    {
+        enemyHealth = startingHealth;
+        transform.position = respawnPoint;
     }
     // Update is called once per frame
     void Update()
@@ -148,4 +158,5 @@ public class EnemyAI6 : MonoBehaviour
         }
 
     }
+    
 }
