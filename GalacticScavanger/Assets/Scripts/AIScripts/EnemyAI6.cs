@@ -40,7 +40,7 @@ public class EnemyAI6 : MonoBehaviour
         if (gameObject.activeSelf)
         {
             enemyHealth = startingHealth;
-            //transform.position = respawnPoint;
+            transform.position = respawnPoint;
         }
     }
     // Update is called once per frame
