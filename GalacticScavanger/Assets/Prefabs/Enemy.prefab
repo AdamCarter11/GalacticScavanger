@@ -224,7 +224,7 @@ MonoBehaviour:
   speed: 10
   rotationSpeed: 45
   collectedScrap: 0
-  actualEnemyHealth: 4
+  actualEnemyHealth: 2
   enemyHealth: 0
 --- !u!114 &7615455725069732496
 MonoBehaviour:
@@ -256,7 +256,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c87379453298c54781db6c5c52a665c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 3
+  health: 2
 --- !u!1 &8654933418619503122
 GameObject:
   m_ObjectHideFlags: 0

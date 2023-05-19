@@ -52,12 +52,13 @@ MonoBehaviour:
   turretCamera: {fileID: 7611724894000309097}
   turretBarrelBase: {fileID: 762249777225659131}
   turretBarrel: {fileID: 8173529516129636655}
+  projSpawnPoint: {fileID: 4601519986303688580}
   fireRate: 0.1
   doubleFireRateTime: 5
   doubleFireCooldown: 10
   projectileDamage: 1
   sphereCastRadius: 0.5
-  sphereCastDistance: 100
+  sphereCastDistance: 500
   layerMaskToIgnore:
     serializedVersion: 2
     m_Bits: 2048
@@ -233,6 +234,7 @@ Transform:
   m_Children:
   - {fileID: 5441845859793155510}
   - {fileID: 789615364132250843}
+  - {fileID: 1515514648300124583}
   m_Father: {fileID: 6073350239471359504}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -369,6 +371,37 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!1 &4601519986303688580
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1515514648300124583}
+  m_Layer: 11
+  m_Name: ProjSpawn
+  m_TagString: Untagged
+  m_Icon: {fileID: 1206586993520771344, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1515514648300124583
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4601519986303688580}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: -0.3, z: 2.33}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2224917879085916519}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7611724894000309097
 GameObject:
   m_ObjectHideFlags: 0

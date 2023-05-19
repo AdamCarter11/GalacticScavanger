@@ -10,6 +10,7 @@ public class Turret : MonoBehaviour
     [SerializeField] private GameObject turretCamera;
     [SerializeField] private GameObject turretBarrelBase;
     [SerializeField] private GameObject turretBarrel;
+    [SerializeField] private GameObject projSpawnPoint;
     
     [Header("Shooting Information")]
     [SerializeField] public float fireRate = 0.1f;
@@ -151,7 +152,7 @@ public class Turret : MonoBehaviour
         // Draw a debug line showing the direction and distance of the spherecast
         Debug.DrawRay(turretBarrel.transform.position, turretBarrel.transform.forward * sphereCastDistance, Color.yellow, 1f);
         
-        Instantiate(projectile, turretBarrel.transform.position, Quaternion.Euler(turretBarrel.transform.eulerAngles));
+        Instantiate(projectile, projSpawnPoint.transform.position, Quaternion.Euler(turretBarrel.transform.eulerAngles));
         
     }
     

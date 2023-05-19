@@ -125,7 +125,7 @@ public class EnemyAI6 : MonoBehaviour
         {
             if (hit.collider.gameObject.CompareTag("Obstacle"))
             {
-                print("OBSTACLE");
+                //print("OBSTACLE");
                 isThereAnyThing = true;
                 transform.Rotate(Vector3.up * Time.deltaTime * rotationSpeed);
             }
@@ -147,11 +147,11 @@ public class EnemyAI6 : MonoBehaviour
 
         // Find all objects with the target tag within the search radius
         Collider[] objectsInRange = Physics.OverlapSphere(transform.position, scrapSearchRadius, scrapLayer);
-        print(objectsInRange.Length);
+        //print(objectsInRange.Length);
         if (objectsInRange.Length <= 1)
         {
             target = player.gameObject;
-            print("player is nearest");
+            //print("player is nearest");
         }
         else
         {
