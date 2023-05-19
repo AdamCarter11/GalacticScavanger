@@ -5,8 +5,17 @@ public class CollectibleSpawner : MonoBehaviour
     public GameObject collectiblePrefab;   // The prefab of the collectible object to spawn
     public int numberOfCollectibles = 10;  // The number of collectibles to spawn
     public float spawnRadius = 10f;        // The maximum distance from the spawner at which collectibles can be spawned
-
+    bool canSpawn;
     void Start()
+    {
+        SpawnLogic();
+    }
+    private void Update()
+    {
+        //SpawnLogic();
+    }
+
+    void SpawnLogic()
     {
         for (int i = 0; i < numberOfCollectibles; i++)
         {
@@ -14,9 +23,11 @@ public class CollectibleSpawner : MonoBehaviour
             Vector3 spawnPosition = transform.position + Random.insideUnitSphere * spawnRadius;
 
             // Check if any colliders intersect the intended spawn position
+            
             Collider[] colliders = Physics.OverlapSphere(spawnPosition, 0.5f);
+            //print(colliders.Length);
             int totalChecks = 0;
-            while(colliders.Length > 0 && totalChecks < 10)
+            while (colliders.Length > 2 && totalChecks < 10)
             {
                 // Generate a random position within the spawn radius
                 spawnPosition = transform.position + Random.insideUnitSphere * spawnRadius;
@@ -24,9 +35,12 @@ public class CollectibleSpawner : MonoBehaviour
                 // Check if any colliders intersect the intended spawn position
                 colliders = Physics.OverlapSphere(spawnPosition, 0.5f);
                 totalChecks++;
+                
             }
+            
             //print("Colliders length: " + colliders.Length);
-            bool canSpawn = true;
+            if(totalChecks < 10)
+                canSpawn = true;
             /*
             foreach (Collider c in colliders)
             {
@@ -38,13 +52,14 @@ public class CollectibleSpawner : MonoBehaviour
                 }
             }
             */
-            
+
             // If there's no overlap, spawn the collectible
             if (canSpawn)
             {
                 Instantiate(collectiblePrefab, spawnPosition, Quaternion.identity);
+                //print(collectiblePrefab.transform.position);
             }
-            totalChecks++;
+            //numberOfCollectibles++;
         }
     }
 }

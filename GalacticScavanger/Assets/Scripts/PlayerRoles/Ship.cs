@@ -6,6 +6,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Rendering;
+using UnityEngine.SceneManagement;
 
 // referenced from: https://www.youtube.com/watch?v=fZvJvZA4nhY&ab_channel=DanPos
 
@@ -194,6 +195,7 @@ public class Ship : MonoBehaviour
         shieldingOnCool = false;
     }
 
+    bool continueScan = true;
     void scanLogic()
     {
         //print("Start scan");
@@ -207,12 +209,27 @@ public class Ship : MonoBehaviour
             print("Finished scan");
             scanOut = false;
         }
-        
+        StartCoroutine(scanLength());
         Collider[] colliders = Physics.OverlapSphere(transform.position, scanCol.radius, scanLayers, QueryTriggerInteraction.Collide);
         foreach (Collider objectHit in colliders){
+            print("Scan hit: " + objectHit.gameObject.name);
+            if (!continueScan)
+            {
+                scanOut = false;
+                break;
+            }
             GameObject tempObj = objectHit.gameObject;
-            tempObj.GetComponent<Outline>().enabled = true;
-            print(tempObj.name);
+            if(tempObj != null)
+            {
+                tempObj.GetComponent<Outline>().enabled = true;
+                //print(tempObj.name);
+            }
+            else
+            {
+                scanOut = false;
+                break;
+            }
+           
         }
         currentObjects = colliders.Length;
         //print(currentObjects);
@@ -223,6 +240,12 @@ public class Ship : MonoBehaviour
             print("Finished scan");
             scanOut = false;
         }
+    }
+    IEnumerator scanLength()
+    {
+        continueScan = true;
+        yield return new WaitForSeconds(5f);
+        continueScan = false;
     }
 
     void teleportLogic()
@@ -404,6 +427,7 @@ public class Ship : MonoBehaviour
         }
         if (other.gameObject.CompareTag("DockingStation"))
         {
+            print("DOCKING");
             GameManager.instance.ChangeScrapVal(0);
         }
         if (other.gameObject.CompareTag("EnemyProj"))
@@ -416,6 +440,7 @@ public class Ship : MonoBehaviour
                 if (health <= 0)
                 {
                     // game over
+                    SceneManager.LoadScene("GameOver");
                 }
             }
             
@@ -429,8 +454,9 @@ public class Ship : MonoBehaviour
     }
     private void OnCollisionEnter(Collision collision)
     {
-        rb.angularVelocity = Vector3.zero;
-        rb.velocity = Vector3.zero;
+        //print(collision.gameObject.name);
+        //rb.angularVelocity = Vector3.zero;
+        //rb.velocity = Vector3.zero;
         /*
         Vector3 averageNormal = Vector3.zero;
         foreach (ContactPoint contact in collision.contacts)
