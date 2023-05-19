@@ -9,6 +9,12 @@ public class EnemyManager : MonoBehaviour
     private void Start()
     {
         enemiesInScene = GameObject.FindGameObjectsWithTag("Enemy");
+        /*
+        for (int i = 0; i < enemiesInScene.Length; i++)
+        {
+            enemiesInScene[i].GetComponent<EnemyAI6>().enemyHealth = 10;
+        }
+        */
         print("Enemies: " + enemiesInScene.Length);
     }
     private void Update()
@@ -28,7 +34,8 @@ public class EnemyManager : MonoBehaviour
         yield return new WaitForSeconds(enemyRespawnTime);
         for (int i = 0; i < enemiesInScene.Length; i++)
         {
-            enemiesInScene[i].SetActive(true);
+            if (!enemiesInScene[i].activeSelf)
+                enemiesInScene[i].SetActive(true);
         }
     }
 }

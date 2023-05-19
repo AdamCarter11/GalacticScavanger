@@ -12,7 +12,7 @@ public class EnemyAI6 : MonoBehaviour
     [SerializeField]  private float speed = 10.0f;
     private bool isThereAnyThing = false;
     // Specify the target for the enemy.
-    [SerializeField] private GameObject target, player;
+    private GameObject target, player;
     [SerializeField] private float rotationSpeed = 45.0f;
     private RaycastHit hit;
 
@@ -24,25 +24,63 @@ public class EnemyAI6 : MonoBehaviour
     int depositedScrap;
 
     private Vector3 respawnPoint;
-    public int enemyHealth = 10;
+    [SerializeField] int actualEnemyHealth;
+    [HideInInspector] public int enemyHealth;
     private int startingHealth;
     void Start()
     {
+        enemyHealth = actualEnemyHealth;
         startingHealth = enemyHealth;
         respawnPoint = transform.position;
+        target = GameObject.FindGameObjectWithTag("Ship");
+        player = GameObject.FindGameObjectWithTag("Ship");
     }
     private void OnEnable()
     {
-        enemyHealth = startingHealth;
-        transform.position = respawnPoint;
+        if (gameObject.activeSelf)
+        {
+            enemyHealth = startingHealth;
+            transform.position = respawnPoint;
+        }
     }
     // Update is called once per frame
     void Update()
     {
+        if (target == null)
+        {
+            target = GameObject.FindGameObjectWithTag("Ship");
+            player = GameObject.FindGameObjectWithTag("Ship");
+        }
+        else
+        {
+            EnemyAILogic();
+        } 
+        // Use to debug the Physics.RayCast.
+        Debug.DrawRay(transform.position + (transform.right * 7), transform.forward * 20, Color.red);
+        Debug.DrawRay(transform.position - (transform.right * 7), transform.forward * 20, Color.red);
+        Debug.DrawRay(transform.position - (transform.forward * 4), -transform.right * 20, Color.yellow);
+        Debug.DrawRay(transform.position - (transform.forward * 4), transform.right * 20, Color.yellow);
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.CompareTag("DockingStation"))
+        {
+            depositedScrap = collectedScrap;
+            collectedScrap = 0;
+            if(depositedScrap > 100)
+            {   
+                //lose condition for player maybe?
+
+            }
+        }
+    }
+    void EnemyAILogic()
+    {
         //Look At smoothly Towards the Target if there is nothing in front.
         if (!isThereAnyThing)
         {
-            if(collectedScrap < scrapDepositThreshold)
+            if (collectedScrap < scrapDepositThreshold)
             {
                 if (Vector3.Distance(player.transform.position, transform.position) > playerAttackRange)
                 {
@@ -60,10 +98,10 @@ public class EnemyAI6 : MonoBehaviour
                 GameObject[] dockingStations = GameObject.FindGameObjectsWithTag("DockingStation");
                 float shortestDistance = Mathf.Infinity;
                 Vector3 currPos = transform.position;
-                foreach(GameObject obj in dockingStations)
+                foreach (GameObject obj in dockingStations)
                 {
                     float distance = Vector3.Distance(currPos, obj.transform.position);
-                    if(distance < shortestDistance)
+                    if (distance < shortestDistance)
                     {
                         shortestDistance = distance;
                         nearestObject = obj;
@@ -71,7 +109,7 @@ public class EnemyAI6 : MonoBehaviour
                 }
                 target = nearestObject;
             }
-            
+
             Vector3 relativePos = target.transform.position - transform.position;
             Quaternion rotation = Quaternion.LookRotation(relativePos);
             transform.rotation = Quaternion.Slerp(transform.rotation, rotation, Time.deltaTime);
@@ -100,25 +138,6 @@ public class EnemyAI6 : MonoBehaviour
             if (hit.collider.gameObject.CompareTag("Obstacle"))
             {
                 isThereAnyThing = false;
-            }
-        }
-        // Use to debug the Physics.RayCast.
-        Debug.DrawRay(transform.position + (transform.right * 7), transform.forward * 20, Color.red);
-        Debug.DrawRay(transform.position - (transform.right * 7), transform.forward * 20, Color.red);
-        Debug.DrawRay(transform.position - (transform.forward * 4), -transform.right * 20, Color.yellow);
-        Debug.DrawRay(transform.position - (transform.forward * 4), transform.right * 20, Color.yellow);
-    }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.gameObject.CompareTag("DockingStation"))
-        {
-            depositedScrap = collectedScrap;
-            collectedScrap = 0;
-            if(depositedScrap > 100)
-            {   
-                //lose condition for player maybe?
-
             }
         }
     }
