@@ -34,7 +34,8 @@ public class EnemyManager : MonoBehaviour
         yield return new WaitForSeconds(enemyRespawnTime);
         for (int i = 0; i < enemiesInScene.Length; i++)
         {
-            enemiesInScene[i].SetActive(true);
+            if (!enemiesInScene[i].activeSelf)
+                enemiesInScene[i].SetActive(true);
         }
     }
 }

@@ -293,16 +293,16 @@ MonoBehaviour:
   playerAttackRange: 150
   scrapSearchRadius: 500
   range: 160
-  targetTag: 
+  targetTag: Ship
   scrapLayer:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 1024
   scrapDepositThreshold: 30
   speed: 10
-  target: {fileID: 0}
-  player: {fileID: 0}
   rotationSpeed: 45
   collectedScrap: 0
+  actualEnemyHealth: 4
+  enemyHealth: 0
 --- !u!114 &7615455725069732496
 MonoBehaviour:
   m_ObjectHideFlags: 0
