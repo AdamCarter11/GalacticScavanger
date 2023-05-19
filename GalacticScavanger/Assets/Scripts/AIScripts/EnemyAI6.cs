@@ -37,7 +37,7 @@ public class EnemyAI6 : MonoBehaviour
     }
     private void OnEnable()
     {
-        if (gameObject.activeSelf)
+        if (gameObject.activeSelf && respawnPoint.x != 0 && respawnPoint.y != 0 && respawnPoint.z != 0)
         {
             enemyHealth = startingHealth;
             transform.position = respawnPoint;
