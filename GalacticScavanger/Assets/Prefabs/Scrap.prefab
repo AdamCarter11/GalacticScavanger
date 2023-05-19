@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2611579061540178799}
   - component: {fileID: 1064076790235119589}
-  m_Layer: 10
+  m_Layer: 0
   m_Name: CollectionArea
   m_TagString: CollectionArea
   m_Icon: {fileID: 0}
@@ -43,7 +43,7 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 1
+  m_Radius: 1.5
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &5988257677994111858
 GameObject:
@@ -56,10 +56,10 @@ GameObject:
   - component: {fileID: 5988257677994111865}
   - component: {fileID: 5988257677994111862}
   - component: {fileID: 5988257677994111863}
-  - component: {fileID: 5988257677994111860}
   - component: {fileID: 5988257677994111861}
   - component: {fileID: 5988257677994111864}
   - component: {fileID: -8932941355899375824}
+  - component: {fileID: 5457800784246013747}
   m_Layer: 10
   m_Name: Scrap
   m_TagString: Scrap
@@ -133,20 +133,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!136 &5988257677994111860
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5988257677994111858}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  m_Radius: 0.5
-  m_Height: 2
-  m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &5988257677994111861
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -194,3 +180,16 @@ MonoBehaviour:
   precomputeOutline: 0
   bakeKeys: []
   bakeValues: []
+--- !u!135 &5457800784246013747
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5988257677994111858}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.016571816
+  m_Center: {x: 0.0035286688, y: 0.00128109, z: -0.002465605}

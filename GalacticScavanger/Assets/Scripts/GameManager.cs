@@ -67,7 +67,7 @@ public class GameManager : MonoBehaviour
                 timerOn = false;
                 // gameover
                 Cursor.visible = true;
-                //SceneManager.LoadScene("GameOver");
+                SceneManager.LoadScene("GameOver");
             }
         }
     }

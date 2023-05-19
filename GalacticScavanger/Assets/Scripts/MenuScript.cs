@@ -8,7 +8,8 @@ public class MenuScript : MonoBehaviour
     private void Start()
     {
         //set to -1 before they select a character just in case
-        PlayerPrefs.SetInt("WhichCharacter", -1);
+        PlayerPrefs.SetInt("Player1Character", -1);
+        PlayerPrefs.SetInt("Player2Character", -1);
     }
     public void StartGame()
     {

@@ -1479,7 +1479,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!65 &631341918
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -4219,7 +4219,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1822941588}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3.0086708, y: 5.83885, z: 27.266512}
+  m_LocalPosition: {x: 94.6, y: 5.83885, z: 27.266512}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -4256,7 +4256,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   timerText: {fileID: 585671113}
-  StartingTime: 10
+  StartingTime: 100
   scrapText: {fileID: 883886956}
   depositedText: {fileID: 226736649}
 --- !u!4 &1873973174

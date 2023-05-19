@@ -7,6 +7,10 @@ public class CollectableBehavior : MonoBehaviour
 {
 
     [HideInInspector] public int scrapCap = 10;
+    private void Start()
+    {
+        scrapCap = 10;
+    }
     private void OnTriggerEnter(Collider other)
     {
         //will have to change this to make the AI actually be able to increas their own scrap instead of the players
