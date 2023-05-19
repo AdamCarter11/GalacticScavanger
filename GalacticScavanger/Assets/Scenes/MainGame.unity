@@ -4209,7 +4209,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   collectiblePrefab: {fileID: 5988257677994111858, guid: 349d0c79336f7f54ab760888312375fd, type: 3}
-  numberOfCollectibles: 10
+  numberOfCollectibles: 50
   spawnRadius: 100
 --- !u!4 &1822941590
 Transform:

@@ -290,9 +290,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca82a417fc3c96149882a359c4bedec0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerAttackRange: 150
+  playerAttackRange: 30
   scrapSearchRadius: 500
-  range: 160
+  range: 40
   targetTag: Ship
   scrapLayer:
     serializedVersion: 2
