@@ -41,6 +41,7 @@ public class Turret : MonoBehaviour
     int whichClass;
     bool canDouble = true;
     bool turretAbility = false;
+    [SerializeField] ParticleSystem muzzleFlashPS;
 
     // Start is called before the first frame update
     void Start()
@@ -150,7 +151,7 @@ public class Turret : MonoBehaviour
         }
         // Draw a debug line showing the direction and distance of the spherecast
         Debug.DrawRay(turretBarrel.transform.position, turretBarrel.transform.forward * sphereCastDistance, Color.yellow, 1f);
-        
+        Instantiate(muzzleFlashPS, turretBarrel.transform.position, Quaternion.identity);
         Instantiate(projectile, turretBarrel.transform.position, Quaternion.Euler(turretBarrel.transform.eulerAngles));
         
     }

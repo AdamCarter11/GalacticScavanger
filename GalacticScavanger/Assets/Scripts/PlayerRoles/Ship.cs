@@ -94,6 +94,7 @@ public class Ship : MonoBehaviour
     [SerializeField] float emissionRate = 10f;
     [SerializeField] ParticleSystem particleSystem;
     [SerializeField] ParticleSystem depositPS;
+    [SerializeField] ParticleSystem lightningPS;
 
     void Start()
     {
@@ -222,11 +223,14 @@ public class Ship : MonoBehaviour
     bool continueScan = true;
     void scanLogic()
     {
+        lightningPS.Play();
         //print("Start scan");
         //scanCol.transform.localScale += Vector3.one * scanSpeed * Time.deltaTime;
-        if(scanCol.radius <= maxScanRadius)
+        if (scanCol.radius <= maxScanRadius)
         {
             scanCol.radius += 1f * scanSpeed * Time.deltaTime;
+            //lightningPS.transform.localScale *= 1f * scanSpeed * Time.deltaTime;
+            lightningPS.gameObject.transform.localScale = new Vector3(lightningPS.gameObject.transform.localScale.x + 1f * scanSpeed * Time.deltaTime / 4, lightningPS.gameObject.transform.localScale.y + 1f * scanSpeed * Time.deltaTime / 4, lightningPS.gameObject.transform.localScale.z + 1f * scanSpeed * Time.deltaTime / 4);
         }
         else
         {
@@ -239,6 +243,9 @@ public class Ship : MonoBehaviour
             print("Scan hit: " + objectHit.gameObject.name);
             if (!continueScan)
             {
+                lightningPS.gameObject.transform.localScale = new Vector3(1, 1, 1);
+                lightningPS.Stop();
+                lightningPS.Clear();
                 scanCol.radius = .1f;
                 scanOut = false;
                 break;
@@ -251,6 +258,9 @@ public class Ship : MonoBehaviour
             }
             else
             {
+                lightningPS.gameObject.transform.localScale = new Vector3(1, 1, 1);
+                lightningPS.Stop();
+                lightningPS.Clear();
                 scanCol.radius = .1f;
                 scanOut = false;
                 break;
@@ -263,6 +273,9 @@ public class Ship : MonoBehaviour
         // Stop growing if we've hit the maximum number of objects
         if (currentObjects >= howManyToScan)
         {
+            lightningPS.gameObject.transform.localScale = new Vector3(1, 1, 1);
+            lightningPS.Stop();
+            lightningPS.Clear();
             print("Finished scan");
             scanCol.radius = .1f;
             scanOut = false;
