@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Net;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -87,9 +88,19 @@ public class Ship : MonoBehaviour
     [SerializeField] float shieldTime = 5.0f;
     [SerializeField] float shieldCoolDown = 10.0f;
 
+    //particle effect vars
+    private Transform startPoint;
+    private Transform endPoint;
+    [SerializeField] float emissionRate = 10f;
+    [SerializeField] ParticleSystem particleSystem;
+    [SerializeField] ParticleSystem depositPS;
 
     void Start()
     {
+        if(particleSystem == null)
+        {
+            particleSystem = GameObject.FindGameObjectWithTag("miningParticle").GetComponent<ParticleSystem>();
+        }
         rb = GetComponent<Rigidbody>();
         currBoostAmount = maxBoostAmount;
         Cursor.visible = false;
@@ -125,6 +136,19 @@ public class Ship : MonoBehaviour
             scanLogic();
         }
         healthUIText.GetComponent<TextMeshProUGUI>().text = "Health: " + health;
+
+        //particle logic
+        if(endPoint != null)
+        {
+            particleSystem.Play();
+            startPoint = transform;
+            ParticleLogc();
+        }
+        else
+        {
+            particleSystem.Stop();
+            particleSystem.Clear();
+        }
     }
     void FixedUpdate()
     {
@@ -215,6 +239,7 @@ public class Ship : MonoBehaviour
             print("Scan hit: " + objectHit.gameObject.name);
             if (!continueScan)
             {
+                scanCol.radius = .1f;
                 scanOut = false;
                 break;
             }
@@ -226,6 +251,7 @@ public class Ship : MonoBehaviour
             }
             else
             {
+                scanCol.radius = .1f;
                 scanOut = false;
                 break;
             }
@@ -238,6 +264,7 @@ public class Ship : MonoBehaviour
         if (currentObjects >= howManyToScan)
         {
             print("Finished scan");
+            scanCol.radius = .1f;
             scanOut = false;
         }
     }
@@ -420,14 +447,16 @@ public class Ship : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag("CollectionArea"))
+        if (other.gameObject.CompareTag("CollectionArea") && !scanOut)
         {
             print(other.gameObject.name);
             GameManager.instance.DockingScrap(other.gameObject.transform.parent.gameObject, 10);
+            endPoint = other.transform;
         }
         if (other.gameObject.CompareTag("DockingStation"))
         {
             print("DOCKING");
+            Instantiate(depositPS, transform.position, Quaternion.identity);
             GameManager.instance.ChangeScrapVal(0);
         }
         if (other.gameObject.CompareTag("EnemyProj"))
@@ -450,6 +479,7 @@ public class Ship : MonoBehaviour
     {
         if (other.gameObject.CompareTag("CollectionArea")){
             GameManager.instance.StopDock();
+            endPoint = null;
         }
     }
     private void OnCollisionEnter(Collision collision)
@@ -490,6 +520,28 @@ public class Ship : MonoBehaviour
             print("NOT paused");
         }
         */
+    }
+
+    private void ParticleLogc()
+    {
+        // Calculate the distance between the start and end points
+        float distance = Vector3.Distance(startPoint.position, endPoint.position);
+
+        // Calculate the emission rate based on the distance
+        float calculatedRate = emissionRate * distance;
+
+        // Set the particle emission rate
+        var emission = particleSystem.emission;
+        emission.rateOverTime = calculatedRate;
+
+        // Set the particle system position to the start point
+        particleSystem.transform.position = startPoint.position;
+
+        // Calculate the direction from start to end
+        Vector3 direction = (endPoint.position - startPoint.position).normalized;
+
+        // Set the particle system rotation to face the direction
+        particleSystem.transform.rotation = Quaternion.LookRotation(direction);
     }
 
     #region Input Methods

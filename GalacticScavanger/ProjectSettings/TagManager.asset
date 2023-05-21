@@ -12,6 +12,7 @@ TagManager:
   - Obstacle
   - CollectionArea
   - EnemyProj
+  - miningParticle
   layers:
   - Default
   - TransparentFX
@@ -25,8 +26,8 @@ TagManager:
   - Player4
   - Scrap
   - Ship
-  - 
-  - 
+  - scanLayer
+  - dockingLayer
   - 
   - 
   - 
