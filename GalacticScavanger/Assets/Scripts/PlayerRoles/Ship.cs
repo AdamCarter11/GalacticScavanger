@@ -96,6 +96,8 @@ public class Ship : MonoBehaviour
     [SerializeField] ParticleSystem depositPS;
     [SerializeField] ParticleSystem lightningPS;
 
+    bool currentlyMining = false;
+
     void Start()
     {
         if(particleSystem == null)
@@ -141,6 +143,7 @@ public class Ship : MonoBehaviour
         //particle logic
         if(endPoint != null)
         {
+            print("play mining particle");
             particleSystem.Play();
             startPoint = transform;
             ParticleLogc();
@@ -460,11 +463,12 @@ public class Ship : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag("CollectionArea") && !scanOut)
+        if (other.gameObject.CompareTag("CollectionArea") && !scanOut && !currentlyMining)
         {
             print(other.gameObject.name);
             GameManager.instance.DockingScrap(other.gameObject.transform.parent.gameObject, 10);
             endPoint = other.transform;
+            currentlyMining = true;
         }
         if (other.gameObject.CompareTag("DockingStation"))
         {
@@ -490,9 +494,10 @@ public class Ship : MonoBehaviour
     }
     private void OnTriggerExit(Collider other)
     {
-        if (other.gameObject.CompareTag("CollectionArea")){
+        if (other.gameObject.CompareTag("CollectionArea") && currentlyMining){
             GameManager.instance.StopDock();
             endPoint = null;
+            currentlyMining = false;
         }
     }
     private void OnCollisionEnter(Collision collision)

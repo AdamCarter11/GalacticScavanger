@@ -5,6 +5,7 @@ public class EnemyAI6 : MonoBehaviour
     // Fix a range how early u want your enemy detect the obstacle.
     [SerializeField] private int playerAttackRange = 150;
     [SerializeField] private int scrapSearchRadius = 500;
+    [SerializeField] private float activeRange = 600;
     [SerializeField] private int range = 160;
     [SerializeField] private string targetTag;
     [SerializeField] private LayerMask scrapLayer;
@@ -80,39 +81,45 @@ public class EnemyAI6 : MonoBehaviour
         //Look At smoothly Towards the Target if there is nothing in front.
         if (!isThereAnyThing)
         {
-            if (collectedScrap < scrapDepositThreshold)
+            if (Vector3.Distance(transform.position, player.transform.position) < activeRange)
             {
-                if (Vector3.Distance(player.transform.position, transform.position) > playerAttackRange)
+                if (collectedScrap < scrapDepositThreshold)
                 {
-                    //target = nearest scrap unless there is no nearby scrap in search radius
-                    FindNearestObject();
+                    if (Vector3.Distance(player.transform.position, transform.position) > playerAttackRange)
+                    {
+                        //target = nearest scrap unless there is no nearby scrap in search radius
+                        FindNearestObject();
+                    }
+                    else
+                    {
+                        target = player;
+                    }
                 }
                 else
                 {
-                    target = player;
+                    //find nearest docking station
+                    GameObject[] dockingStations = GameObject.FindGameObjectsWithTag("DockingStation");
+                    float shortestDistance = Mathf.Infinity;
+                    Vector3 currPos = transform.position;
+                    foreach (GameObject obj in dockingStations)
+                    {
+                        float distance = Vector3.Distance(currPos, obj.transform.position);
+                        if (distance < shortestDistance)
+                        {
+                            shortestDistance = distance;
+                            nearestObject = obj;
+                        }
+                    }
+                    target = nearestObject;
                 }
+                Vector3 relativePos = target.transform.position - transform.position;
+                Quaternion rotation = Quaternion.LookRotation(relativePos);
+                transform.rotation = Quaternion.Slerp(transform.rotation, rotation, Time.deltaTime);
             }
             else
             {
-                //find nearest docking station
-                GameObject[] dockingStations = GameObject.FindGameObjectsWithTag("DockingStation");
-                float shortestDistance = Mathf.Infinity;
-                Vector3 currPos = transform.position;
-                foreach (GameObject obj in dockingStations)
-                {
-                    float distance = Vector3.Distance(currPos, obj.transform.position);
-                    if (distance < shortestDistance)
-                    {
-                        shortestDistance = distance;
-                        nearestObject = obj;
-                    }
-                }
-                target = nearestObject;
+                return;
             }
-
-            Vector3 relativePos = target.transform.position - transform.position;
-            Quaternion rotation = Quaternion.LookRotation(relativePos);
-            transform.rotation = Quaternion.Slerp(transform.rotation, rotation, Time.deltaTime);
         }
         // Enemy translate in forward direction.
         transform.Translate(Vector3.forward * Time.deltaTime * speed);
