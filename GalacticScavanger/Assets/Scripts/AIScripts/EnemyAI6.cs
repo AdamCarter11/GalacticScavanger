@@ -118,6 +118,8 @@ public class EnemyAI6 : MonoBehaviour
             }
             else
             {
+                gameObject.GetComponent<Rigidbody>().velocity = Vector3.zero;
+                gameObject.GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
                 return;
             }
         }
