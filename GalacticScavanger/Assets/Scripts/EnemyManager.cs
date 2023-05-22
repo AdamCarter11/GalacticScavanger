@@ -6,6 +6,7 @@ public class EnemyManager : MonoBehaviour
 {
     GameObject[] enemiesInScene;
     [SerializeField] float enemyRespawnTime = 10f;
+    
     private void Start()
     {
         enemiesInScene = GameObject.FindGameObjectsWithTag("Enemy");

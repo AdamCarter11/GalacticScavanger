@@ -213,10 +213,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca82a417fc3c96149882a359c4bedec0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerAttackRange: 30
+  playerAttackRange: 150
   scrapSearchRadius: 500
-  range: 40
-  targetTag: Ship
+  range: 160
+  targetTag: Scrap
   scrapLayer:
     serializedVersion: 2
     m_Bits: 1024
@@ -224,7 +224,7 @@ MonoBehaviour:
   speed: 10
   rotationSpeed: 45
   collectedScrap: 0
-  actualEnemyHealth: 2
+  actualEnemyHealth: 4
   enemyHealth: 0
 --- !u!114 &7615455725069732496
 MonoBehaviour:
@@ -256,7 +256,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c87379453298c54781db6c5c52a665c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 2
+  health: 3
+  explosionPS: {fileID: 417761080263594739, guid: 7800b8f6b712bfe49bd663eeb3ebe1e4, type: 3}
 --- !u!1 &8654933418619503122
 GameObject:
   m_ObjectHideFlags: 0

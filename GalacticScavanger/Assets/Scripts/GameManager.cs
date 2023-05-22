@@ -18,6 +18,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] TMP_Text timerText;
     [SerializeField] float StartingTime;
     [SerializeField] TMP_Text scrapText, depositedText;
+
     float timeLeft;
     bool timerOn = true;
 
@@ -41,7 +42,7 @@ public class GameManager : MonoBehaviour
             collectedScrap += currPlayerScrap;
             tempTarget = 0;
         }
-
+        
         currPlayerScrap = tempTarget;
         scrapText.text = "Scrap: " + currPlayerScrap;
         depositedText.text = "Deposited: " + collectedScrap;

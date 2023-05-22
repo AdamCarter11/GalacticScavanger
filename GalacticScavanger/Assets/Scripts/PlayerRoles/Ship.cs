@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Net;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -87,9 +88,20 @@ public class Ship : MonoBehaviour
     [SerializeField] float shieldTime = 5.0f;
     [SerializeField] float shieldCoolDown = 10.0f;
 
+    //particle effect vars
+    private Transform startPoint;
+    private Transform endPoint;
+    [SerializeField] float emissionRate = 10f;
+    [SerializeField] ParticleSystem particleSystem;
+    [SerializeField] ParticleSystem depositPS;
+    [SerializeField] ParticleSystem lightningPS;
 
     void Start()
     {
+        if(particleSystem == null)
+        {
+            particleSystem = GameObject.FindGameObjectWithTag("miningParticle").GetComponent<ParticleSystem>();
+        }
         rb = GetComponent<Rigidbody>();
         currBoostAmount = maxBoostAmount;
         Cursor.visible = false;
@@ -125,6 +137,19 @@ public class Ship : MonoBehaviour
             scanLogic();
         }
         healthUIText.GetComponent<TextMeshProUGUI>().text = "Health: " + health;
+
+        //particle logic
+        if(endPoint != null)
+        {
+            particleSystem.Play();
+            startPoint = transform;
+            ParticleLogc();
+        }
+        else
+        {
+            particleSystem.Stop();
+            particleSystem.Clear();
+        }
     }
     void FixedUpdate()
     {
@@ -198,11 +223,14 @@ public class Ship : MonoBehaviour
     bool continueScan = true;
     void scanLogic()
     {
+        lightningPS.Play();
         //print("Start scan");
         //scanCol.transform.localScale += Vector3.one * scanSpeed * Time.deltaTime;
-        if(scanCol.radius <= maxScanRadius)
+        if (scanCol.radius <= maxScanRadius)
         {
             scanCol.radius += 1f * scanSpeed * Time.deltaTime;
+            //lightningPS.transform.localScale *= 1f * scanSpeed * Time.deltaTime;
+            lightningPS.gameObject.transform.localScale = new Vector3(lightningPS.gameObject.transform.localScale.x + 1f * scanSpeed * Time.deltaTime / 4, lightningPS.gameObject.transform.localScale.y + 1f * scanSpeed * Time.deltaTime / 4, lightningPS.gameObject.transform.localScale.z + 1f * scanSpeed * Time.deltaTime / 4);
         }
         else
         {
@@ -215,6 +243,10 @@ public class Ship : MonoBehaviour
             print("Scan hit: " + objectHit.gameObject.name);
             if (!continueScan)
             {
+                lightningPS.gameObject.transform.localScale = new Vector3(1, 1, 1);
+                lightningPS.Stop();
+                lightningPS.Clear();
+                scanCol.radius = .1f;
                 scanOut = false;
                 break;
             }
@@ -226,6 +258,10 @@ public class Ship : MonoBehaviour
             }
             else
             {
+                lightningPS.gameObject.transform.localScale = new Vector3(1, 1, 1);
+                lightningPS.Stop();
+                lightningPS.Clear();
+                scanCol.radius = .1f;
                 scanOut = false;
                 break;
             }
@@ -237,7 +273,11 @@ public class Ship : MonoBehaviour
         // Stop growing if we've hit the maximum number of objects
         if (currentObjects >= howManyToScan)
         {
+            lightningPS.gameObject.transform.localScale = new Vector3(1, 1, 1);
+            lightningPS.Stop();
+            lightningPS.Clear();
             print("Finished scan");
+            scanCol.radius = .1f;
             scanOut = false;
         }
     }
@@ -420,14 +460,16 @@ public class Ship : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag("CollectionArea"))
+        if (other.gameObject.CompareTag("CollectionArea") && !scanOut)
         {
             print(other.gameObject.name);
             GameManager.instance.DockingScrap(other.gameObject.transform.parent.gameObject, 10);
+            endPoint = other.transform;
         }
         if (other.gameObject.CompareTag("DockingStation"))
         {
             print("DOCKING");
+            Instantiate(depositPS, transform.position, Quaternion.identity);
             GameManager.instance.ChangeScrapVal(0);
         }
         if (other.gameObject.CompareTag("EnemyProj"))
@@ -450,6 +492,7 @@ public class Ship : MonoBehaviour
     {
         if (other.gameObject.CompareTag("CollectionArea")){
             GameManager.instance.StopDock();
+            endPoint = null;
         }
     }
     private void OnCollisionEnter(Collision collision)
@@ -490,6 +533,28 @@ public class Ship : MonoBehaviour
             print("NOT paused");
         }
         */
+    }
+
+    private void ParticleLogc()
+    {
+        // Calculate the distance between the start and end points
+        float distance = Vector3.Distance(startPoint.position, endPoint.position);
+
+        // Calculate the emission rate based on the distance
+        float calculatedRate = emissionRate * distance;
+
+        // Set the particle emission rate
+        var emission = particleSystem.emission;
+        emission.rateOverTime = calculatedRate;
+
+        // Set the particle system position to the start point
+        particleSystem.transform.position = startPoint.position;
+
+        // Calculate the direction from start to end
+        Vector3 direction = (endPoint.position - startPoint.position).normalized;
+
+        // Set the particle system rotation to face the direction
+        particleSystem.transform.rotation = Quaternion.LookRotation(direction);
     }
 
     #region Input Methods

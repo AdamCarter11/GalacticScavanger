@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class CollectibleSpawner : MonoBehaviour
@@ -6,18 +7,31 @@ public class CollectibleSpawner : MonoBehaviour
     public int numberOfCollectibles = 10;  // The number of collectibles to spawn
     public float spawnRadius = 10f;        // The maximum distance from the spawner at which collectibles can be spawned
     bool canSpawn;
+    bool spawnDelayed = false;
+    [SerializeField] float respawnDelay = 20f;
     void Start()
     {
         SpawnLogic();
     }
     private void Update()
     {
-        //SpawnLogic();
+        if (!spawnDelayed)
+        {
+            spawnDelayed = true;
+            SpawnLogic();
+            StartCoroutine(spawnDelay());
+        }
+        
+    }
+    IEnumerator spawnDelay()
+    {
+        yield return new WaitForSeconds(respawnDelay);
+        spawnDelayed = false;
     }
 
     void SpawnLogic()
     {
-        for (int i = 0; i < numberOfCollectibles; i++)
+        for(int i = 0; i < numberOfCollectibles; i++)
         {
             // Generate a random position within the spawn radius
             Vector3 spawnPosition = transform.position + Random.insideUnitSphere * spawnRadius;
