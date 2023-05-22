@@ -55,14 +55,21 @@ public class GameManager : MonoBehaviour
     }
     public void ChangeScrapVal(int scrapChange)
     {
-        int tempTarget = scrapChange;
-        if (scrapChange == -1 || scrapChange == 0)
-        {
-            collectedScrap += currPlayerScrap;
-            tempTarget = 0;
-        }
-        
-        currPlayerScrap = tempTarget;
+            int tempTarget = scrapChange;
+            if (scrapChange == -1 || scrapChange == 0)
+            {
+                collectedScrap += currPlayerScrap;
+                tempTarget = 0;
+            }
+            currPlayerScrap = tempTarget;
+            tempTarget = scrapChange;
+            if (scrapChange == -1 || scrapChange == 0)
+            {
+                collectedGas += currPlayerGas;
+                tempTarget = 0;
+            }
+            currPlayerGas = tempTarget;
+
         AssignTextVals();
     }
 
@@ -100,14 +107,14 @@ public class GameManager : MonoBehaviour
         timerText.text = string.Format("{0:00} : {1:00}", minutes, seconds);
     }
 
-    public void DockingScrap(GameObject scrapObj, int maxScrapCap)
+    public void DockingScrap(GameObject scrapObj, int maxScrapCap, string whatType)
     {
         if (!isDocking)
         {
             canDock = true;
             //lerp or change overtime the players scrap
             //StartCoroutine(DockScraps());
-            StartCoroutine(DockScraps(scrapObj, maxScrapCap));
+            StartCoroutine(DockScraps(scrapObj, maxScrapCap, whatType));
             isDocking = true;
         }
 
@@ -116,26 +123,32 @@ public class GameManager : MonoBehaviour
     {
         canDock = false;
         //StopCoroutine(DockScraps());
-        StopCoroutine(DockScraps(null, 0));
+        StopCoroutine(DockScraps(null, 0, ""));
     }
 
-    IEnumerator DockScraps(GameObject scrapObj, int maxScrapCap)
+    IEnumerator DockScraps(GameObject scrapObj, int maxScrapCap, string whatType)
     {
         while (scrapObj != null && scrapObj.GetComponent<CollectableBehavior>().scrapCap > 0 && canDock)
         {
             yield return new WaitForSeconds(1f);
-            //currPlayerScrap--;
-            //collectedScrap++;
-            currPlayerScrap++;
-            scrapText.text = "Scrap: " + currPlayerScrap;
+            if(whatType == "Scrap")
+            {
+                currPlayerScrap++;
+                scrapText.text = "Scrap: " + currPlayerScrap;
+                print("collecting Scrap");
+            }
+            else if(whatType == "Gas")
+            {
+                currPlayerGas++;
+                gasText.text = "Gas: " + currPlayerGas;
+                print("collecting Gas");
+            }
+            else
+            {
+                print("Incorrect function parameter for dock function");
+            }
             if (scrapObj != null)
                 scrapObj.GetComponent<CollectableBehavior>().scrapCap--;
-            //collectedScrap++;
-            //scrapText.text = "Scrap: " + currPlayerScrap;
-            //depositedText.text = "Deposited: " + collectedScrap;
-            //print(currPlayerScrap);
-            //depositedText.text = "Deposited: " + collectedScrap;
-            //print(currPlayerScrap);
         }
         if(scrapObj != null)
         {
@@ -145,6 +158,11 @@ public class GameManager : MonoBehaviour
             }
         }
         isDocking = false;
+        if(currPlayerScrap >= goalScrap && currPlayerGas >= goalGas)
+        {
+            // win condition
+            SceneManager.LoadScene("GameOver");
+        }
     }
 
     void AssignTextVals()

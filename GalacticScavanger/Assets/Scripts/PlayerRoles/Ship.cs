@@ -465,8 +465,15 @@ public class Ship : MonoBehaviour
     {
         if (other.gameObject.CompareTag("CollectionArea") && !scanOut && !currentlyMining)
         {
-            print(other.gameObject.name);
-            GameManager.instance.DockingScrap(other.gameObject.transform.parent.gameObject, 10);
+            //print(other.gameObject.name);
+            GameManager.instance.DockingScrap(other.gameObject.transform.parent.gameObject, 10, "Scrap");
+            endPoint = other.transform;
+            currentlyMining = true;
+        }
+        if (other.gameObject.CompareTag("GasCollectionArea") && !scanOut && !currentlyMining)
+        {
+            //print(other.gameObject.name);
+            GameManager.instance.DockingScrap(other.gameObject.transform.parent.gameObject, 10, "Gas");
             endPoint = other.transform;
             currentlyMining = true;
         }
@@ -494,7 +501,7 @@ public class Ship : MonoBehaviour
     }
     private void OnTriggerExit(Collider other)
     {
-        if (other.gameObject.CompareTag("CollectionArea") && currentlyMining){
+        if (other.gameObject.CompareTag("CollectionArea") || other.gameObject.CompareTag("GasCollectionArea") && currentlyMining){
             GameManager.instance.StopDock();
             endPoint = null;
             currentlyMining = false;

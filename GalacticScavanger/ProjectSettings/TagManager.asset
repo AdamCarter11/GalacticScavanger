@@ -15,6 +15,7 @@ TagManager:
   - miningParticle
   - Compass
   - Gas
+  - GasCollectionArea
   layers:
   - Default
   - TransparentFX

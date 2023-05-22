@@ -392,7 +392,7 @@ GameObject:
   - component: {fileID: 27073753}
   - component: {fileID: 27073752}
   m_Layer: 5
-  m_Name: DepositedMetalText
+  m_Name: DepositedGasText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -438,7 +438,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Deposited Metal: -1'
+  m_text: 'Deposited Gas: -1'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -1957,7 +1957,7 @@ Transform:
   - {fileID: 1164479840}
   - {fileID: 1543681027}
   m_Father: {fileID: 0}
-  m_RootOrder: 10
+  m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &280570299
 GameObject:
@@ -2304,7 +2304,7 @@ Transform:
   - {fileID: 1808414924}
   - {fileID: 993859992}
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &367968907
 PrefabInstance:
@@ -3150,7 +3150,7 @@ Transform:
   - {fileID: 1818724116}
   - {fileID: 626314645}
   m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &458287066
 PrefabInstance:
@@ -4666,7 +4666,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &722489647
 Transform:
   m_ObjectHideFlags: 0
@@ -4702,7 +4702,7 @@ Transform:
   - {fileID: 1171447450}
   - {fileID: 688269137}
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &727528311
 PrefabInstance:
@@ -5512,7 +5512,7 @@ GameObject:
   - component: {fileID: 867055783}
   - component: {fileID: 867055782}
   m_Layer: 5
-  m_Name: Metal Goal Text
+  m_Name: Gas Goal Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5558,7 +5558,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Metal Goal: -1'
+  m_text: 'Gas Goal: -1'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -6153,7 +6153,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &916277757
 GameObject:
@@ -6480,7 +6480,7 @@ Transform:
   - {fileID: 2124765129}
   - {fileID: 2000163856}
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &963054246
 PrefabInstance:
@@ -6835,7 +6835,7 @@ GameObject:
   - component: {fileID: 1046936482}
   - component: {fileID: 1046936481}
   m_Layer: 5
-  m_Name: MetalText
+  m_Name: GasText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6881,7 +6881,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Metal: -1'
+  m_text: 'Gas: -1'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -7857,7 +7857,7 @@ RectTransform:
   - {fileID: 1734098398}
   - {fileID: 1299945910}
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -9667,6 +9667,63 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8190232993642773015, guid: 5273b90aa8a39494b8ddba1e3e731774, type: 3}
   m_PrefabInstance: {fileID: 23721055}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &1629976409
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 5988257677994111858, guid: 83a9aafa1fc908744aed6b5e797d9087, type: 3}
+      propertyPath: m_Name
+      value: Gas
+      objectReference: {fileID: 0}
+    - target: {fileID: 5988257677994111865, guid: 83a9aafa1fc908744aed6b5e797d9087, type: 3}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5988257677994111865, guid: 83a9aafa1fc908744aed6b5e797d9087, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -42.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5988257677994111865, guid: 83a9aafa1fc908744aed6b5e797d9087, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 7.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 5988257677994111865, guid: 83a9aafa1fc908744aed6b5e797d9087, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 51.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 5988257677994111865, guid: 83a9aafa1fc908744aed6b5e797d9087, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5988257677994111865, guid: 83a9aafa1fc908744aed6b5e797d9087, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5988257677994111865, guid: 83a9aafa1fc908744aed6b5e797d9087, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5988257677994111865, guid: 83a9aafa1fc908744aed6b5e797d9087, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5988257677994111865, guid: 83a9aafa1fc908744aed6b5e797d9087, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5988257677994111865, guid: 83a9aafa1fc908744aed6b5e797d9087, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5988257677994111865, guid: 83a9aafa1fc908744aed6b5e797d9087, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 83a9aafa1fc908744aed6b5e797d9087, type: 3}
 --- !u!1 &1649634494
 GameObject:
   m_ObjectHideFlags: 0
@@ -10669,7 +10726,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1808414923
 PrefabInstance:
@@ -11045,7 +11102,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3054118e6efb3bf408ed8a60729b3f36, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  collectiblePrefab: {fileID: 5988257677994111858, guid: 349d0c79336f7f54ab760888312375fd, type: 3}
+  collectiblePrefab:
+  - {fileID: 5988257677994111858, guid: 349d0c79336f7f54ab760888312375fd, type: 3}
+  - {fileID: 5988257677994111858, guid: 83a9aafa1fc908744aed6b5e797d9087, type: 3}
   numberOfCollectibles: 10
   spawnRadius: 30
   respawnDelay: 20
@@ -11198,10 +11257,10 @@ MonoBehaviour:
   timerText: {fileID: 585671113}
   scrapText: {fileID: 883886956}
   depositedText: {fileID: 226736649}
-  metalText: {fileID: 1046936481}
-  depositedMetalText: {fileID: 27073752}
+  gasText: {fileID: 1046936481}
+  depositedGasText: {fileID: 27073752}
   scrapGoalText: {fileID: 449307991}
-  metalGoalText: {fileID: 867055782}
+  gasGoalText: {fileID: 867055782}
   StartingTime: 600
   totalGoalAmount: 20
 --- !u!4 &1873973174
@@ -11248,12 +11307,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d053729bb77dbed4d9b30a6191cd4b21, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 0}
-  distanceThreshold: 10
-  obstacleAvoidanceDistance: 5
-  obstacleMask:
-    serializedVersion: 2
-    m_Bits: 1
 --- !u!4 &1876314599
 Transform:
   m_ObjectHideFlags: 0
@@ -11506,7 +11559,7 @@ Transform:
   - {fileID: 1556686931}
   - {fileID: 76359610}
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1929292179
 GameObject:
@@ -12030,7 +12083,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3054118e6efb3bf408ed8a60729b3f36, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  collectiblePrefab: {fileID: 5988257677994111858, guid: 349d0c79336f7f54ab760888312375fd, type: 3}
+  collectiblePrefab:
+  - {fileID: 5988257677994111858, guid: 349d0c79336f7f54ab760888312375fd, type: 3}
+  - {fileID: 5988257677994111858, guid: 83a9aafa1fc908744aed6b5e797d9087, type: 3}
   numberOfCollectibles: 10
   spawnRadius: 30
   respawnDelay: 20
@@ -12065,7 +12120,7 @@ Transform:
   - {fileID: 1695689847}
   - {fileID: 1900257922}
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &2006136952
 PrefabInstance:
@@ -12754,7 +12809,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3054118e6efb3bf408ed8a60729b3f36, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  collectiblePrefab: {fileID: 5988257677994111858, guid: 349d0c79336f7f54ab760888312375fd, type: 3}
+  collectiblePrefab:
+  - {fileID: 5988257677994111858, guid: 349d0c79336f7f54ab760888312375fd, type: 3}
+  - {fileID: 5988257677994111858, guid: 83a9aafa1fc908744aed6b5e797d9087, type: 3}
   numberOfCollectibles: 10
   spawnRadius: 30
   respawnDelay: 20

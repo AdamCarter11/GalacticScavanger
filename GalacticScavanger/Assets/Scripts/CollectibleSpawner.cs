@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class CollectibleSpawner : MonoBehaviour
 {
-    public GameObject collectiblePrefab;   // The prefab of the collectible object to spawn
+    public GameObject[] collectiblePrefab;   // The prefab of the collectible object to spawn
     public int numberOfCollectibles = 10;  // The number of collectibles to spawn
     public float spawnRadius = 10f;        // The maximum distance from the spawner at which collectibles can be spawned
     bool canSpawn;
@@ -70,7 +70,7 @@ public class CollectibleSpawner : MonoBehaviour
             // If there's no overlap, spawn the collectible
             if (canSpawn)
             {
-                Instantiate(collectiblePrefab, spawnPosition, Quaternion.identity);
+                Instantiate(collectiblePrefab[Random.Range(0,2)], spawnPosition, Quaternion.identity);
                 //print(collectiblePrefab.transform.position);
             }
             //numberOfCollectibles++;

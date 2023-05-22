@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 1064076790235119589}
   m_Layer: 0
   m_Name: CollectionArea
-  m_TagString: CollectionArea
+  m_TagString: GasCollectionArea
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
