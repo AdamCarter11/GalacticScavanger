@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 5045815088557979058}
   - component: {fileID: 7053377396780368248}
   - component: {fileID: 1568697178920152172}
+  - component: {fileID: 5471394656212857958}
   m_Layer: 0
   m_Name: asteroid3_big
   m_TagString: Untagged
@@ -98,3 +99,17 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 2540817853737639666, guid: 6dde807a1f0ec364fb1cc2c2ff9381a8, type: 3}
+--- !u!114 &5471394656212857958
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8854742274067833005}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e888563a3186b1e469aba18b073b6a0d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  minSpeed: 10
+  maxSpeed: 50

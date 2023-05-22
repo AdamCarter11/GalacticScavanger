@@ -8,28 +8,16 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
 
-    // scrap
     private int currPlayerScrap;
     private int collectedScrap;
-    private int goalScrap;
-
-    // metal
-    private int currPlayerGas;
-    private int collectedGas;
-    private int goalGas;
 
     private bool isDocking = false;
     bool canDock = true;
 
     //Timer variables
-    [Header("TEXT ui elements")]
     [SerializeField] TMP_Text timerText;
-    [SerializeField] TMP_Text scrapText, depositedText;
-    [SerializeField] TMP_Text gasText, depositedGasText;
-    [SerializeField] TMP_Text scrapGoalText, gasGoalText;
-    [Header("Game variables")]
     [SerializeField] float StartingTime;
-    [SerializeField] int totalGoalAmount = 20;
+    [SerializeField] TMP_Text scrapText, depositedText;
 
     float timeLeft;
     bool timerOn = true;
@@ -45,13 +33,6 @@ public class GameManager : MonoBehaviour
             instance = this;
         }
         timeLeft = StartingTime;
-        goalScrap = Random.Range(0, 20);
-        goalGas = totalGoalAmount - goalScrap;
-        print("Scrap Goal: " + goalScrap + " metal goal: " + goalGas);
-        scrapGoalText.text = "Scrap goal: " + goalScrap;
-        gasGoalText.text = "Gas goal: " + goalGas;
-
-        AssignTextVals();
     }
     public void ChangeScrapVal(int scrapChange)
     {
@@ -71,6 +52,7 @@ public class GameManager : MonoBehaviour
             currPlayerGas = tempTarget;
 
         AssignTextVals();
+
     }
 
     private void Update()
@@ -163,13 +145,5 @@ public class GameManager : MonoBehaviour
             // win condition
             SceneManager.LoadScene("GameOver");
         }
-    }
-
-    void AssignTextVals()
-    {
-        scrapText.text = "Scrap: " + currPlayerScrap;
-        depositedText.text = "Deposited: " + collectedScrap;
-        gasText.text = "Gas: " + currPlayerGas;
-        depositedGasText.text = "Deposited: " + collectedGas;
     }
 }
