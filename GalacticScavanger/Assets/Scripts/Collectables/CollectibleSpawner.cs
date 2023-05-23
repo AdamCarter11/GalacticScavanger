@@ -9,6 +9,13 @@ public class CollectibleSpawner : MonoBehaviour
     bool canSpawn;
     bool spawnDelayed = false;
     [SerializeField] float respawnDelay = 20f;
+    public enum spawnType
+    {
+        Random,
+        ScrapOnly,
+        GasOnly
+    }
+    [SerializeField] spawnType enumSpawnType;
     void Start()
     {
         SpawnLogic();
@@ -70,7 +77,19 @@ public class CollectibleSpawner : MonoBehaviour
             // If there's no overlap, spawn the collectible
             if (canSpawn)
             {
-                Instantiate(collectiblePrefab[Random.Range(0,2)], spawnPosition, Quaternion.identity);
+                switch (enumSpawnType)
+                {
+                    case spawnType.Random:
+                        Instantiate(collectiblePrefab[Random.Range(0, 2)], spawnPosition, Quaternion.identity);
+                        break;
+                    case spawnType.ScrapOnly:
+                        Instantiate(collectiblePrefab[0], spawnPosition, Quaternion.identity);
+                        break;
+                    case spawnType.GasOnly:
+                        Instantiate(collectiblePrefab[1], spawnPosition, Quaternion.identity);
+                        break;
+                }
+                //Instantiate(collectiblePrefab[Random.Range(0,2)], spawnPosition, Quaternion.identity);
                 //print(collectiblePrefab.transform.position);
             }
             //numberOfCollectibles++;
