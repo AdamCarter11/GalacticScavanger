@@ -45,7 +45,7 @@ public class GameManager : MonoBehaviour
             instance = this;
         }
         timeLeft = StartingTime;
-        goalScrap = Random.Range(0, 20);
+        goalScrap = Random.Range(0, totalGoalAmount);
         goalGas = totalGoalAmount - goalScrap;
         print("Scrap Goal: " + goalScrap + " metal goal: " + goalGas);
         scrapGoalText.text = "Scrap goal: " + goalScrap;
