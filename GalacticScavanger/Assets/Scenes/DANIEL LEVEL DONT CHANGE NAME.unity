@@ -409,6 +409,7 @@ MonoBehaviour:
   numberOfCollectibles: 10
   spawnRadius: 30
   respawnDelay: 40
+  enumSpawnType: 2
 --- !u!1001 &20198003
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -12449,6 +12450,7 @@ MonoBehaviour:
   numberOfCollectibles: 10
   spawnRadius: 30
   respawnDelay: 40
+  enumSpawnType: 2
 --- !u!1 &1535335766
 GameObject:
   m_ObjectHideFlags: 0
@@ -13892,6 +13894,7 @@ MonoBehaviour:
   numberOfCollectibles: 10
   spawnRadius: 30
   respawnDelay: 40
+  enumSpawnType: 2
 --- !u!1 &1801944450
 GameObject:
   m_ObjectHideFlags: 0
@@ -14531,6 +14534,7 @@ MonoBehaviour:
   numberOfCollectibles: 10
   spawnRadius: 30
   respawnDelay: 40
+  enumSpawnType: 1
 --- !u!4 &1822941590
 Transform:
   m_ObjectHideFlags: 0
@@ -15409,6 +15413,7 @@ MonoBehaviour:
   numberOfCollectibles: 10
   spawnRadius: 30
   respawnDelay: 40
+  enumSpawnType: 1
 --- !u!1001 &2006136952
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -16146,6 +16151,7 @@ MonoBehaviour:
   numberOfCollectibles: 10
   spawnRadius: 30
   respawnDelay: 40
+  enumSpawnType: 1
 --- !u!1001 &2124969705
 PrefabInstance:
   m_ObjectHideFlags: 0
