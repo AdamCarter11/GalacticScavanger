@@ -44,7 +44,7 @@ public class Turret : MonoBehaviour
     int whichClass;
     bool canDouble = true;
     bool turretAbility = false;
-    [SerializeField] ParticleSystem muzzleFlashPS;
+    [SerializeField] GameObject muzzleFlashPS;
 
     // Start is called before the first frame update
     void Start()

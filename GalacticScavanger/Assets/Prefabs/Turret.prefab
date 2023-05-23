@@ -66,7 +66,7 @@ MonoBehaviour:
   projectile: {fileID: 8744558536229626749, guid: 1f333d17d80c00f4eaec6d6d1d4e2c8b, type: 3}
   minAngle: -89.999
   maxAngle: 5
-  muzzleFlashPS: {fileID: 676895456658060426, guid: 60ee411c48ab8de43ba548ec0c813314, type: 3}
+  muzzleFlashPS: {fileID: 676895456658060424, guid: 60ee411c48ab8de43ba548ec0c813314, type: 3}
 --- !u!114 &1700090380186389598
 MonoBehaviour:
   m_ObjectHideFlags: 0
