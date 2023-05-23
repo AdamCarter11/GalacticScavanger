@@ -99,7 +99,7 @@ GameObject:
   - component: {fileID: 7615455725069732497}
   - component: {fileID: 7615455725069732496}
   - component: {fileID: 5892575355552034962}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Enemy
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -184,8 +184,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 0.86019963, y: 0.66568154, z: 1.7852687}
+  m_Center: {x: 0, y: 0.23402762, z: -0.055014897}
 --- !u!54 &7615455725069732506
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -241,7 +241,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   outlineMode: 0
-  outlineColor: {r: 1, g: 0, b: 0, a: 1}
+  outlineColor: {r: 1, g: 0, b: 0.8850875, a: 1}
   outlineWidth: 3
   precomputeOutline: 0
   bakeKeys: []

@@ -54,7 +54,7 @@ MonoBehaviour:
   turretBarrel: {fileID: 8173529516129636655}
   barrelModel: {fileID: 5332897741757977821}
   projSpawnPoint: {fileID: 4601519986303688580}
-  fireRate: 0.1
+  fireRate: 0.3
   doubleFireRateTime: 5
   doubleFireCooldown: 10
   projectileDamage: 1
@@ -398,7 +398,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4601519986303688580}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.3, z: 2.33}
+  m_LocalPosition: {x: 0, y: -0.3, z: 2.74}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

@@ -149,7 +149,7 @@ public class Turret : MonoBehaviour
             }
             else
             {
-                Debug.Log("Hit object: " + hit.transform.name);
+                //Debug.Log("Hit object: " + hit.transform.name);
             }
             // Do something with the hit object here
         }

@@ -5609,7 +5609,7 @@ Camera:
     width: 1
     height: 1
   near clip plane: 0.3
-  far clip plane: 1000
+  far clip plane: 10000
   field of view: 60
   orthographic: 0
   orthographic size: 5
@@ -6020,14 +6020,14 @@ MonoBehaviour:
   pausePanel: {fileID: 0}
   teleportCooldownOrScanCooldown: 5
   scanCol: {fileID: 1703471018405613123}
-  scanSpeed: 5
-  howManyToScan: 2
-  maxScanRadius: 1000
+  scanSpeed: 400
+  howManyToScan: 20
+  maxScanRadius: 30000
   scanLayers:
     serializedVersion: 2
-    m_Bits: 1024
+    m_Bits: 1032
   shieldTime: 5
-  shieldCoolDown: 10
+  shieldCoolDown: 25
   emissionRate: 10
   particleSystem: {fileID: 0}
   depositPS: {fileID: 7022268795503775818, guid: 7377f38a94f13bd43924090d4a77f29e, type: 3}
@@ -6941,6 +6941,18 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6716933543107358038, guid: 8a334e7c388e77347a1dddd727ef3446, type: 3}
+      propertyPath: cullingMode
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6716933543107358038, guid: 8a334e7c388e77347a1dddd727ef3446, type: 3}
+      propertyPath: playOnAwake
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6716933543107358038, guid: 8a334e7c388e77347a1dddd727ef3446, type: 3}
+      propertyPath: scalingMode
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6716933543107358038, guid: 8a334e7c388e77347a1dddd727ef3446, type: 3}
       propertyPath: InitialModule.startColor.maxColor.a
       value: 0.08627451
       objectReference: {fileID: 0}
@@ -6950,7 +6962,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6716933543107358056, guid: 8a334e7c388e77347a1dddd727ef3446, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8a334e7c388e77347a1dddd727ef3446, type: 3}

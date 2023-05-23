@@ -292,7 +292,7 @@ public class Ship : MonoBehaviour
     IEnumerator scanLength()
     {
         continueScan = true;
-        yield return new WaitForSeconds(5f);
+        yield return new WaitForSeconds(shieldCoolDown);
         continueScan = false;
     }
 
@@ -317,7 +317,7 @@ public class Ship : MonoBehaviour
     IEnumerator TeleportCooldown()
     {
         canTeleport = false;
-        yield return new WaitForSeconds(teleportCooldownOrScanCooldown);
+        yield return new WaitForSeconds(shieldCoolDown);
         canTeleport = true;
     }
     void HandleMovement()
@@ -471,14 +471,14 @@ public class Ship : MonoBehaviour
         if (other.gameObject.CompareTag("CollectionArea") && !scanOut && !currentlyMining)
         {
             //print(other.gameObject.name);
-            GameManager.instance.DockingScrap(other.gameObject.transform.parent.gameObject, 10, "Scrap");
+            GameManager.instance.CollectingScrapFunc(other.gameObject.transform.parent.gameObject, 10, "Scrap");
             endPoint = other.transform;
             currentlyMining = true;
         }
         if (other.gameObject.CompareTag("GasCollectionArea") && !scanOut && !currentlyMining)
         {
             //print(other.gameObject.name);
-            GameManager.instance.DockingScrap(other.gameObject.transform.parent.gameObject, 10, "Gas");
+            GameManager.instance.CollectingScrapFunc(other.gameObject.transform.parent.gameObject, 10, "Gas");
             endPoint = other.transform;
             currentlyMining = true;
         }
@@ -486,7 +486,7 @@ public class Ship : MonoBehaviour
         {
             print("DOCKING");
             Instantiate(depositPS, transform.position, Quaternion.identity);
-            GameManager.instance.ChangeScrapVal(0);
+            GameManager.instance.DockingFunc(0);
             health = startingHealth;
         }
         if (other.gameObject.CompareTag("EnemyProj"))

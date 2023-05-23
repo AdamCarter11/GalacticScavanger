@@ -30,6 +30,7 @@ public class GameManager : MonoBehaviour
     [Header("Game variables")]
     [SerializeField] float StartingTime;
     [SerializeField] int totalGoalAmount = 20;
+    [SerializeField] int goalIncreaseAmount = 5;
 
     float timeLeft;
     bool timerOn = true;
@@ -53,7 +54,7 @@ public class GameManager : MonoBehaviour
 
         AssignTextVals();
     }
-    public void ChangeScrapVal(int scrapChange)
+    public void DockingFunc(int scrapChange)
     {
             int tempTarget = scrapChange;
             if (scrapChange == -1 || scrapChange == 0)
@@ -71,6 +72,31 @@ public class GameManager : MonoBehaviour
             currPlayerGas = tempTarget;
 
         AssignTextVals();
+
+        // Level up condition
+        if (collectedScrap >= goalScrap && collectedGas >= goalGas)
+        {
+            print("Finished mission!");
+            // reset players scrap
+            currPlayerScrap = 0;
+            collectedScrap = 0;
+            currPlayerGas = 0;
+            collectedGas = 0;
+
+            // generate a new goal
+            totalGoalAmount += goalIncreaseAmount;
+            timeLeft = StartingTime;
+            goalScrap = Random.Range(0, totalGoalAmount);
+            goalGas = totalGoalAmount - goalScrap;
+            print("Scrap Goal: " + goalScrap + " metal goal: " + goalGas);
+            scrapGoalText.text = "Scrap goal: " + goalScrap;
+            gasGoalText.text = "Gas goal: " + goalGas;
+
+            // UPGRADE PLAYER
+
+            // display level up text
+            StartCoroutine(levelUpTextDisplay());
+        }
 
     }
 
@@ -108,14 +134,14 @@ public class GameManager : MonoBehaviour
         timerText.text = string.Format("{0:00} : {1:00}", minutes, seconds);
     }
 
-    public void DockingScrap(GameObject scrapObj, int maxScrapCap, string whatType)
+    public void CollectingScrapFunc(GameObject scrapObj, int maxScrapCap, string whatType)
     {
         if (!isDocking)
         {
             canDock = true;
             //lerp or change overtime the players scrap
             //StartCoroutine(DockScraps());
-            StartCoroutine(DockScraps(scrapObj, maxScrapCap, whatType));
+            StartCoroutine(CollectingScrapCo(scrapObj, maxScrapCap, whatType));
             isDocking = true;
         }
 
@@ -124,10 +150,10 @@ public class GameManager : MonoBehaviour
     {
         canDock = false;
         //StopCoroutine(DockScraps());
-        StopCoroutine(DockScraps(null, 0, ""));
+        StopCoroutine(CollectingScrapCo(null, 0, ""));
     }
 
-    IEnumerator DockScraps(GameObject scrapObj, int maxScrapCap, string whatType)
+    IEnumerator CollectingScrapCo(GameObject scrapObj, int maxScrapCap, string whatType)
     {
         while (scrapObj != null && scrapObj.GetComponent<CollectableBehavior>().scrapCap > 0 && canDock)
         {
@@ -160,27 +186,7 @@ public class GameManager : MonoBehaviour
         }
         isDocking = false;
 
-        // Level up condition
-        if (collectedScrap >= goalScrap && collectedGas >= goalGas)
-        {
-            // reset players scrap
-            currPlayerScrap = 0;
-            collectedScrap = 0;
-            currPlayerGas = 0;
-            collectedGas = 0;
-
-            // generate a new goal
-            goalScrap = Random.Range(0, totalGoalAmount);
-            goalGas = totalGoalAmount - goalScrap;
-            print("Scrap Goal: " + goalScrap + " metal goal: " + goalGas);
-            scrapGoalText.text = "Scrap goal: " + goalScrap;
-            gasGoalText.text = "Gas goal: " + goalGas;
-
-            // UPGRADE PLAYER
-
-            // display level up text
-            StartCoroutine(levelUpTextDisplay());
-        }
+        
     }
     IEnumerator levelUpTextDisplay()
     {
@@ -194,5 +200,9 @@ public class GameManager : MonoBehaviour
         depositedText.text = "Deposited: " + collectedScrap;
         gasText.text = "Gas: " + currPlayerGas;
         depositedGasText.text = "Deposited: " + collectedGas;
+    }
+    public void ChangeTIme(float changeTimeByVal)
+    {
+        timeLeft += changeTimeByVal;
     }
 }
