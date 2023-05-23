@@ -161,7 +161,7 @@ public class GameManager : MonoBehaviour
         isDocking = false;
 
         // Level up condition
-        if (currPlayerScrap >= goalScrap && currPlayerGas >= goalGas)
+        if (collectedScrap >= goalScrap && collectedGas >= goalGas)
         {
             // reset players scrap
             currPlayerScrap = 0;
