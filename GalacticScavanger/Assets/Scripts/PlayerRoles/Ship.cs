@@ -96,6 +96,7 @@ public class Ship : MonoBehaviour
     [SerializeField] ParticleSystem particleSystem;
     [SerializeField] ParticleSystem depositPS;
     [SerializeField] ParticleSystem lightningPS;
+    [SerializeField] GameObject shieldObj;
 
     bool currentlyMining = false;
 
@@ -214,7 +215,9 @@ public class Ship : MonoBehaviour
     IEnumerator shieldLogic()
     {
         shielding = true;
+        shieldObj.SetActive(true);
         yield return new WaitForSeconds(shieldTime);
+        shieldObj.SetActive(false);
         shielding = false;
         StartCoroutine(shieldCoolDownFunc());
     }
