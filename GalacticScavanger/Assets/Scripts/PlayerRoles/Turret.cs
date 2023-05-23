@@ -66,6 +66,7 @@ public class Turret : MonoBehaviour
 
     private void Update()
     {
+        Instantiate(muzzleFlashPS, projSpawnPoint.transform.position, Quaternion.identity);
         if (ship)
         {
             RotationUpdate();

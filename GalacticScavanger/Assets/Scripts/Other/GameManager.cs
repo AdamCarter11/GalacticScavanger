@@ -26,6 +26,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] TMP_Text scrapText, depositedText;
     [SerializeField] TMP_Text gasText, depositedGasText;
     [SerializeField] TMP_Text scrapGoalText, gasGoalText;
+    [SerializeField] TMP_Text levelUpText;
     [Header("Game variables")]
     [SerializeField] float StartingTime;
     [SerializeField] int totalGoalAmount = 20;
@@ -160,9 +161,15 @@ public class GameManager : MonoBehaviour
         isDocking = false;
         if(currPlayerScrap >= goalScrap && currPlayerGas >= goalGas)
         {
-            // win condition
-            SceneManager.LoadScene("GameOver");
+            // Level up condition
+            StartCoroutine(levelUpTextDisplay());
         }
+    }
+    IEnumerator levelUpTextDisplay()
+    {
+        levelUpText.enabled = true;
+        yield return new WaitForSeconds(2f);
+        levelUpText.enabled = false;
     }
     void AssignTextVals()
     {
