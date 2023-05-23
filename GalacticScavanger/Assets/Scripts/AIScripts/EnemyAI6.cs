@@ -112,6 +112,11 @@ public class EnemyAI6 : MonoBehaviour
                     }
                     target = nearestObject;
                 }
+                if(target == null)
+                {
+                    target = GameObject.FindGameObjectWithTag("Ship");
+                    player = GameObject.FindGameObjectWithTag("Ship");
+                }
                 Vector3 relativePos = target.transform.position - transform.position;
                 Quaternion rotation = Quaternion.LookRotation(relativePos);
                 transform.rotation = Quaternion.Slerp(transform.rotation, rotation, Time.deltaTime);
