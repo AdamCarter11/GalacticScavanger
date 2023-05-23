@@ -42,6 +42,7 @@ public class Ship : MonoBehaviour
 
     [Header("Health and Collectable Vars")]
     public int health = 10;
+    int startingHealth;
     public int collectableCount = 0;
     [SerializeField] private GameObject healthUIText;
 
@@ -114,6 +115,7 @@ public class Ship : MonoBehaviour
         {
             healthUIText = GameObject.Find("HealthPointsText");
         }
+        startingHealth = health;
     }
 
     private void Awake()
@@ -482,6 +484,7 @@ public class Ship : MonoBehaviour
             print("DOCKING");
             Instantiate(depositPS, transform.position, Quaternion.identity);
             GameManager.instance.ChangeScrapVal(0);
+            health = startingHealth;
         }
         if (other.gameObject.CompareTag("EnemyProj"))
         {
