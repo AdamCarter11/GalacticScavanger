@@ -66,8 +66,6 @@ public class Turret : MonoBehaviour
 
     private void Update()
     {
-        GameObject tempParticle = Instantiate(muzzleFlashPS, projSpawnPoint.transform.position, Quaternion.identity);
-        print("temp particle: " + tempParticle.name + " temp particle length: " + tempParticle.GetComponent<ParticleSystem>().main.duration);
         if (ship)
         {
             RotationUpdate();
