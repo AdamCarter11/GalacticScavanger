@@ -159,9 +159,26 @@ public class GameManager : MonoBehaviour
             }
         }
         isDocking = false;
-        if(currPlayerScrap >= goalScrap && currPlayerGas >= goalGas)
+
+        // Level up condition
+        if (currPlayerScrap >= goalScrap && currPlayerGas >= goalGas)
         {
-            // Level up condition
+            // reset players scrap
+            currPlayerScrap = 0;
+            collectedScrap = 0;
+            currPlayerGas = 0;
+            collectedGas = 0;
+
+            // generate a new goal
+            goalScrap = Random.Range(0, totalGoalAmount);
+            goalGas = totalGoalAmount - goalScrap;
+            print("Scrap Goal: " + goalScrap + " metal goal: " + goalGas);
+            scrapGoalText.text = "Scrap goal: " + goalScrap;
+            gasGoalText.text = "Gas goal: " + goalGas;
+
+            // UPGRADE PLAYER
+
+            // display level up text
             StartCoroutine(levelUpTextDisplay());
         }
     }
