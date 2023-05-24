@@ -55,7 +55,7 @@ MonoBehaviour:
   turretBarrel: {fileID: 8173529516129636655}
   barrelModel: {fileID: 5332897741757977821}
   projSpawnPoint: {fileID: 4601519986303688580}
-  fireRate: 0.3
+  fireRate: 0.1
   doubleFireRateTime: 5
   doubleFireCooldown: 10
   projectileDamage: 1

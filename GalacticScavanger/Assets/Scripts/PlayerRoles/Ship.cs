@@ -8,6 +8,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Rendering;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 // referenced from: https://www.youtube.com/watch?v=fZvJvZA4nhY&ab_channel=DanPos
 
@@ -84,7 +85,7 @@ public class Ship : MonoBehaviour
     Quaternion startingRotation;
     float timeCount = 0.0f;
     bool resetSpeed = false;
-    bool shielding = false;
+    //bool shielding = false;
     bool shieldingOnCool = false;
     //[SerializeField] float shieldTime = 5.0f;
     [SerializeField] float radarCoolDown = 10.0f;
@@ -99,6 +100,7 @@ public class Ship : MonoBehaviour
     //[SerializeField] GameObject shieldObj;
 
     bool currentlyMining = false;
+    private Image pilotCooldownImage;
 
     void Start()
     {
@@ -117,6 +119,7 @@ public class Ship : MonoBehaviour
             healthUIText = GameObject.Find("HealthPointsText");
         }
         startingHealth = health;
+        pilotCooldownImage = GameObject.FindGameObjectWithTag("PilotCooldownImage").GetComponent<Image>();
     }
 
     private void Awake()
@@ -169,6 +172,7 @@ public class Ship : MonoBehaviour
         {
             if (boosting && currBoostAmount > 0f)
             {
+                pilotCooldownImage.color = Color.green;
                 currBoostAmount -= boostLossRate;
                 if (currBoostAmount <= 0f)
                 {
@@ -177,6 +181,7 @@ public class Ship : MonoBehaviour
             }
             else
             {
+                pilotCooldownImage.color = Color.red;
                 if (currBoostAmount < maxBoostAmount)
                 {
                     currBoostAmount += boostRechargeRate;
@@ -300,8 +305,10 @@ public class Ship : MonoBehaviour
     IEnumerator TeleportCooldown()
     {
         canTeleport = false;
+        pilotCooldownImage.color = Color.red;
         yield return new WaitForSeconds(radarCoolDown);
         canTeleport = true;
+        pilotCooldownImage.color = Color.green;
     }
     void HandleMovement()
     {
@@ -476,7 +483,7 @@ public class Ship : MonoBehaviour
         {
             Destroy(other.gameObject);
 
-            if (!shielding)
+            if (!Turret.shielding)
             {
                 health--;
                 if (health <= 0)

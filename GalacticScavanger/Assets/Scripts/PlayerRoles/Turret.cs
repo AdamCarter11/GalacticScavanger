@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 public class Turret : MonoBehaviour
 {
@@ -46,10 +47,11 @@ public class Turret : MonoBehaviour
     bool turretAbility = false;
     [SerializeField] GameObject muzzleFlashPS;
     [SerializeField] GameObject shieldObj;
-    bool shielding = false;
+    public static bool shielding = false;
     bool shieldingOnCool = false;
     [SerializeField] float shieldTime = 5.0f;
     [SerializeField] float shieldCoolDown = 10.0f;
+    private Image gunnertCooldownImage;
 
 
     // Start is called before the first frame update
@@ -68,6 +70,7 @@ public class Turret : MonoBehaviour
             Debug.Log("turret did not find ship");
         }
         startingFireRate = fireRate;
+        gunnertCooldownImage = GameObject.FindGameObjectWithTag("GunnerCooldownImage").GetComponent<Image>();
     }
 
     private void Update()
@@ -84,11 +87,11 @@ public class Turret : MonoBehaviour
         }
 
         // turret ability
-        if (PlayerPrefs.GetInt("Player1Character") == 1 && !doubleFireRate && canDouble && turretAbility)
+        if (PlayerPrefs.GetInt("Player2Character") == 1 && !doubleFireRate && canDouble && turretAbility)
         {
             StartCoroutine(fireRateDouble());
         }
-        if (PlayerPrefs.GetInt("Player1Character") == 2)
+        if (PlayerPrefs.GetInt("Player2Character") == 2)
         {
             if (!shielding && turretAbility && !shieldingOnCool)
             {
@@ -107,8 +110,10 @@ public class Turret : MonoBehaviour
     }
     IEnumerator shieldCoolDownFunc()
     {
+        gunnertCooldownImage.color = Color.red;
         shieldingOnCool = true;
         yield return new WaitForSeconds(shieldCoolDown);
+        gunnertCooldownImage.color = Color.green;
         shieldingOnCool = false;
     }
     IEnumerator fireRateDouble()
@@ -123,7 +128,9 @@ public class Turret : MonoBehaviour
     IEnumerator rateCooldown()
     {
         canDouble = false;
+        gunnertCooldownImage.color = Color.red;
         yield return new WaitForSeconds(doubleFireCooldown);
+        gunnertCooldownImage.color = Color.green;
         canDouble = true;
     }
 
@@ -167,7 +174,12 @@ public class Turret : MonoBehaviour
     private void FiringHelper()
     {
         Instantiate(muzzleFlashPS, projSpawnPoint.transform.position, Quaternion.identity);
-        RaycastHit[] hits = Physics.SphereCastAll(turretBarrel.transform.position, sphereCastRadius, turretBarrel.transform.forward, sphereCastDistance, ~layerMaskToIgnore);
+        float tempSphereCastRadius = sphereCastRadius;
+        if (doubleFireRate)
+        {
+            tempSphereCastRadius *= 8;
+        }
+        RaycastHit[] hits = Physics.SphereCastAll(turretBarrel.transform.position, tempSphereCastRadius, turretBarrel.transform.forward, sphereCastDistance, ~layerMaskToIgnore);
         foreach (RaycastHit hit in hits)
         {
             if (hit.transform.CompareTag("Enemy"))
@@ -184,7 +196,7 @@ public class Turret : MonoBehaviour
         // Draw a debug line showing the direction and distance of the spherecast
         Debug.DrawRay(turretBarrel.transform.position, turretBarrel.transform.forward * sphereCastDistance, Color.yellow, 1f);
         barrelModel.transform.localRotation = new Quaternion(barrelModel.transform.localRotation.x + barrelSpinningRate, barrelModel.transform.localRotation.y, barrelModel.transform.localRotation.z, barrelModel.transform.localRotation.w);
-        Instantiate(projectile, projSpawnPoint.transform.position, Quaternion.Euler(turretBarrel.transform.eulerAngles));
+        GameObject tempBullet = Instantiate(projectile, projSpawnPoint.transform.position, Quaternion.Euler(turretBarrel.transform.eulerAngles));
         
     }
     

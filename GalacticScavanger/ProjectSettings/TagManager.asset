@@ -16,6 +16,8 @@ TagManager:
   - Compass
   - Gas
   - GasCollectionArea
+  - PilotCooldownImage
+  - GunnerCooldownImage
   layers:
   - Default
   - TransparentFX

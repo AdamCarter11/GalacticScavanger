@@ -36,6 +36,7 @@ public class GameManager : MonoBehaviour
 
     float timeLeft;
     bool timerOn = true;
+    int variableDiffIncrease = 0;
 
     private void Start()
     {
@@ -86,7 +87,15 @@ public class GameManager : MonoBehaviour
             collectedGas = 0;
 
             // generate a new goal
-            totalGoalAmount += goalIncreaseAmount;
+            if(variableDiffIncrease % 2 == 0)
+            {
+                totalGoalAmount += goalIncreaseAmount;
+            }
+            else
+            {
+                totalGoalAmount += Mathf.RoundToInt(goalIncreaseAmount / 2);
+            }
+            variableDiffIncrease++;
             timeLeft = StartingTime;
             goalScrap = Random.Range(0, totalGoalAmount);
             goalGas = totalGoalAmount - goalScrap;
@@ -195,7 +204,7 @@ public class GameManager : MonoBehaviour
     IEnumerator levelUpTextDisplay()
     {
         levelUpText.enabled = true;
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(3f);
         levelUpText.enabled = false;
     }
     void AssignTextVals()
