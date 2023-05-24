@@ -31,6 +31,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] float StartingTime;
     [SerializeField] int totalGoalAmount = 20;
     [SerializeField] int goalIncreaseAmount = 5;
+    [SerializeField] float scrapCollectionTime = .5f;
 
     float timeLeft;
     bool timerOn = true;
@@ -157,7 +158,7 @@ public class GameManager : MonoBehaviour
     {
         while (scrapObj != null && scrapObj.GetComponent<CollectableBehavior>().scrapCap > 0 && canDock)
         {
-            yield return new WaitForSeconds(1f);
+            yield return new WaitForSeconds(scrapCollectionTime);
             if(whatType == "Scrap")
             {
                 currPlayerScrap++;
