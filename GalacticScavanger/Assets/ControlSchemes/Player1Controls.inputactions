@@ -276,7 +276,7 @@
                 {
                     "name": "Negative",
                     "id": "20d30c8c-92aa-46e5-97d7-822c363cc16f",
-                    "path": "<Gamepad>/leftTrigger",
+                    "path": "<XInputController>/leftShoulder",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -287,7 +287,7 @@
                 {
                     "name": "Positive",
                     "id": "40e03164-4624-4492-bdbe-f0c2ecc85416",
-                    "path": "<Gamepad>/rightShoulder",
+                    "path": "<XInputController>/rightShoulder",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -397,7 +397,7 @@
                 {
                     "name": "",
                     "id": "bde30bf0-e900-488c-9819-4a24606ebfc5",
-                    "path": "<Gamepad>/buttonEast",
+                    "path": "<XInputController>/buttonEast",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
