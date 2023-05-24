@@ -45,6 +45,12 @@ public class Turret : MonoBehaviour
     bool canDouble = true;
     bool turretAbility = false;
     [SerializeField] GameObject muzzleFlashPS;
+    [SerializeField] GameObject shieldObj;
+    bool shielding = false;
+    bool shieldingOnCool = false;
+    [SerializeField] float shieldTime = 5.0f;
+    [SerializeField] float shieldCoolDown = 10.0f;
+
 
     // Start is called before the first frame update
     void Start()
@@ -82,6 +88,28 @@ public class Turret : MonoBehaviour
         {
             StartCoroutine(fireRateDouble());
         }
+        if (PlayerPrefs.GetInt("Player1Character") == 2)
+        {
+            if (!shielding && turretAbility && !shieldingOnCool)
+            {
+                StartCoroutine(shieldLogic());
+            }
+        }
+    }
+    IEnumerator shieldLogic()
+    {
+        shielding = true;
+        shieldObj.SetActive(true);
+        yield return new WaitForSeconds(shieldTime);
+        shieldObj.SetActive(false);
+        shielding = false;
+        StartCoroutine(shieldCoolDownFunc());
+    }
+    IEnumerator shieldCoolDownFunc()
+    {
+        shieldingOnCool = true;
+        yield return new WaitForSeconds(shieldCoolDown);
+        shieldingOnCool = false;
     }
     IEnumerator fireRateDouble()
     {

@@ -86,8 +86,8 @@ public class Ship : MonoBehaviour
     bool resetSpeed = false;
     bool shielding = false;
     bool shieldingOnCool = false;
-    [SerializeField] float shieldTime = 5.0f;
-    [SerializeField] float shieldCoolDown = 10.0f;
+    //[SerializeField] float shieldTime = 5.0f;
+    [SerializeField] float radarCoolDown = 10.0f;
 
     //particle effect vars
     private Transform startPoint;
@@ -96,7 +96,7 @@ public class Ship : MonoBehaviour
     [SerializeField] ParticleSystem particleSystem;
     [SerializeField] ParticleSystem depositPS;
     [SerializeField] ParticleSystem lightningPS;
-    [SerializeField] GameObject shieldObj;
+    //[SerializeField] GameObject shieldObj;
 
     bool currentlyMining = false;
 
@@ -165,7 +165,7 @@ public class Ship : MonoBehaviour
     }
     void HandleBoost()
     {
-        if(whichClass == 2)
+        if(whichClass == 1)
         {
             if (boosting && currBoostAmount > 0f)
             {
@@ -194,7 +194,7 @@ public class Ship : MonoBehaviour
             }
         }
         */
-        //if(whichClass == 1)
+        if(whichClass == 2)
         {
             //I'm just using canTeleport so I don't have to make a new ability
             if(boosting && canTeleport)
@@ -204,29 +204,9 @@ public class Ship : MonoBehaviour
                 scanOut = true;
             }
         }
-        if(whichClass == 2)
-        {
-            if (!shielding && boosting && !shieldingOnCool)
-            {
-                StartCoroutine(shieldLogic());
-            }
-        }
+        
     }
-    IEnumerator shieldLogic()
-    {
-        shielding = true;
-        shieldObj.SetActive(true);
-        yield return new WaitForSeconds(shieldTime);
-        shieldObj.SetActive(false);
-        shielding = false;
-        StartCoroutine(shieldCoolDownFunc());
-    }
-    IEnumerator shieldCoolDownFunc()
-    {
-        shieldingOnCool = true;
-        yield return new WaitForSeconds(shieldCoolDown);
-        shieldingOnCool = false;
-    }
+    
 
     bool continueScan = true;
     void scanLogic()
@@ -289,12 +269,14 @@ public class Ship : MonoBehaviour
             scanOut = false;
         }
     }
+    
     IEnumerator scanLength()
     {
         continueScan = true;
-        yield return new WaitForSeconds(shieldCoolDown);
+        yield return new WaitForSeconds(radarCoolDown);
         continueScan = false;
     }
+    
 
     void teleportLogic()
     {
@@ -314,10 +296,11 @@ public class Ship : MonoBehaviour
         }
 
     }
+    
     IEnumerator TeleportCooldown()
     {
         canTeleport = false;
-        yield return new WaitForSeconds(shieldCoolDown);
+        yield return new WaitForSeconds(radarCoolDown);
         canTeleport = true;
     }
     void HandleMovement()
