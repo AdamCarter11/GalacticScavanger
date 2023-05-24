@@ -9,6 +9,7 @@ public class MenuScript : MonoBehaviour
 {
     [SerializeField] TMP_Text character1DisplayText;
     [SerializeField] TMP_Text character2DisplayText;
+    [SerializeField] GameObject tutorialPanel;
 
     private void Start()
     {
@@ -24,6 +25,10 @@ public class MenuScript : MonoBehaviour
     {
         if(PlayerPrefs.GetInt("Player1Character") != -1 && PlayerPrefs.GetInt("Player2Character") != -1 || SceneManager.GetActiveScene().name == "GameOver")
             SceneManager.LoadScene("DANIEL LEVEL DONT CHANGE NAME");
+    }
+    public void OpenTutorial()
+    {
+        tutorialPanel.SetActive(true);
     }
     public void GoToMenu()
     {
