@@ -3,7 +3,17 @@ guid: a967b7d61df917f4090ef44a088d7737
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - healthUIText: {instanceID: 0}
+  - turretLocation: {instanceID: 0}
+  - turretPrefab: {instanceID: 0}
+  - pausePanel: {instanceID: 0}
+  - scanCol: {instanceID: 0}
+  - particleSystem: {instanceID: 0}
+  - depositPS: {instanceID: 0}
+  - lightningPS: {instanceID: 0}
+  - boostAudio: {fileID: 8300000, guid: de8609028a23ed1459de3581c1cf7da5, type: 3}
+  - scanAudio: {fileID: 8300000, guid: 9f6dee468c1dc734a9b06c38e0b659d3, type: 3}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

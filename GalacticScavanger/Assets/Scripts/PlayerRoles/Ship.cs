@@ -102,6 +102,11 @@ public class Ship : MonoBehaviour
     bool currentlyMining = false;
     private Image pilotCooldownImage;
 
+    // Boost/scan audio
+    private AudioSource m_MyAudioSource;
+    [SerializeField] private AudioClip boostAudio;
+    [SerializeField] private AudioClip scanAudio;
+
     void Start()
     {
         if(particleSystem == null)
@@ -120,6 +125,7 @@ public class Ship : MonoBehaviour
         }
         startingHealth = health;
         pilotCooldownImage = GameObject.FindGameObjectWithTag("PilotCooldownImage").GetComponent<Image>();
+        m_MyAudioSource = GetComponent<AudioSource>();
     }
 
     private void Awake()
@@ -172,6 +178,7 @@ public class Ship : MonoBehaviour
         {
             if (boosting && currBoostAmount > 0f)
             {
+                m_MyAudioSource.PlayOneShot(boostAudio);
                 pilotCooldownImage.color = Color.green;
                 currBoostAmount -= boostLossRate;
                 if (currBoostAmount <= 0f)
@@ -216,6 +223,7 @@ public class Ship : MonoBehaviour
     bool continueScan = true;
     void scanLogic()
     {
+        m_MyAudioSource.PlayOneShot(scanAudio);
         lightningPS.Play();
         //print("Start scan");
         //scanCol.transform.localScale += Vector3.one * scanSpeed * Time.deltaTime;
