@@ -21,15 +21,6 @@ public class UpgradeSystem : MonoBehaviour
     private bool canBeUpgraded = false;
     private int upgradeLevel = 1;
 
-    void Start()
-    {
-        
-    }
-
-    void Update()
-    {
-        
-    }
 
     public void Upgrade()
     {
@@ -39,8 +30,8 @@ public class UpgradeSystem : MonoBehaviour
         GetComponent<Ship>().thrust *= thrustBonus;
         GetComponent<Ship>().upThrust *= upThrustBonus;
         GetComponent<Ship>().strafeThrust *= strafeThrustBonus;
-        GetComponent<Ship>().thrustGlideReduction *= thrustGlideReductionBonus;
-        GetComponent<Ship>().upDownGlideReduction *= upDownGlideReductionBonus;
-        GetComponent<Ship>().leftRightGlideReduction *= leftRightGlideReductionBonus;
+        //GetComponent<Ship>().thrustGlideReduction *= thrustGlideReductionBonus;
+        //GetComponent<Ship>().upDownGlideReduction *= upDownGlideReductionBonus;
+        //GetComponent<Ship>().leftRightGlideReduction *= leftRightGlideReductionBonus;
     }
 }
