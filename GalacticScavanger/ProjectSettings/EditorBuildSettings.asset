@@ -17,4 +17,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/GameOver.unity
     guid: 7033f61bd79d3784fb7c950bd769ee0c
+  - enabled: 1
+    path: Assets/Scenes/DANIEL LEVEL DONT CHANGE NAME.unity
+    guid: a089d69d589a89c40a1922f85a4a336c
   m_configObjects: {}

@@ -13,7 +13,7 @@ public class MenuScript : MonoBehaviour
     }
     public void StartGame()
     {
-        SceneManager.LoadScene("MainGame");
+        SceneManager.LoadScene("DANIEL LEVEL DONT CHANGE NAME");
     }
     public void NavigatorSelect()
     {
