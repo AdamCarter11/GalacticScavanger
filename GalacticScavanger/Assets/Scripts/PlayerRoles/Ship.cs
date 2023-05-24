@@ -16,17 +16,17 @@ public class Ship : MonoBehaviour
 {
     [Header("Ship Movement Vars")]
     //controls how fast you can rotate
-    [SerializeField] float yawTorque = 500f;    // y axis
-    [SerializeField] float pitchTorque = 1000f; // x axis
-    [SerializeField] float rollTorque = 1000f;  // z axis
+    [SerializeField] public float yawTorque = 500f;    // y axis
+    [SerializeField] public float pitchTorque = 1000f; // x axis
+    [SerializeField] public float rollTorque = 1000f;  // z axis
     //controls how fast you can actually move
-    [SerializeField] float thrust = 100f;       // forward speed
-    [SerializeField] float upThrust = 50f;      // up/down speed
-    [SerializeField] float strafeThrust = 50f;  // left/right speed
+    [SerializeField] public float thrust = 100f;       // forward speed
+    [SerializeField] public float upThrust = 50f;      // up/down speed
+    [SerializeField] public float strafeThrust = 50f;  // left/right speed
     //controls accel/deccel (also what makes the ship eventually stop after they release the key
-    [SerializeField, Range(0.001f, 0.999f)] float thrustGlideReduction = 0.999f;
-    [SerializeField, Range(0.001f, 0.999f)] float upDownGlideReduction = .111f;
-    [SerializeField, Range(0.001f, 0.999f)] float leftRightGlideReduction = .111f;
+    [SerializeField, Range(0.001f, 0.999f)] public float thrustGlideReduction = 0.999f;
+    [SerializeField, Range(0.001f, 0.999f)] public float upDownGlideReduction = .111f;
+    [SerializeField, Range(0.001f, 0.999f)] public float leftRightGlideReduction = .111f;
     float glide, verticalGlide, horizontalGlide = 0f;
     [SerializeField] float rollClampVal;
     [SerializeField] float pitchClamp;
