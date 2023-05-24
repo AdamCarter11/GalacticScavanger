@@ -106,6 +106,7 @@ public class Turret : MonoBehaviour
         yield return new WaitForSeconds(shieldTime);
         shieldObj.SetActive(false);
         shielding = false;
+        gunnertCooldownImage.color = Color.red;
         StartCoroutine(shieldCoolDownFunc());
     }
     IEnumerator shieldCoolDownFunc()
@@ -120,6 +121,7 @@ public class Turret : MonoBehaviour
     {
         doubleFireRate = true;
         fireRate /= 2;
+        gunnertCooldownImage.color = Color.red;
         yield return new WaitForSeconds(doubleFireRateTime);
         fireRate = startingFireRate;
         doubleFireRate = false;
