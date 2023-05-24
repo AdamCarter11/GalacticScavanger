@@ -7,6 +7,7 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
+    public GameObject player;
 
     // scrap
     private int currPlayerScrap;
@@ -94,6 +95,8 @@ public class GameManager : MonoBehaviour
             gasGoalText.text = "Gas goal: " + goalGas;
 
             // UPGRADE PLAYER
+            player = GameObject.FindGameObjectWithTag("Ship");
+            player.GetComponent<UpgradeSystem>().Upgrade();
 
             // display level up text
             StartCoroutine(levelUpTextDisplay());
