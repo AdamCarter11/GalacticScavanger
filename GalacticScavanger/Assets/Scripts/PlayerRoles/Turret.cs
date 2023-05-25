@@ -189,7 +189,8 @@ public class Turret : MonoBehaviour
             barrelToRotate.GetComponent<turretBarrleRot>().enabled = true;
             print("Barrel started spinning");
         }
-        Instantiate(muzzleFlashPS, projSpawnPoint.transform.position, Quaternion.identity);
+        // UNCOMMENT IF WE WANT MUZZLEFLASH
+        //Instantiate(muzzleFlashPS, projSpawnPoint.transform.position, Quaternion.identity);
         float tempSphereCastRadius = sphereCastRadius;
         if (doubleFireRate)
         {
