@@ -16,6 +16,8 @@ TagManager:
   - Compass
   - Gas
   - GasCollectionArea
+  - PilotCooldownImage
+  - GunnerCooldownImage
   layers:
   - Default
   - TransparentFX
@@ -31,7 +33,7 @@ TagManager:
   - Ship
   - scanLayer
   - dockingLayer
-  - 
+  - turretLayer
   - 
   - 
   - 

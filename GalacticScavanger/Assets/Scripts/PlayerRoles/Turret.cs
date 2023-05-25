@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 public class Turret : MonoBehaviour
 {
@@ -45,6 +46,16 @@ public class Turret : MonoBehaviour
     bool canDouble = true;
     bool turretAbility = false;
     [SerializeField] GameObject muzzleFlashPS;
+    [SerializeField] GameObject shieldObj;
+    public static bool shielding = false;
+    bool shieldingOnCool = false;
+    [SerializeField] float shieldTime = 5.0f;
+    [SerializeField] float shieldCoolDown = 10.0f;
+    private Image gunnertCooldownImage;
+    [SerializeField] GameObject barrelToRotate;
+    float timeFiringDur = 1f;
+    float lastFirePress;
+
 
     // Start is called before the first frame update
     void Start()
@@ -62,6 +73,8 @@ public class Turret : MonoBehaviour
             Debug.Log("turret did not find ship");
         }
         startingFireRate = fireRate;
+        gunnertCooldownImage = GameObject.FindGameObjectWithTag("GunnerCooldownImage").GetComponent<Image>();
+        barrelToRotate.GetComponent<turretBarrleRot>().enabled = false;
     }
 
     private void Update()
@@ -78,15 +91,45 @@ public class Turret : MonoBehaviour
         }
 
         // turret ability
-        if (PlayerPrefs.GetInt("Player1Character") == 1 && !doubleFireRate && canDouble && turretAbility)
+        if (PlayerPrefs.GetInt("Player2Character") == 1 && !doubleFireRate && canDouble && turretAbility)
         {
             StartCoroutine(fireRateDouble());
         }
+        if (PlayerPrefs.GetInt("Player2Character") == 2)
+        {
+            if (!shielding && turretAbility && !shieldingOnCool)
+            {
+                StartCoroutine(shieldLogic());
+            }
+        }
+        if (Time.time - lastFirePress >= timeFiringDur)
+        {
+            barrelToRotate.GetComponent<turretBarrleRot>().enabled = false;
+        }
+    }
+    IEnumerator shieldLogic()
+    {
+        shielding = true;
+        shieldObj.SetActive(true);
+        yield return new WaitForSeconds(shieldTime);
+        shieldObj.SetActive(false);
+        shielding = false;
+        gunnertCooldownImage.color = Color.red;
+        StartCoroutine(shieldCoolDownFunc());
+    }
+    IEnumerator shieldCoolDownFunc()
+    {
+        gunnertCooldownImage.color = Color.red;
+        shieldingOnCool = true;
+        yield return new WaitForSeconds(shieldCoolDown);
+        gunnertCooldownImage.color = Color.green;
+        shieldingOnCool = false;
     }
     IEnumerator fireRateDouble()
     {
         doubleFireRate = true;
         fireRate /= 2;
+        gunnertCooldownImage.color = Color.red;
         yield return new WaitForSeconds(doubleFireRateTime);
         fireRate = startingFireRate;
         doubleFireRate = false;
@@ -95,7 +138,9 @@ public class Turret : MonoBehaviour
     IEnumerator rateCooldown()
     {
         canDouble = false;
+        gunnertCooldownImage.color = Color.red;
         yield return new WaitForSeconds(doubleFireCooldown);
+        gunnertCooldownImage.color = Color.green;
         canDouble = true;
     }
 
@@ -138,8 +183,19 @@ public class Turret : MonoBehaviour
 
     private void FiringHelper()
     {
+        lastFirePress = Time.time;
+        if(barrelToRotate.GetComponent<turretBarrleRot>().isActiveAndEnabled == false)
+        {
+            barrelToRotate.GetComponent<turretBarrleRot>().enabled = true;
+            print("Barrel started spinning");
+        }
         Instantiate(muzzleFlashPS, projSpawnPoint.transform.position, Quaternion.identity);
-        RaycastHit[] hits = Physics.SphereCastAll(turretBarrel.transform.position, sphereCastRadius, turretBarrel.transform.forward, sphereCastDistance, ~layerMaskToIgnore);
+        float tempSphereCastRadius = sphereCastRadius;
+        if (doubleFireRate)
+        {
+            tempSphereCastRadius *= 8;
+        }
+        RaycastHit[] hits = Physics.SphereCastAll(turretBarrel.transform.position, tempSphereCastRadius, turretBarrel.transform.forward, sphereCastDistance, ~layerMaskToIgnore);
         foreach (RaycastHit hit in hits)
         {
             if (hit.transform.CompareTag("Enemy"))
@@ -155,8 +211,8 @@ public class Turret : MonoBehaviour
         }
         // Draw a debug line showing the direction and distance of the spherecast
         Debug.DrawRay(turretBarrel.transform.position, turretBarrel.transform.forward * sphereCastDistance, Color.yellow, 1f);
-        barrelModel.transform.localRotation = new Quaternion(barrelModel.transform.localRotation.x + barrelSpinningRate, barrelModel.transform.localRotation.y, barrelModel.transform.localRotation.z, barrelModel.transform.localRotation.w);
-        Instantiate(projectile, projSpawnPoint.transform.position, Quaternion.Euler(turretBarrel.transform.eulerAngles));
+        //barrelModel.transform.localRotation = new Quaternion(barrelModel.transform.localRotation.x + barrelSpinningRate, barrelModel.transform.localRotation.y, barrelModel.transform.localRotation.z, barrelModel.transform.localRotation.w);
+        GameObject tempBullet = Instantiate(projectile, projSpawnPoint.transform.position, Quaternion.Euler(turretBarrel.transform.eulerAngles));
         
     }
     

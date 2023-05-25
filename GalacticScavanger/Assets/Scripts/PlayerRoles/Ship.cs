@@ -8,6 +8,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Rendering;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 // referenced from: https://www.youtube.com/watch?v=fZvJvZA4nhY&ab_channel=DanPos
 
@@ -16,27 +17,27 @@ public class Ship : MonoBehaviour
 {
     [Header("Ship Movement Vars")]
     //controls how fast you can rotate
-    [SerializeField] float yawTorque = 500f;    // y axis
-    [SerializeField] float pitchTorque = 1000f; // x axis
-    [SerializeField] float rollTorque = 1000f;  // z axis
+    [SerializeField] public float yawTorque = 500f;    // y axis
+    [SerializeField] public float pitchTorque = 1000f; // x axis
+    [SerializeField] public float rollTorque = 1000f;  // z axis
     //controls how fast you can actually move
-    [SerializeField] float thrust = 100f;       // forward speed
-    [SerializeField] float upThrust = 50f;      // up/down speed
-    [SerializeField] float strafeThrust = 50f;  // left/right speed
+    [SerializeField] public float thrust = 100f;       // forward speed
+    [SerializeField] public float upThrust = 50f;      // up/down speed
+    [SerializeField] public float strafeThrust = 50f;  // left/right speed
     //controls accel/deccel (also what makes the ship eventually stop after they release the key
-    [SerializeField, Range(0.001f, 0.999f)] float thrustGlideReduction = 0.999f;
-    [SerializeField, Range(0.001f, 0.999f)] float upDownGlideReduction = .111f;
-    [SerializeField, Range(0.001f, 0.999f)] float leftRightGlideReduction = .111f;
+    [SerializeField, Range(0.001f, 0.999f)] public float thrustGlideReduction = 0.999f;
+    [SerializeField, Range(0.001f, 0.999f)] public float upDownGlideReduction = .111f;
+    [SerializeField, Range(0.001f, 0.999f)] public float leftRightGlideReduction = .111f;
     float glide, verticalGlide, horizontalGlide = 0f;
     [SerializeField] float rollClampVal;
     [SerializeField] float pitchClamp;
     [SerializeField] bool canDrift = false;
 
     [Header("Boosting Vars")]
-    [SerializeField] float maxBoostAmount = 2f;
-    [SerializeField] float boostLossRate = .25f;
-    [SerializeField] float boostRechargeRate = .5f;
-    [SerializeField] float boostMultiplier = 5f;
+    [SerializeField] public float maxBoostAmount = 2f;
+    [SerializeField] public float boostLossRate = .25f;
+    [SerializeField] public float boostRechargeRate = .5f;
+    [SerializeField] public float boostMultiplier = 5f;
     public bool boosting = false;
     public float currBoostAmount;
 
@@ -84,10 +85,10 @@ public class Ship : MonoBehaviour
     Quaternion startingRotation;
     float timeCount = 0.0f;
     bool resetSpeed = false;
-    bool shielding = false;
+    //bool shielding = false;
     bool shieldingOnCool = false;
-    [SerializeField] float shieldTime = 5.0f;
-    [SerializeField] float shieldCoolDown = 10.0f;
+    //[SerializeField] float shieldTime = 5.0f;
+    [SerializeField] float radarCoolDown = 10.0f;
 
     //particle effect vars
     private Transform startPoint;
@@ -96,9 +97,15 @@ public class Ship : MonoBehaviour
     [SerializeField] ParticleSystem particleSystem;
     [SerializeField] ParticleSystem depositPS;
     [SerializeField] ParticleSystem lightningPS;
-    [SerializeField] GameObject shieldObj;
+    //[SerializeField] GameObject shieldObj;
 
     bool currentlyMining = false;
+    private Image pilotCooldownImage;
+
+    // Boost/scan audio
+    private AudioSource m_MyAudioSource;
+    [SerializeField] private AudioClip boostAudio;
+    [SerializeField] private AudioClip scanAudio;
 
     void Start()
     {
@@ -117,6 +124,8 @@ public class Ship : MonoBehaviour
             healthUIText = GameObject.Find("HealthPointsText");
         }
         startingHealth = health;
+        pilotCooldownImage = GameObject.FindGameObjectWithTag("PilotCooldownImage").GetComponent<Image>();
+        m_MyAudioSource = GetComponent<AudioSource>();
     }
 
     private void Awake()
@@ -165,10 +174,12 @@ public class Ship : MonoBehaviour
     }
     void HandleBoost()
     {
-        if(whichClass == 2)
+        if(whichClass == 1)
         {
             if (boosting && currBoostAmount > 0f)
             {
+                m_MyAudioSource.PlayOneShot(boostAudio);
+                pilotCooldownImage.color = Color.green;
                 currBoostAmount -= boostLossRate;
                 if (currBoostAmount <= 0f)
                 {
@@ -177,6 +188,7 @@ public class Ship : MonoBehaviour
             }
             else
             {
+                pilotCooldownImage.color = Color.red;
                 if (currBoostAmount < maxBoostAmount)
                 {
                     currBoostAmount += boostRechargeRate;
@@ -194,7 +206,7 @@ public class Ship : MonoBehaviour
             }
         }
         */
-        //if(whichClass == 1)
+        if(whichClass == 2)
         {
             //I'm just using canTeleport so I don't have to make a new ability
             if(boosting && canTeleport)
@@ -204,33 +216,14 @@ public class Ship : MonoBehaviour
                 scanOut = true;
             }
         }
-        if(whichClass == 2)
-        {
-            if (!shielding && boosting && !shieldingOnCool)
-            {
-                StartCoroutine(shieldLogic());
-            }
-        }
+        
     }
-    IEnumerator shieldLogic()
-    {
-        shielding = true;
-        shieldObj.SetActive(true);
-        yield return new WaitForSeconds(shieldTime);
-        shieldObj.SetActive(false);
-        shielding = false;
-        StartCoroutine(shieldCoolDownFunc());
-    }
-    IEnumerator shieldCoolDownFunc()
-    {
-        shieldingOnCool = true;
-        yield return new WaitForSeconds(shieldCoolDown);
-        shieldingOnCool = false;
-    }
+    
 
     bool continueScan = true;
     void scanLogic()
     {
+        m_MyAudioSource.PlayOneShot(scanAudio);
         lightningPS.Play();
         //print("Start scan");
         //scanCol.transform.localScale += Vector3.one * scanSpeed * Time.deltaTime;
@@ -289,12 +282,14 @@ public class Ship : MonoBehaviour
             scanOut = false;
         }
     }
+    
     IEnumerator scanLength()
     {
         continueScan = true;
-        yield return new WaitForSeconds(shieldCoolDown);
+        yield return new WaitForSeconds(radarCoolDown);
         continueScan = false;
     }
+    
 
     void teleportLogic()
     {
@@ -314,11 +309,14 @@ public class Ship : MonoBehaviour
         }
 
     }
+    
     IEnumerator TeleportCooldown()
     {
         canTeleport = false;
-        yield return new WaitForSeconds(shieldCoolDown);
+        pilotCooldownImage.color = Color.red;
+        yield return new WaitForSeconds(radarCoolDown);
         canTeleport = true;
+        pilotCooldownImage.color = Color.green;
     }
     void HandleMovement()
     {
@@ -493,7 +491,7 @@ public class Ship : MonoBehaviour
         {
             Destroy(other.gameObject);
 
-            if (!shielding)
+            if (!Turret.shielding)
             {
                 health--;
                 if (health <= 0)
