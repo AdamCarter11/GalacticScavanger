@@ -28,7 +28,8 @@ public class MenuScript : MonoBehaviour
     }
     public void OpenTutorial()
     {
-        tutorialPanel.SetActive(true);
+        if (PlayerPrefs.GetInt("Player1Character") != -1 && PlayerPrefs.GetInt("Player2Character") != -1 || SceneManager.GetActiveScene().name == "GameOver")
+            tutorialPanel.SetActive(true);
     }
     public void GoToMenu()
     {

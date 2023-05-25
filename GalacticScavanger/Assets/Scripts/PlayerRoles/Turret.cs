@@ -52,6 +52,9 @@ public class Turret : MonoBehaviour
     [SerializeField] float shieldTime = 5.0f;
     [SerializeField] float shieldCoolDown = 10.0f;
     private Image gunnertCooldownImage;
+    [SerializeField] GameObject barrelToRotate;
+    float timeFiringDur = 3f;
+    float lastFirePress;
 
 
     // Start is called before the first frame update
@@ -71,6 +74,7 @@ public class Turret : MonoBehaviour
         }
         startingFireRate = fireRate;
         gunnertCooldownImage = GameObject.FindGameObjectWithTag("GunnerCooldownImage").GetComponent<Image>();
+        barrelToRotate.GetComponent<turretBarrleRot>().enabled = false;
     }
 
     private void Update()
@@ -97,6 +101,10 @@ public class Turret : MonoBehaviour
             {
                 StartCoroutine(shieldLogic());
             }
+        }
+        if (Time.time - lastFirePress >= timeFiringDur)
+        {
+            barrelToRotate.GetComponent<turretBarrleRot>().enabled = false;
         }
     }
     IEnumerator shieldLogic()
@@ -175,6 +183,12 @@ public class Turret : MonoBehaviour
 
     private void FiringHelper()
     {
+        lastFirePress = Time.time;
+        if(barrelToRotate.GetComponent<turretBarrleRot>().isActiveAndEnabled == false)
+        {
+            barrelToRotate.GetComponent<turretBarrleRot>().enabled = true;
+            print("Barrel started spinning");
+        }
         Instantiate(muzzleFlashPS, projSpawnPoint.transform.position, Quaternion.identity);
         float tempSphereCastRadius = sphereCastRadius;
         if (doubleFireRate)
@@ -197,7 +211,7 @@ public class Turret : MonoBehaviour
         }
         // Draw a debug line showing the direction and distance of the spherecast
         Debug.DrawRay(turretBarrel.transform.position, turretBarrel.transform.forward * sphereCastDistance, Color.yellow, 1f);
-        barrelModel.transform.localRotation = new Quaternion(barrelModel.transform.localRotation.x + barrelSpinningRate, barrelModel.transform.localRotation.y, barrelModel.transform.localRotation.z, barrelModel.transform.localRotation.w);
+        //barrelModel.transform.localRotation = new Quaternion(barrelModel.transform.localRotation.x + barrelSpinningRate, barrelModel.transform.localRotation.y, barrelModel.transform.localRotation.z, barrelModel.transform.localRotation.w);
         GameObject tempBullet = Instantiate(projectile, projSpawnPoint.transform.position, Quaternion.Euler(turretBarrel.transform.eulerAngles));
         
     }
