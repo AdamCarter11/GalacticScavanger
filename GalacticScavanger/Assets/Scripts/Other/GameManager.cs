@@ -17,6 +17,8 @@ public class GameManager : MonoBehaviour
     private int currPlayerGas;
     private int collectedGas;
     private int goalGas;
+    // enemies
+    /*[HideInInspector]*/ public int currEnemiesDestroyed;
 
     private bool isDocking = false;
     bool canDock = true;
@@ -33,6 +35,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] int totalGoalAmount = 20;
     [SerializeField] int goalIncreaseAmount = 5;
     [SerializeField] float scrapCollectionTime = .5f;
+    [SerializeField] int goalEnemies = 10;
 
     float timeLeft;
     bool timerOn = true;
@@ -77,7 +80,7 @@ public class GameManager : MonoBehaviour
         AssignTextVals();
 
         // Level up condition
-        if (collectedScrap >= goalScrap && collectedGas >= goalGas)
+        if (collectedScrap >= goalScrap && collectedGas >= goalGas && currEnemiesDestroyed >= goalEnemies)
         {
             print("Finished mission!");
             // reset players scrap
@@ -86,8 +89,11 @@ public class GameManager : MonoBehaviour
             currPlayerGas = 0;
             collectedGas = 0;
 
+            // reset players enemies destroyed
+            currEnemiesDestroyed = 0;
+
             // generate a new goal
-            if(variableDiffIncrease % 2 == 0)
+            if (variableDiffIncrease % 2 == 0)
             {
                 totalGoalAmount += goalIncreaseAmount;
             }
