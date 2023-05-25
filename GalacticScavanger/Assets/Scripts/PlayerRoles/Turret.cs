@@ -53,7 +53,7 @@ public class Turret : MonoBehaviour
     [SerializeField] float shieldCoolDown = 10.0f;
     private Image gunnertCooldownImage;
     [SerializeField] GameObject barrelToRotate;
-    float timeFiringDur = 3f;
+    float timeFiringDur = 1f;
     float lastFirePress;
 
 
