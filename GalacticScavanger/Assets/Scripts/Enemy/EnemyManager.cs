@@ -29,6 +29,7 @@ public class EnemyManager : MonoBehaviour
                 {
                     print("enemy destruction: " + enemiesInScene[i].name);
                     GameManager.instance.currEnemiesDestroyed++;
+                    GameManager.instance.UpdateEnemiesKilled();
                     GameManager.instance.ChangeTIme(changeTimeVal);
                     enemiesInScene[i].SetActive(false);
                     StopCoroutine(respawnEnemies());

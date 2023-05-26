@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.SceneManagement;
+using System.Transactions;
 
 public class GameManager : MonoBehaviour
 {
@@ -28,7 +29,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] TMP_Text timerText;
     [SerializeField] TMP_Text scrapText, depositedText;
     [SerializeField] TMP_Text gasText, depositedGasText;
-    [SerializeField] TMP_Text scrapGoalText, gasGoalText;
+    [SerializeField] TMP_Text destroyedEnemiesText;
+    //[SerializeField] TMP_Text scrapGoalText, gasGoalText;
     [SerializeField] TMP_Text levelUpText;
     [Header("Game variables")]
     [SerializeField] float StartingTime;
@@ -55,8 +57,9 @@ public class GameManager : MonoBehaviour
         goalScrap = Random.Range(0, totalGoalAmount);
         goalGas = totalGoalAmount - goalScrap;
         print("Scrap Goal: " + goalScrap + " metal goal: " + goalGas);
-        scrapGoalText.text = "Scrap goal: " + goalScrap;
-        gasGoalText.text = "Gas goal: " + goalGas;
+        //scrapGoalText.text = "Scrap goal: " + goalScrap;
+        //gasGoalText.text = "Gas goal: " + goalGas;
+        destroyedEnemiesText.text = "Enemies: 0/" + goalEnemies;
 
         AssignTextVals();
     }
@@ -91,6 +94,7 @@ public class GameManager : MonoBehaviour
 
             // reset players enemies destroyed
             currEnemiesDestroyed = 0;
+            UpdateEnemiesKilled();
 
             // generate a new goal
             if (variableDiffIncrease % 2 == 0)
@@ -106,8 +110,8 @@ public class GameManager : MonoBehaviour
             goalScrap = Random.Range(0, totalGoalAmount);
             goalGas = totalGoalAmount - goalScrap;
             print("Scrap Goal: " + goalScrap + " metal goal: " + goalGas);
-            scrapGoalText.text = "Scrap goal: " + goalScrap;
-            gasGoalText.text = "Gas goal: " + goalGas;
+            //scrapGoalText.text = "Scrap goal: " + goalScrap;
+            //gasGoalText.text = "Gas goal: " + goalGas;
 
             // UPGRADE PLAYER
             player = GameObject.FindGameObjectWithTag("Ship");
@@ -216,12 +220,17 @@ public class GameManager : MonoBehaviour
     void AssignTextVals()
     {
         scrapText.text = "Scrap: " + currPlayerScrap;
-        depositedText.text = "Deposited: " + collectedScrap;
+        depositedText.text = "Deposited: " + collectedScrap + "/" + goalScrap;
         gasText.text = "Gas: " + currPlayerGas;
-        depositedGasText.text = "Deposited: " + collectedGas;
+        depositedGasText.text = "Deposited: " + collectedGas + "/" + goalGas;
     }
     public void ChangeTIme(float changeTimeByVal)
     {
         timeLeft += changeTimeByVal;
+    }
+
+    public void UpdateEnemiesKilled()
+    {
+        destroyedEnemiesText.text = "Enemies: " + currEnemiesDestroyed + "/" + goalEnemies;
     }
 }
