@@ -46,6 +46,9 @@ public class Ship : MonoBehaviour
     int startingHealth;
     public int collectableCount = 0;
     [SerializeField] private GameObject healthUIText;
+    [SerializeField] private int asteroidCollisionDamage = 1;
+    [SerializeField] private float asteroidCollisionImmunityTimer = 1f;
+    private float runningAsteroidImmunityTimer;
 
     [Header("Gunner Vars")] 
     [SerializeField] public Transform turretLocation;
@@ -135,6 +138,8 @@ public class Ship : MonoBehaviour
         {
             damageUI = GameObject.Find("damageUI");
         }
+
+        runningAsteroidImmunityTimer = asteroidCollisionImmunityTimer;
     }
 
     private void Awake()
@@ -191,6 +196,7 @@ public class Ship : MonoBehaviour
                 damageUI.GetComponent<Image>().color = color;
             }
         }
+        runningAsteroidImmunityTimer -= Time.deltaTime;
     }
     void FixedUpdate()
     {
@@ -554,6 +560,12 @@ public class Ship : MonoBehaviour
     }
     private void OnCollisionEnter(Collision collision)
     {
+        if (collision.gameObject.CompareTag("Asteroid") && runningAsteroidImmunityTimer < 0)
+        {
+            this.health -= asteroidCollisionDamage;
+            runningAsteroidImmunityTimer = asteroidCollisionImmunityTimer;
+        }
+        
         //print(collision.gameObject.name);
         //rb.angularVelocity = Vector3.zero;
         //rb.velocity = Vector3.zero;

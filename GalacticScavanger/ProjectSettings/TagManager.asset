@@ -18,6 +18,7 @@ TagManager:
   - GasCollectionArea
   - PilotCooldownImage
   - GunnerCooldownImage
+  - Asteroid
   layers:
   - Default
   - TransparentFX

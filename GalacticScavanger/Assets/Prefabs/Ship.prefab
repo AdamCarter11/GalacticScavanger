@@ -6293,6 +6293,7 @@ MonoBehaviour:
   health: 10
   collectableCount: 0
   healthUIText: {fileID: 0}
+  asteroidCollisionDamage: 1
   turretLocation: {fileID: 5874590492130449082}
   turretPrefab: {fileID: 3036964109284216318, guid: 090e7bb5c4c940e4f92161438c286f58, type: 3}
   pausePanel: {fileID: 0}
