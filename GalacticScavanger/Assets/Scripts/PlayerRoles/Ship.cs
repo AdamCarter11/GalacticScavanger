@@ -211,6 +211,10 @@ public class Ship : MonoBehaviour
     {
         if(whichClass == 1)
         {
+            if(currBoostAmount >= maxBoostAmount)
+            {
+                pilotCooldownImage.color = Color.green;
+            }
             if (boosting && currBoostAmount > 0f)
             {
                 m_MyAudioSource.clip = boostAudio;
@@ -218,7 +222,7 @@ public class Ship : MonoBehaviour
                 {
                     m_MyAudioSource.Play();
                 }
-                pilotCooldownImage.color = Color.green;
+                
                 currBoostAmount -= boostLossRate;
                 if (currBoostAmount <= 0f)
                 {
@@ -227,7 +231,8 @@ public class Ship : MonoBehaviour
             }
             else
             {
-                pilotCooldownImage.color = Color.red;
+                if(currBoostAmount <= 1f)
+                    pilotCooldownImage.color = Color.red;
                 if (currBoostAmount < maxBoostAmount)
                 {
                     currBoostAmount += boostRechargeRate;
@@ -656,7 +661,8 @@ public class Ship : MonoBehaviour
 
     public void OnBoost(InputAction.CallbackContext context)
     {
-        boosting = context.performed;
+        if(currBoostAmount >= maxBoostAmount)
+            boosting = context.performed;
     }
 
     public void PauseGame(InputAction.CallbackContext context)
