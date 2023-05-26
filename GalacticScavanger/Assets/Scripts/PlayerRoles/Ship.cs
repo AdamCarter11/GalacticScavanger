@@ -110,6 +110,7 @@ public class Ship : MonoBehaviour
     [SerializeField] AudioClip onHitAudio;
     [SerializeField] AudioClip collectionAudio;
     [SerializeField] AudioClip depositAudio;
+    [SerializeField] GameObject damageUI;
 
     void Start()
     {
@@ -130,6 +131,10 @@ public class Ship : MonoBehaviour
         startingHealth = health;
         pilotCooldownImage = GameObject.FindGameObjectWithTag("PilotCooldownImage").GetComponent<Image>();
         m_MyAudioSource = GetComponent<AudioSource>();
+        if(damageUI == null)
+        {
+            damageUI = GameObject.Find("damageUI");
+        }
     }
 
     private void Awake()
@@ -168,6 +173,23 @@ public class Ship : MonoBehaviour
         {
             particleSystem.Stop();
             particleSystem.Clear();
+        }
+
+        // to change the alpha of the on damage effect (this should probably be a lerp, but this is a quick addition
+        if(damageUI != null)
+        {
+            if(damageUI.GetComponent<Image>().color.a > 0)
+            {
+                var color = damageUI.GetComponent<Image>().color;
+                color.a -= 0.01f;
+                damageUI.GetComponent<Image>().color = color;
+            }
+            else
+            {
+                var color = damageUI.GetComponent<Image>().color;
+                color.a = 0f;
+                damageUI.GetComponent<Image>().color = color;
+            }
         }
     }
     void FixedUpdate()
@@ -506,6 +528,7 @@ public class Ship : MonoBehaviour
             if (!Turret.shielding)
             {
                 health--;
+                TakeDamage();
                 if (health <= 0)
                 {
                     // game over
@@ -514,6 +537,12 @@ public class Ship : MonoBehaviour
             }
             
         }
+    }
+    void TakeDamage()
+    {
+        var color = damageUI.GetComponent<Image>().color;
+        color.a = .5f;
+        damageUI.GetComponent<Image>().color = color;
     }
     private void OnTriggerExit(Collider other)
     {
