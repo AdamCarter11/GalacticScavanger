@@ -14,7 +14,7 @@ public class MenuScript : MonoBehaviour
     private void Start()
     {
         //set to -1 before they select a character just in case
-        if(SceneManager.GetActiveScene().name == "GameOver")
+        if(SceneManager.GetActiveScene().name != "GameOver")
         {
             PlayerPrefs.SetInt("Player1Character", -1);
             PlayerPrefs.SetInt("Player2Character", -1);
