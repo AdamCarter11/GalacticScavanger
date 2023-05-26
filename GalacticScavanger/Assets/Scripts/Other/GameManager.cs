@@ -38,7 +38,9 @@ public class GameManager : MonoBehaviour
     [SerializeField] int goalIncreaseAmount = 5;
     [SerializeField] float scrapCollectionTime = .5f;
     [SerializeField] int goalEnemies = 10;
-    [SerializeField] int missionsNeededToWin = 3;
+    [SerializeField] int goalEnemiesIncreaseAmount = 5;
+    [SerializeField] int missionsNeededToWin = 4;
+    [SerializeField] EnemyManager enemyManager;
     int missionsCompleted = 0;
 
     float timeLeft;
@@ -98,15 +100,18 @@ public class GameManager : MonoBehaviour
             // reset players enemies destroyed
             currEnemiesDestroyed = 0;
             UpdateEnemiesKilled();
+            enemyManager.RespawnAllEnemies();
 
             // generate a new goal
             if (variableDiffIncrease % 2 == 0)
             {
                 totalGoalAmount += goalIncreaseAmount;
+                goalEnemies += goalEnemiesIncreaseAmount;
             }
             else
             {
                 totalGoalAmount += Mathf.RoundToInt(goalIncreaseAmount / 2);
+                goalEnemies += Mathf.RoundToInt(goalEnemiesIncreaseAmount / 2);
             }
             variableDiffIncrease++;
             timeLeft = StartingTime;
@@ -117,7 +122,7 @@ public class GameManager : MonoBehaviour
             //gasGoalText.text = "Gas goal: " + goalGas;
 
             // UPGRADE PLAYER
-            player = GameObject.FindGameObjectWithTag("Ship");
+            player = GameObject.FindGameObjectWithTag("LevelUpManager");
             player.GetComponent<UpgradeSystem>().Upgrade();
 
             // display level up text

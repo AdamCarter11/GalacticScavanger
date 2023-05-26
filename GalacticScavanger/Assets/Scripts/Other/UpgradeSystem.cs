@@ -48,28 +48,37 @@ public class UpgradeSystem : MonoBehaviour
         whichClass2 = PlayerPrefs.GetInt("Player2Character");
 
         //engine upgrades
-        if (whichClass1 == 1)
+        if(playerShipRef != null)
         {
-            playerShipRef.GetComponent<Ship>().yawTorque *= yawTorqueBonus;
-            playerShipRef.GetComponent<Ship>().pitchTorque *= pitchTorqueBonus;
-            playerShipRef.GetComponent<Ship>().rollTorque *= rollTorqueBonus;
+            if (whichClass1 == 1)
+            {
+                playerShipRef.GetComponent<Ship>().yawTorque *= yawTorqueBonus;
+                playerShipRef.GetComponent<Ship>().pitchTorque *= pitchTorqueBonus;
+                playerShipRef.GetComponent<Ship>().rollTorque *= rollTorqueBonus;
+            }
+            if (whichClass1 == 2)
+            {
+                playerShipRef.GetComponent<Ship>().upThrust *= upThrustBonus;
+                playerShipRef.GetComponent<Ship>().strafeThrust *= strafeThrustBonus;
+            }
+            playerShipRef.GetComponent<Ship>().thrust *= thrustBonus;
         }
-        if (whichClass1 == 2)
-        {
-            playerShipRef.GetComponent<Ship>().upThrust *= upThrustBonus;
-            playerShipRef.GetComponent<Ship>().strafeThrust *= strafeThrustBonus;
-        }
+        
         //gun upgrades
-        if (whichClass2 == 1)
+        if(turretRef != null)
         {
-            turretRef.GetComponent<Turret>().projectileDamage += projectileDamageBonus;
+            if (whichClass2 == 1)
+            {
+                turretRef.GetComponent<Turret>().projectileDamage += projectileDamageBonus;
+            }
+            if (whichClass2 == 2)
+            {
+                turretRef.GetComponent<Turret>().fireRate *= fireRateBonus;
+            }
         }
-        if (whichClass2 == 2)
-        {
-            turretRef.GetComponent<Turret>().fireRate *= fireRateBonus;
-        }
+       
         //non class upgrades
-        playerShipRef.GetComponent<Ship>().thrust *= thrustBonus;
+        
         //playerShipRef.GetComponent<Ship>().health += healthBonus;
         
         //GetComponent<Ship>().thrustGlideReduction *= thrustGlideReductionBonus;

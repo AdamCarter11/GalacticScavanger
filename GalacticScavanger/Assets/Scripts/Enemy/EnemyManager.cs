@@ -5,19 +5,21 @@ using UnityEngine;
 public class EnemyManager : MonoBehaviour
 {
     GameObject[] enemiesInScene;
+    [HideInInspector] public static int totalEnemiesInScene;
     [SerializeField] float enemyRespawnTime = 10f;
     [SerializeField] float changeTimeVal = 2f;
 
     private void Start()
     {
         enemiesInScene = GameObject.FindGameObjectsWithTag("Enemy");
+        totalEnemiesInScene = enemiesInScene.Length;
         /*
         for (int i = 0; i < enemiesInScene.Length; i++)
         {
             enemiesInScene[i].GetComponent<EnemyAI6>().enemyHealth = 10;
         }
         */
-        print("Enemies: " + enemiesInScene.Length);
+        print("Enemies: " + totalEnemiesInScene);
     }
     private void Update()
     {
@@ -52,6 +54,15 @@ public class EnemyManager : MonoBehaviour
             if (!enemiesInScene[i].activeSelf)
                 enemiesInScene[i].SetActive(true);
                 
+        }
+    }
+    public void RespawnAllEnemies()
+    {
+        for (int i = 0; i < enemiesInScene.Length; i++)
+        {
+            if (!enemiesInScene[i].activeSelf)
+                enemiesInScene[i].SetActive(true);
+
         }
     }
 }
