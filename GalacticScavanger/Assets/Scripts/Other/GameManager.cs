@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.SceneManagement;
+using System.Transactions;
 
 public class GameManager : MonoBehaviour
 {
@@ -17,6 +18,8 @@ public class GameManager : MonoBehaviour
     private int currPlayerGas;
     private int collectedGas;
     private int goalGas;
+    // enemies
+    /*[HideInInspector]*/ public int currEnemiesDestroyed;
 
     private bool isDocking = false;
     bool canDock = true;
@@ -26,13 +29,15 @@ public class GameManager : MonoBehaviour
     [SerializeField] TMP_Text timerText;
     [SerializeField] TMP_Text scrapText, depositedText;
     [SerializeField] TMP_Text gasText, depositedGasText;
-    [SerializeField] TMP_Text scrapGoalText, gasGoalText;
+    [SerializeField] TMP_Text destroyedEnemiesText;
+    //[SerializeField] TMP_Text scrapGoalText, gasGoalText;
     [SerializeField] TMP_Text levelUpText;
     [Header("Game variables")]
     [SerializeField] float StartingTime;
     [SerializeField] int totalGoalAmount = 20;
     [SerializeField] int goalIncreaseAmount = 5;
     [SerializeField] float scrapCollectionTime = .5f;
+    [SerializeField] int goalEnemies = 10;
 
     float timeLeft;
     bool timerOn = true;
@@ -52,8 +57,9 @@ public class GameManager : MonoBehaviour
         goalScrap = Random.Range(0, totalGoalAmount);
         goalGas = totalGoalAmount - goalScrap;
         print("Scrap Goal: " + goalScrap + " metal goal: " + goalGas);
-        scrapGoalText.text = "Scrap goal: " + goalScrap;
-        gasGoalText.text = "Gas goal: " + goalGas;
+        //scrapGoalText.text = "Scrap goal: " + goalScrap;
+        //gasGoalText.text = "Gas goal: " + goalGas;
+        destroyedEnemiesText.text = "Enemies: 0/" + goalEnemies;
 
         AssignTextVals();
     }
@@ -77,7 +83,7 @@ public class GameManager : MonoBehaviour
         AssignTextVals();
 
         // Level up condition
-        if (collectedScrap >= goalScrap && collectedGas >= goalGas)
+        if (collectedScrap >= goalScrap && collectedGas >= goalGas && currEnemiesDestroyed >= goalEnemies)
         {
             print("Finished mission!");
             // reset players scrap
@@ -86,8 +92,12 @@ public class GameManager : MonoBehaviour
             currPlayerGas = 0;
             collectedGas = 0;
 
+            // reset players enemies destroyed
+            currEnemiesDestroyed = 0;
+            UpdateEnemiesKilled();
+
             // generate a new goal
-            if(variableDiffIncrease % 2 == 0)
+            if (variableDiffIncrease % 2 == 0)
             {
                 totalGoalAmount += goalIncreaseAmount;
             }
@@ -100,8 +110,8 @@ public class GameManager : MonoBehaviour
             goalScrap = Random.Range(0, totalGoalAmount);
             goalGas = totalGoalAmount - goalScrap;
             print("Scrap Goal: " + goalScrap + " metal goal: " + goalGas);
-            scrapGoalText.text = "Scrap goal: " + goalScrap;
-            gasGoalText.text = "Gas goal: " + goalGas;
+            //scrapGoalText.text = "Scrap goal: " + goalScrap;
+            //gasGoalText.text = "Gas goal: " + goalGas;
 
             // UPGRADE PLAYER
             player = GameObject.FindGameObjectWithTag("Ship");
@@ -210,12 +220,17 @@ public class GameManager : MonoBehaviour
     void AssignTextVals()
     {
         scrapText.text = "Scrap: " + currPlayerScrap;
-        depositedText.text = "Deposited: " + collectedScrap;
+        depositedText.text = "Deposited: " + collectedScrap + "/" + goalScrap;
         gasText.text = "Gas: " + currPlayerGas;
-        depositedGasText.text = "Deposited: " + collectedGas;
+        depositedGasText.text = "Deposited: " + collectedGas + "/" + goalGas;
     }
     public void ChangeTIme(float changeTimeByVal)
     {
         timeLeft += changeTimeByVal;
+    }
+
+    public void UpdateEnemiesKilled()
+    {
+        destroyedEnemiesText.text = "Enemies: " + currEnemiesDestroyed + "/" + goalEnemies;
     }
 }
