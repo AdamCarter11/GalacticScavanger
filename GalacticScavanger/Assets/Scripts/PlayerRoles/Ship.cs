@@ -49,6 +49,7 @@ public class Ship : MonoBehaviour
     [SerializeField] private int asteroidCollisionDamage = 1;
     [SerializeField] private float asteroidCollisionImmunityTimer = 1f;
     private float runningAsteroidImmunityTimer;
+    private HealthBarManager healthBarManager;
 
     [Header("Gunner Vars")] 
     [SerializeField] public Transform turretLocation;
@@ -117,7 +118,9 @@ public class Ship : MonoBehaviour
 
     void Start()
     {
-        if(particleSystem == null)
+        healthBarManager = FindObjectOfType<HealthBarManager>();
+
+        if (particleSystem == null)
         {
             particleSystem = GameObject.FindGameObjectWithTag("miningParticle").GetComponent<ParticleSystem>();
         }
@@ -525,6 +528,7 @@ public class Ship : MonoBehaviour
             Instantiate(depositPS, transform.position, Quaternion.identity);
             GameManager.instance.DockingFunc(0);
             health = startingHealth;
+            healthBarManager.SetSpriteIndex(health);
         }
         if (other.gameObject.CompareTag("EnemyProj"))
         {
@@ -549,6 +553,7 @@ public class Ship : MonoBehaviour
         var color = damageUI.GetComponent<Image>().color;
         color.a = .5f;
         damageUI.GetComponent<Image>().color = color;
+        healthBarManager.SetSpriteIndex(health);
     }
     private void OnTriggerExit(Collider other)
     {

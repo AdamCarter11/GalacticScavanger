@@ -165,7 +165,11 @@ public class Turret : MonoBehaviour
         float x = pitchYaw.y;
         float y = pitchYaw.x;
 
+
+
+
         // rotate base on y axis
+        
         Quaternion localRotation = this.transform.localRotation;
         this.transform.RotateAround(this.transform.position, this.transform.up, y);
         
@@ -177,6 +181,7 @@ public class Turret : MonoBehaviour
         rollAngle = (rollAngle > 180) ? rollAngle - 360 : rollAngle;
         rollAngle = Mathf.Clamp(rollAngle, minAngle, maxAngle);
         turretBarrelBase.transform.localRotation = Quaternion.Euler(new Vector3(rollAngle, turretBarrelBase.transform.localRotation.y, turretBarrelBase.transform.localRotation.z));
+        
     }
 
     private void FireUpdate()

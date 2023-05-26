@@ -19,6 +19,7 @@ TagManager:
   - PilotCooldownImage
   - GunnerCooldownImage
   - Asteroid
+  - LevelUpManager
   layers:
   - Default
   - TransparentFX
