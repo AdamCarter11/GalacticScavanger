@@ -38,6 +38,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] int goalIncreaseAmount = 5;
     [SerializeField] float scrapCollectionTime = .5f;
     [SerializeField] int goalEnemies = 10;
+    [SerializeField] int missionsNeededToWin = 3;
+    int missionsCompleted = 0;
 
     float timeLeft;
     bool timerOn = true;
@@ -86,6 +88,7 @@ public class GameManager : MonoBehaviour
         if (collectedScrap >= goalScrap && collectedGas >= goalGas && currEnemiesDestroyed >= goalEnemies)
         {
             print("Finished mission!");
+            missionsCompleted++;
             // reset players scrap
             currPlayerScrap = 0;
             collectedScrap = 0;
@@ -213,9 +216,19 @@ public class GameManager : MonoBehaviour
     }
     IEnumerator levelUpTextDisplay()
     {
+        // check for win condition
+        if (missionsCompleted >= missionsNeededToWin)
+        {
+            levelUpText.text = "You Win!";
+            
+        }
         levelUpText.enabled = true;
         yield return new WaitForSeconds(3f);
         levelUpText.enabled = false;
+        if (missionsCompleted >= missionsNeededToWin)
+        {
+            SceneManager.LoadScene("GameOver");
+        }
     }
     void AssignTextVals()
     {

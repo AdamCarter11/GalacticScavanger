@@ -6293,7 +6293,8 @@ MonoBehaviour:
   health: 10
   collectableCount: 0
   healthUIText: {fileID: 0}
-  asteroidCollisionDamage: 1
+  asteroidCollisionDamage: 0
+  asteroidCollisionImmunityTimer: 1
   turretLocation: {fileID: 5874590492130449082}
   turretPrefab: {fileID: 3036964109284216318, guid: 090e7bb5c4c940e4f92161438c286f58, type: 3}
   pausePanel: {fileID: 0}
@@ -6315,6 +6316,7 @@ MonoBehaviour:
   onHitAudio: {fileID: 8300000, guid: 72b91202aa2ebfb4cb997f47092cceee, type: 3}
   collectionAudio: {fileID: 8300000, guid: 7cf8e80623f922b4a89c97a145b47812, type: 3}
   depositAudio: {fileID: 8300000, guid: 2df703c7e3b125f4490c60c438370c52, type: 3}
+  damageUI: {fileID: 0}
 --- !u!54 &8325805688791109805
 Rigidbody:
   m_ObjectHideFlags: 0
