@@ -28,6 +28,8 @@ public class EnemyManager : MonoBehaviour
                 if (enemiesInScene[i].GetComponent<EnemyHealth>().health <= 0 && enemiesInScene[i].activeSelf)
                 {
                     print("enemy destruction: " + enemiesInScene[i].name);
+                    GameManager.instance.currEnemiesDestroyed++;
+                    GameManager.instance.UpdateEnemiesKilled();
                     GameManager.instance.ChangeTIme(changeTimeVal);
                     enemiesInScene[i].SetActive(false);
                     StopCoroutine(respawnEnemies());
