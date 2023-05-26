@@ -3,14 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using TMPro;
-
+using UnityEngine.Windows.Speech;
 
 public class MenuScript : MonoBehaviour
 {
     [SerializeField] TMP_Text character1DisplayText;
     [SerializeField] TMP_Text character2DisplayText;
     [SerializeField] GameObject tutorialPanel;
-
+    [SerializeField] TMP_Text gameOverText;
     private void Start()
     {
         //set to -1 before they select a character just in case
@@ -19,7 +19,22 @@ public class MenuScript : MonoBehaviour
             PlayerPrefs.SetInt("Player1Character", -1);
             PlayerPrefs.SetInt("Player2Character", -1);
         }
-        
+        else if(gameOverText != null)
+        {
+            string gameOverCondition = PlayerPrefs.GetString("CauseOfDeath");
+            if(gameOverCondition == "Victory")
+            {
+                gameOverText.text = "Victory!";
+            }
+            if (gameOverCondition == "Time")
+            {
+                gameOverText.text = "GAMEOVER: Ran out of time!";
+            }
+            if (gameOverCondition == "Health")
+            {
+                gameOverText.text = "GAMEOVER: Destroyed by enemy ships!";
+            }
+        }
     }
     public void StartGame()
     {

@@ -542,6 +542,7 @@ public class Ship : MonoBehaviour
                 if (health <= 0)
                 {
                     // game over
+                    PlayerPrefs.SetString("CauseOfDeath", "Health");
                     SceneManager.LoadScene("GameOver");
                 }
             }

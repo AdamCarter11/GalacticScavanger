@@ -41,7 +41,9 @@ public class GameManager : MonoBehaviour
     [SerializeField] int goalEnemiesIncreaseAmount = 5;
     [SerializeField] int missionsNeededToWin = 4;
     [SerializeField] EnemyManager enemyManager;
+    Vector3 timerTextStartingSize;
     int missionsCompleted = 0;
+    GameObject playerRef;
 
     float timeLeft;
     bool timerOn = true;
@@ -64,6 +66,7 @@ public class GameManager : MonoBehaviour
         //scrapGoalText.text = "Scrap goal: " + goalScrap;
         //gasGoalText.text = "Gas goal: " + goalGas;
         destroyedEnemiesText.text = "Enemies: 0/" + goalEnemies;
+        timerTextStartingSize = timerText.gameObject.transform.localScale;
 
         AssignTextVals();
     }
@@ -133,8 +136,16 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
+        if(playerRef == null)
+        {
+            playerRef = GameObject.FindGameObjectWithTag("Ship");
+        }
+        else
+        {
+            TimerFunc();
+        }
         //print(currPlayerScrap);
-        TimerFunc();
+        
     }
 
     private void TimerFunc()
@@ -144,6 +155,17 @@ public class GameManager : MonoBehaviour
             if(timeLeft > 0)
             {
                 timeLeft -= Time.deltaTime;
+                if(timeLeft <= StartingTime / 2)
+                {
+                    timerText.gameObject.GetComponent<Animator>().enabled = true;
+                    timerText.color = Color.red;
+                }
+                else
+                {
+                    timerText.gameObject.GetComponent<Animator>().enabled = false;
+                    timerText.gameObject.transform.localScale = timerTextStartingSize;
+                    timerText.color = Color.white; 
+                }
                 UpdateTimer(timeLeft);
             }
             else
@@ -151,6 +173,7 @@ public class GameManager : MonoBehaviour
                 timerOn = false;
                 // gameover
                 Cursor.visible = true;
+                PlayerPrefs.SetString("CauseOfDeath", "Time");
                 SceneManager.LoadScene("GameOver");
             }
         }
@@ -232,6 +255,7 @@ public class GameManager : MonoBehaviour
         levelUpText.enabled = false;
         if (missionsCompleted >= missionsNeededToWin)
         {
+            PlayerPrefs.SetString("CauseOfDeath", "Victory");
             SceneManager.LoadScene("GameOver");
         }
     }
