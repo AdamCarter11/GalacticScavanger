@@ -65,7 +65,7 @@ public class GameManager : MonoBehaviour
         print("Scrap Goal: " + goalScrap + " metal goal: " + goalGas);
         //scrapGoalText.text = "Scrap goal: " + goalScrap;
         //gasGoalText.text = "Gas goal: " + goalGas;
-        destroyedEnemiesText.text = "Enemies: 0/" + goalEnemies;
+        destroyedEnemiesText.text = "0/" + goalEnemies;
         timerTextStartingSize = timerText.gameObject.transform.localScale;
 
         AssignTextVals();
@@ -102,7 +102,7 @@ public class GameManager : MonoBehaviour
 
             // reset players enemies destroyed
             currEnemiesDestroyed = 0;
-            UpdateEnemiesKilled();
+            
             enemyManager.RespawnAllEnemies();
 
             // generate a new goal
@@ -116,6 +116,7 @@ public class GameManager : MonoBehaviour
                 totalGoalAmount += Mathf.RoundToInt(goalIncreaseAmount / 2);
                 goalEnemies += Mathf.RoundToInt(goalEnemiesIncreaseAmount / 2);
             }
+            UpdateEnemiesKilled();
             variableDiffIncrease++;
             timeLeft = StartingTime;
             goalScrap = Random.Range(0, totalGoalAmount);
@@ -273,6 +274,6 @@ public class GameManager : MonoBehaviour
 
     public void UpdateEnemiesKilled()
     {
-        destroyedEnemiesText.text = "Enemies: " + currEnemiesDestroyed + "/" + goalEnemies;
+        destroyedEnemiesText.text = currEnemiesDestroyed + "/" + goalEnemies;
     }
 }
