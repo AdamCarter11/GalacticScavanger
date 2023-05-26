@@ -56,6 +56,11 @@ public class Turret : MonoBehaviour
     float timeFiringDur = 1f;
     float lastFirePress;
 
+    // Audio Clips
+    AudioSource audioSource;
+    [SerializeField] AudioClip baseLaserClip;
+    [SerializeField] AudioClip amplifyClip;
+    [SerializeField] AudioClip shieldClip;
 
     // Start is called before the first frame update
     void Start()
@@ -75,6 +80,7 @@ public class Turret : MonoBehaviour
         startingFireRate = fireRate;
         gunnertCooldownImage = GameObject.FindGameObjectWithTag("GunnerCooldownImage").GetComponent<Image>();
         barrelToRotate.GetComponent<turretBarrleRot>().enabled = false;
+        audioSource = GetComponent<AudioSource>();
     }
 
     private void Update()
@@ -109,6 +115,11 @@ public class Turret : MonoBehaviour
     }
     IEnumerator shieldLogic()
     {
+        // Play audio
+        audioSource.Stop();
+        audioSource.clip = shieldClip;
+        audioSource.Play();
+
         shielding = true;
         shieldObj.SetActive(true);
         yield return new WaitForSeconds(shieldTime);
@@ -127,6 +138,11 @@ public class Turret : MonoBehaviour
     }
     IEnumerator fireRateDouble()
     {
+        // Play audio
+        audioSource.Stop();
+        audioSource.clip = amplifyClip;
+        audioSource.Play();
+
         doubleFireRate = true;
         fireRate /= 2;
         gunnertCooldownImage.color = Color.red;
@@ -183,6 +199,7 @@ public class Turret : MonoBehaviour
 
     private void FiringHelper()
     {
+        audioSource.PlayOneShot(baseLaserClip);
         lastFirePress = Time.time;
         if(barrelToRotate.GetComponent<turretBarrleRot>().isActiveAndEnabled == false)
         {

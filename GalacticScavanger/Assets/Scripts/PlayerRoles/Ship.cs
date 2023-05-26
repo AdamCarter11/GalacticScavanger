@@ -104,8 +104,8 @@ public class Ship : MonoBehaviour
 
     // Boost/scan audio
     private AudioSource m_MyAudioSource;
-    [SerializeField] private AudioClip boostAudio;
-    [SerializeField] private AudioClip scanAudio;
+    [SerializeField] AudioClip boostAudio;
+    [SerializeField] AudioClip scanAudio;
 
     void Start()
     {
@@ -178,7 +178,11 @@ public class Ship : MonoBehaviour
         {
             if (boosting && currBoostAmount > 0f)
             {
-                m_MyAudioSource.PlayOneShot(boostAudio);
+                m_MyAudioSource.clip = boostAudio;
+                if (!m_MyAudioSource.isPlaying)
+                {
+                    m_MyAudioSource.Play();
+                }
                 pilotCooldownImage.color = Color.green;
                 currBoostAmount -= boostLossRate;
                 if (currBoostAmount <= 0f)
