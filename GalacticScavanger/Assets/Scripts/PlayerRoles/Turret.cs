@@ -69,7 +69,7 @@ public class Turret : MonoBehaviour
         if (ship)
         {
             turretLocation = ship.GetComponent<Ship>().turretLocation;
-            this.transform.parent = turretLocation;
+            //this.transform.parent = turretLocation;
             this.transform.position = turretLocation.position;
             runningTime = fireRate;
         }
@@ -78,7 +78,7 @@ public class Turret : MonoBehaviour
             Debug.Log("turret did not find ship");
         }
         startingFireRate = fireRate;
-        gunnertCooldownImage = GameObject.FindGameObjectWithTag("GunnerCooldownImage").GetComponent<Image>();
+        //gunnertCooldownImage = GameObject.FindGameObjectWithTag("GunnerCooldownImage").GetComponent<Image>();
         barrelToRotate.GetComponent<turretBarrleRot>().enabled = false;
         audioSource = GetComponent<AudioSource>();
     }
@@ -87,7 +87,12 @@ public class Turret : MonoBehaviour
     {
         if (ship)
         {
-            RotationUpdate();
+            // update turret location
+            this.transform.position = turretLocation.position;
+            
+            RotateTurret(pitchYaw);
+
+            //RotationUpdate();
             FireUpdate();
             //DebugViewingRays();
         }
@@ -174,8 +179,9 @@ public class Turret : MonoBehaviour
 
         //clamp the roll
         float rollAngle = turretBarrelBase.transform.localEulerAngles.x - x;
+        float clampedRollAngle = turretBarrelBase.transform.eulerAngles.x - x;
         rollAngle = (rollAngle > 180) ? rollAngle - 360 : rollAngle;
-        rollAngle = Mathf.Clamp(rollAngle, minAngle, maxAngle);
+        rollAngle = Mathf.Clamp(clampedRollAngle, minAngle, maxAngle);
         turretBarrelBase.transform.localRotation = Quaternion.Euler(new Vector3(rollAngle, turretBarrelBase.transform.localRotation.y, turretBarrelBase.transform.localRotation.z));
     }
 
@@ -242,6 +248,38 @@ public class Turret : MonoBehaviour
         Debug.DrawRay(turretLocation.position, turretToShip, Color.red);
         Debug.DrawRay(ship.transform.position, ship.transform.up*10, Color.green);
         Debug.DrawRay(ship.transform.position, ship.transform.forward*10, Color.blue);
+    }
+
+    
+    private const float maxRightRotation = 90f;
+
+    public void RotateTurret(Vector2 inputVector)
+    {
+        Vector3 turretForward = this.transform.forward;
+        Vector3 turretUp = this.transform.up;
+
+        Quaternion shipRotation = ship.transform.rotation;
+        Vector3 shipUp = ship.transform.up;
+
+        Vector3 turretToShip = ship.transform.position - this.transform.position;
+
+        // Calculate the dot product between turret forward and ship up vectors
+        float dotProduct = Vector3.Dot(turretForward, shipUp);
+
+        // Calculate the maximum allowed angle between turret forward and ship up vectors
+        float maxAngle = Mathf.Acos(dotProduct) * Mathf.Rad2Deg;
+
+        // Clamp the rotation on the right vector axis within [-90, 90] degrees based on the maximum angle
+        float clampedRightRotation = Mathf.Clamp(inputVector.x * maxRightRotation, -maxAngle, maxAngle);
+
+        // Calculate the rotation axis for the turret's up vector in ship's local space
+        Vector3 rotationAxis = Vector3.Cross(turretToShip, turretForward).normalized;
+
+        // Rotate the turret around its up vector axis using the clamped right rotation angle in ship's local space
+        Quaternion upRotation = Quaternion.AngleAxis(clampedRightRotation, rotationAxis);
+
+        // Apply the rotation to the turret in ship's global space
+        this.transform.rotation = shipRotation * Quaternion.LookRotation(turretForward, upRotation * shipUp);
     }
 
     #region Input Methods
