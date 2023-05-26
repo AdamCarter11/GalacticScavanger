@@ -19,14 +19,28 @@ public class UpgradeSystem : MonoBehaviour
     //[SerializeField, Range(0.001f, 0.999f)] float leftRightGlideReductionBonus = 1.1f;
     [Header("Ship Turret Upgrade Percentages")]
     [SerializeField] public float fireRateBonus = 0.85f;
-    [SerializeField] public int projectileDamageBonus = 2;
-    [SerializeField] public int healthBonus = 2;
+    [SerializeField] public int projectileDamageBonus = 1;
+    //[SerializeField] public int healthBonus = 2;
+    GameObject playerShipRef;
+    GameObject turretRef;
 
     private bool canBeUpgraded = false;
     private int upgradeLevel = 1;
 
     int whichClass1;
     int whichClass2;
+
+    private void Update()
+    {
+        if(playerShipRef == null)
+        {
+            playerShipRef = GameObject.FindGameObjectWithTag("Ship");
+        }
+        if (turretRef == null)
+        {
+            turretRef = GameObject.FindGameObjectWithTag("Turret");
+        }
+    }
 
     public void Upgrade()
     {
@@ -36,27 +50,27 @@ public class UpgradeSystem : MonoBehaviour
         //engine upgrades
         if (whichClass1 == 1)
         {
-            GetComponent<Ship>().yawTorque *= yawTorqueBonus;
-            GetComponent<Ship>().pitchTorque *= pitchTorqueBonus;
-            GetComponent<Ship>().rollTorque *= rollTorqueBonus;
+            playerShipRef.GetComponent<Ship>().yawTorque *= yawTorqueBonus;
+            playerShipRef.GetComponent<Ship>().pitchTorque *= pitchTorqueBonus;
+            playerShipRef.GetComponent<Ship>().rollTorque *= rollTorqueBonus;
         }
         if (whichClass1 == 2)
         {
-            GetComponent<Ship>().upThrust *= upThrustBonus;
-            GetComponent<Ship>().strafeThrust *= strafeThrustBonus;
+            playerShipRef.GetComponent<Ship>().upThrust *= upThrustBonus;
+            playerShipRef.GetComponent<Ship>().strafeThrust *= strafeThrustBonus;
         }
         //gun upgrades
         if (whichClass2 == 1)
         {
-            GetComponent<Turret>().projectileDamage += projectileDamageBonus;
+            turretRef.GetComponent<Turret>().projectileDamage += projectileDamageBonus;
         }
         if (whichClass2 == 2)
         {
-            GetComponent<Turret>().fireRate *= fireRateBonus;
+            turretRef.GetComponent<Turret>().fireRate *= fireRateBonus;
         }
         //non class upgrades
-        GetComponent<Ship>().thrust *= thrustBonus;
-        GetComponent<Ship>().health += healthBonus;
+        playerShipRef.GetComponent<Ship>().thrust *= thrustBonus;
+        //playerShipRef.GetComponent<Ship>().health += healthBonus;
         
         //GetComponent<Ship>().thrustGlideReduction *= thrustGlideReductionBonus;
         //GetComponent<Ship>().upDownGlideReduction *= upDownGlideReductionBonus;

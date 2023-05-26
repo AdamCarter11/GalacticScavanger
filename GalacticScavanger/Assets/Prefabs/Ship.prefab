@@ -6056,7 +6056,6 @@ GameObject:
   - component: {fileID: 8325805688791109805}
   - component: {fileID: 8325805688791109803}
   - component: {fileID: 4805991139414967673}
-  - component: {fileID: 8462233916415121076}
   - component: {fileID: 3725436424924061114}
   m_Layer: 11
   m_Name: Ship
@@ -6359,27 +6358,6 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &8462233916415121076
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8325805688791109806}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7f8ee78212dd61a4bb5a831289dfbc25, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  yawTorqueBonus: 1.1
-  pitchTorqueBonus: 1.1
-  rollTorqueBonus: 1.1
-  thrustBonus: 1.1
-  upThrustBonus: 1.1
-  strafeThrustBonus: 1.1
-  fireRateBonus: 0.9
-  projectileDamageBonus: 1
-  healthBonus: 1
 --- !u!82 &3725436424924061114
 AudioSource:
   m_ObjectHideFlags: 0
