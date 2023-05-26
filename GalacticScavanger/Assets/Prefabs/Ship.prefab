@@ -6311,6 +6311,9 @@ MonoBehaviour:
   lightningPS: {fileID: 8294436375017315039}
   boostAudio: {fileID: 8300000, guid: de8609028a23ed1459de3581c1cf7da5, type: 3}
   scanAudio: {fileID: 8300000, guid: 9f6dee468c1dc734a9b06c38e0b659d3, type: 3}
+  onHitAudio: {fileID: 8300000, guid: 72b91202aa2ebfb4cb997f47092cceee, type: 3}
+  collectionAudio: {fileID: 8300000, guid: 7cf8e80623f922b4a89c97a145b47812, type: 3}
+  depositAudio: {fileID: 8300000, guid: 2df703c7e3b125f4490c60c438370c52, type: 3}
 --- !u!54 &8325805688791109805
 Rigidbody:
   m_ObjectHideFlags: 0

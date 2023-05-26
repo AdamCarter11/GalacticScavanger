@@ -103,9 +103,13 @@ public class Ship : MonoBehaviour
     private Image pilotCooldownImage;
 
     // Boost/scan audio
+    [Header("Audio Clips")]
     private AudioSource m_MyAudioSource;
     [SerializeField] AudioClip boostAudio;
     [SerializeField] AudioClip scanAudio;
+    [SerializeField] AudioClip onHitAudio;
+    [SerializeField] AudioClip collectionAudio;
+    [SerializeField] AudioClip depositAudio;
 
     void Start()
     {
@@ -472,6 +476,7 @@ public class Ship : MonoBehaviour
     {
         if (other.gameObject.CompareTag("CollectionArea") && !scanOut && !currentlyMining)
         {
+            m_MyAudioSource.PlayOneShot(collectionAudio);
             //print(other.gameObject.name);
             GameManager.instance.CollectingScrapFunc(other.gameObject.transform.parent.gameObject, 10, "Scrap");
             endPoint = other.transform;
@@ -479,6 +484,7 @@ public class Ship : MonoBehaviour
         }
         if (other.gameObject.CompareTag("GasCollectionArea") && !scanOut && !currentlyMining)
         {
+            m_MyAudioSource.PlayOneShot(collectionAudio);
             //print(other.gameObject.name);
             GameManager.instance.CollectingScrapFunc(other.gameObject.transform.parent.gameObject, 10, "Gas");
             endPoint = other.transform;
@@ -486,6 +492,7 @@ public class Ship : MonoBehaviour
         }
         if (other.gameObject.CompareTag("DockingStation"))
         {
+            m_MyAudioSource.PlayOneShot(depositAudio);
             print("DOCKING");
             Instantiate(depositPS, transform.position, Quaternion.identity);
             GameManager.instance.DockingFunc(0);
@@ -493,6 +500,7 @@ public class Ship : MonoBehaviour
         }
         if (other.gameObject.CompareTag("EnemyProj"))
         {
+            m_MyAudioSource.PlayOneShot(onHitAudio);
             Destroy(other.gameObject);
 
             if (!Turret.shielding)
