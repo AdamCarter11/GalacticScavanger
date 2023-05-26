@@ -1210,7 +1210,9 @@ MonoBehaviour:
   goalIncreaseAmount: 5
   scrapCollectionTime: 0.5
   goalEnemies: 10
-  missionsNeededToWin: 3
+  goalEnemiesIncreaseAmount: 5
+  missionsNeededToWin: 4
+  enemyManager: {fileID: 1110541497}
 --- !u!1001 &118972506
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3814,7 +3816,7 @@ GameObject:
   - component: {fileID: 427297108}
   m_Layer: 0
   m_Name: LevelUpManager
-  m_TagString: Untagged
+  m_TagString: LevelUpManager
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
